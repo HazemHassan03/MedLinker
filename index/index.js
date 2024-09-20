@@ -4,7 +4,10 @@ let headerBar = document.getElementById("header-bar"),
 headerBar.addEventListener("click", () => {
   nav.classList.toggle("active");
   document.addEventListener("click", (e) => {
-    if (e.target !== headerBar && e.target !== nav) {
+    if (
+      e.target !== headerBar &&
+      e.target.parentElement.parentElement !== nav
+    ) {
       nav.classList.remove("active");
     }
   });
