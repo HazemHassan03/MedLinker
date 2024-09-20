@@ -1,14 +1,22 @@
-document.getElementById("header-bar").addEventListener("click", () => {
-  document.getElementById("nav").classList.toggle("active");
+let headerBar = document.getElementById("header-bar"),
+  nav = document.getElementById("nav"),
+  toTop = document.getElementById("to-top");
+headerBar.addEventListener("click", () => {
+  nav.classList.toggle("active");
+  document.addEventListener("click", (e) => {
+    if (e.target !== headerBar && e.target !== nav) {
+      nav.classList.remove("active");
+    }
+  });
 });
 window.addEventListener("scroll", () => {
   if (window.scrollY > 900) {
-    document.getElementById("to-top").style.transform = "scale(1)";
+    toTop.style.transform = "scale(1)";
   } else {
-    document.getElementById("to-top").style.transform = "scale(0)";
+    toTop.style.transform = "scale(0)";
   }
 });
-document.getElementById("to-top").addEventListener("click", () => {
+toTop.addEventListener("click", () => {
   window.scrollTo({
     top: 0,
     behavior: "smooth",
