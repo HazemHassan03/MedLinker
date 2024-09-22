@@ -3,8 +3,10 @@
   --alt-color: #137c8c;
   --blue-color: #004b84;
   --blue-alt-color: #003b68;
+  --white-color: #dbe2ef;
   --english-font: "League Spartan", system-ui;
   --arabic-font: "Alexandria", sans-serif;
+  --arabic-second-font: "Cairo", sans-serif;
   --transition: 0.3s;
 }
 * {
@@ -66,7 +68,7 @@ body > section:not(:first-of-type) {
   background-image: url(../images/landing-background.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center;
+  background-position: center top;
   padding-top: 20px;
   position: relative;
 }
@@ -260,13 +262,8 @@ header .bar {
   outline: none;
   border: none;
   font-size: 20px;
-  font-family: var(--arabic-font);
   color: var(--main-color);
-}
-.description .input input::placeholder {
-  font-size: 16px;
-  line-height: 2;
-  vertical-align: text-bottom;
+  font-family: var(--arabic-second-font);
 }
 .description .input input:focus::placeholder {
   transition: opacity var(--transition);
@@ -382,10 +379,6 @@ header .bar {
   -ms-transition: var(--transition);
   -o-transition: var(--transition);
 }
-.presentation .body div:hover {
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
-    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-}
 .presentation .body div span {
   position: absolute;
   left: 20px;
@@ -495,6 +488,12 @@ footer .social i {
 }
 footer .social i:hover {
   color: var(--alt-color);
+}
+footer .copyright {
+  width: fit-content;
+  margin: auto;
+  margin-top: 35px;
+  color: white;
 }
 #to-top {
   position: fixed;

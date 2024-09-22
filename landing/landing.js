@@ -1,7 +1,9 @@
 let headerBar = document.getElementById("header-bar"),
   nav = document.getElementById("nav"),
   toTop = document.getElementById("to-top"),
-  presentation = document.querySelectorAll(".presentation .body div");
+  presentation = document.querySelectorAll(".presentation .body div"),
+  copyrightDate = document.getElementById("copyright-date"),
+  date = new Date();
 
 headerBar.addEventListener("click", () => {
   nav.classList.toggle("active");
@@ -35,3 +37,5 @@ for (let i = 0; i < presentation.length; i++) {
   span.append(spanText);
   presentation[i].prepend(span);
 }
+
+copyrightDate.textContent = date.getFullYear();
