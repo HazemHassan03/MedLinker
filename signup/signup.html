@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
+    <link rel="stylesheet" href="/fontawesome/all.min.css" />
+    <link rel="stylesheet" href="signup.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="form">
+        <img class="logo-white" src="/images/logo-white-expand.png" alt="The Logo" />
+        <h1>Let's get started!</h1>
+        <form class="signup-form">
+          <div class="row">
+            <label for="name">Full Name</label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              placeholder="Your name in english"
+            />
+            <i class="valid fa-regular fa-circle-check"></i>
+            <i class="not-valid fa-regular fa-circle-xmark"></i>
+          </div>
+          <p class="name-rules rules">Like: Med Linker</p>
+          <div class="row">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Your email"
+            />
+            <i class="valid fa-regular fa-circle-check"></i>
+            <i class="not-valid fa-regular fa-circle-xmark"></i>
+          </div>
+          <p class="email-rules rules">Like: medlinker@email.com</p>
+          <div class="row">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Write a strong password"
+            />
+            <p class="show-hide">Show</p>
+            <i class="valid fa-regular fa-circle-check"></i>
+            <i class="not-valid fa-regular fa-circle-xmark"></i>
+          </div>
+          <div class="password-rules rules">
+            <p>
+              The password length must be at least 8 characters and contains:
+            </p>
+            <p>- At least one uppercase English letter</p>
+            <p>- At least one lowercase English letter</p>
+            <p>- At least one number</p>
+            <p>- At least one special character like: #?!@$%^&*-</p>
+          </div>
+          <div class="row">
+            <input type="submit" value="Sign up" />
+          </div>
+        </form>
+        <p class="have-account">
+          Already have an account? <a href="../login/login.html">Login</a>
+        </p>
+      </div>
+      <div class="logo">
+        <img src="/images/logo-blue.png" alt="The Logo" />
+      </div>
+    </div>
+    <script src="signup.js"></script>
+  </body>
+</html>

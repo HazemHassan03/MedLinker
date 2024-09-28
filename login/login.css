@@ -1,0 +1,160 @@
+:root {
+  --main-color: #133a5e;
+  --alt-color: #137c8c;
+  --blue-color: #004b84;
+  --blue-alt-color: #003b68;
+  --white-color: #dbe2ef;
+  --green-color: #22c55e;
+  --red-color: #f44336;
+  --english-font: "League Spartan", system-ui;
+  --transition: 0.3s;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+::-webkit-scrollbar {
+  width: 15px;
+}
+::-webkit-scrollbar-track {
+  background-color: var(--white-color);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--blue-color);
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--blue-alt-color);
+}
+body {
+  font-family: var(--english-font);
+  background-color: var(--white-color);
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100dvh;
+}
+.form {
+  background-color: var(--main-color);
+}
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+}
+.logo img {
+  max-width: 100%;
+  width: 400px;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 30px;
+}
+.form .logo-white {
+  width: 300px;
+  margin-bottom: 30px;
+  display: none;
+}
+form {
+  width: 100%;
+  max-width: 350px;
+}
+.row {
+  position: relative;
+  margin: 20px 0;
+}
+label:not(.show-password) {
+  position: absolute;
+  top: -12px;
+  left: 10px;
+  padding: 0 5px;
+  color: white;
+  background-color: var(--main-color);
+  font-weight: 500;
+}
+input {
+  width: 100%;
+  padding: 12px 30px 12px 10px;
+  background-color: transparent;
+  border: 1px solid white;
+  outline: none;
+  color: white;
+  border-radius: 6px;
+  font-size: 17px;
+  font-family: var(--english-font);
+  margin-bottom: 5px;
+  transition: border-color var(--transition);
+  -webkit-transition: border-color var(--transition);
+  -moz-transition: border-color var(--transition);
+  -ms-transition: border-color var(--transition);
+  -o-transition: border-color var(--transition);
+}
+input:-webkit-autofill {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: white;
+  caret-color: white;
+}
+input::placeholder {
+  color: white;
+  opacity: 0.5;
+}
+input[type="submit"] {
+  background-color: var(--alt-color);
+  font-size: 20px;
+  font-weight: 500;
+  border: none;
+  border-radius: 30px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+.not-have-account {
+  color: white;
+}
+.not-have-account a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+.not-have-account a:hover {
+  text-decoration: underline;
+}
+.show-hide {
+  position: absolute;
+  right: 0;
+  bottom: -42px;
+  padding: 3px 5px;
+  background-color: var(--alt-color);
+  transform: translateY(-50%);
+  color: white;
+  border-radius: 5px;
+  display: none;
+  cursor: pointer;
+  z-index: 1;
+}
+.show-hide.active {
+  display: block;
+}
+
+@media (max-width: 665px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+  .logo {
+    display: none;
+  }
+  .form .logo-white {
+    display: initial;
+  }
+}

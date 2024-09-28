@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>More Information</title>
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
+    <link rel="stylesheet" href="/fontawesome/all.min.css" />
+    <link rel="stylesheet" href="information.css" />
+  </head>
+  <body>
+    <div class="choices">
+      <div class="choices-container">
+        <div class="company choice">Sign up as a company</div>
+        <div class="or">
+          <p>OR</p>
+          <div class="line"></div>
+        </div>
+        <div class="employer choice">Sign up as an employer</div>
+      </div>
+      <div class="return">
+        <i class="fa-solid fa-chevron-right"></i>
+      </div>
+      <i class="exit fa-solid fa-chevron-left"></i>
+    </div>
+    <img src="/images/logo-blue-expand.png" alt="The Logo" class="logo" />
+    <div class="container">
+      <form class="employer-form">
+        <h2>Personal Information</h2>
+        <div class="row flex">
+          <div class="fname">
+            <h3>First Name</h3>
+            <input type="text" name="fname" id="fname" />
+            <i class="readonly fa-solid fa-lock"></i>
+          </div>
+          <div class="lname">
+            <h3>Last Name</h3>
+            <input type="text" name="lname" id="lname" />
+            <i class="readonly fa-solid fa-lock"></i>
+          </div>
+        </div>
+        <div class="row flex">
+          <div class="username">
+            <h3 for="username">Username</h3>
+            <input type="text" name="username" id="username" />
+            <p class="taken">This username is already taken</p>
+            <p class="not-valid">
+              The username must be at least 8 characters and have at least one
+              english letter and the numbers are optional
+            </p>
+          </div>
+          <div class="email">
+            <h3 for="email">Email Address</h3>
+            <input type="text" name="email" id="email" />
+            <i class="readonly fa-solid fa-lock"></i>
+          </div>
+        </div>
+        <div class="row flex">
+          <div class="phone">
+            <h3 for="phone">Phone Number</h3>
+            <input type="text" name="phone" id="phone" maxlength="11" />
+            <p class="not-valid">Not Valid Number</p>
+          </div>
+          <div class="address">
+            <h3 for="address">Address</h3>
+            <input type="text" name="address" id="address" />
+          </div>
+        </div>
+        <div class="row flex">
+          <div class="birth">
+            <h3>Date Of Birth</h3>
+            <select name="day" id="day">
+              <option value="0">Day</option>
+            </select>
+            <select name="month" id="month">
+              <option value="0">Month</option>
+            </select>
+            <select name="year" id="year">
+              <option value="0">Year</option>
+            </select>
+            <p class="not-valid">Not Valid Date</p>
+          </div>
+          <div class="graduation">
+            <h3 for="graduation">Graduation Year (or expected)</h3>
+            <select name="graduation" id="graduation">
+              <option value="0">Year</option>
+            </select>
+            <p class="not-valid">Not Valid Year</p>
+          </div>
+        </div>
+        <div class="row flex no-block">
+          <div class="level">
+            <h3 for="level">Your Current Level</h3>
+            <select name="level" id="level">
+              <option value="0">Current Level</option>
+              <option>Level 1</option>
+              <option>Level 2</option>
+              <option>Level 3</option>
+              <option>Level 4</option>
+              <option>Level 5</option>
+              <option>Graduated</option>
+            </select>
+            <p class="not-valid">Not Valid Level</p>
+          </div>
+          <div class="military">
+            <h3 for="military">Military Status</h3>
+            <select name="military" id="military">
+              <option value="0">Military Status</option>
+              <option>Exempted</option>
+              <option>Postponed</option>
+              <option>Serving</option>
+              <option>Fulfilled</option>
+            </select>
+            <p class="not-valid">Not Valid Status</p>
+          </div>
+          <div class="gender">
+            <h3>Gender</h3>
+            <label>
+              <input type="radio" name="gender" id="male" />
+              Male
+            </label>
+            <label for="female">
+              <input type="radio" name="gender" id="female" />
+              Female
+            </label>
+            <p class="not-valid">You must choose a gender</p>
+          </div>
+        </div>
+        <input class="next" type="submit" value="Next" />
+      </form>
+      <form class="employer-second-form">
+        <h2>Position Information</h2>
+        <div class="row">
+          <div class="job-title">
+            <h3>
+              What is the job title that describe what you are looking for?
+            </h3>
+            <input type="text" name="job-title" id="job-title" />
+          </div>
+        </div>
+        <div class="row flex">
+          <div class="experience">
+            <h3>How many experience do you have?</h3>
+            <div class="con">
+              <div class="years">
+                <h4>Years</h4>
+                <input type="number" name="years" id="years" />
+              </div>
+              <div class="months">
+                <h4>Months</h4>
+                <input type="number" name="months" id="months" />
+              </div>
+            </div>
+          </div>
+          <div class="job-type">
+            <h3>What type of job are you open to?</h3>
+            <select name="job-type" id="job-type">
+              <option value="0">Job Type</option>
+              <option>Full Time</option>
+              <option>Part Time</option>
+            </select>
+            <p class="not-valid">Not Valid Job Type</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="cv">
+            <h3>Upload Your CV</h3>
+            <label>
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <input type="file" name="cv" id="cv" accept=".pdf" />
+            </label>
+          </div>
+        </div>
+        <div class="nav">
+          <button class="back">Back</button>
+          <input class="submit" type="submit" value="Submit" />
+        </div>
+      </form>
+      <form class="company-form">
+        <h2>Company Information</h2>
+      </form>
+    </div>
+    <script src="information.js"></script>
+  </body>
+</html>

@@ -19,7 +19,7 @@
   width: 15px;
 }
 ::-webkit-scrollbar-track {
-  background-color: #dbe2ef;
+  background-color: var(--white-color);
 }
 ::-webkit-scrollbar-thumb {
   background-color: var(--blue-color);
@@ -136,7 +136,7 @@ header nav ul .login {
   }
 }
 header .bar {
-  color: white;
+  color: var(--main-color);
   font-size: 24px;
   cursor: pointer;
   display: none;
