@@ -43,6 +43,7 @@ employerChoice.addEventListener("click", () => {
   choices.style.marginLeft = "-100%";
   companyForm.style.display = "none";
   employerForm.style.display = "block";
+  employerSecondForm.style.display = "block";
   setTimeout(() => {
     exitChoices.style.display = "initial";
   }, 300);
@@ -50,6 +51,7 @@ employerChoice.addEventListener("click", () => {
 companyChoice.addEventListener("click", () => {
   choices.style.marginLeft = "-100%";
   employerForm.style.display = "none";
+  employerSecondForm.style.display = "none";
   companyForm.style.display = "block";
   exitChoices.style.display = "initial";
   setTimeout(() => {
