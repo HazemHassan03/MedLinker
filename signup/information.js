@@ -2,7 +2,10 @@ let infObj;
 if (sessionStorage.getItem("Data")) {
   infObj = JSON.parse(sessionStorage.getItem("Data"));
 } else {
-  location.pathname = "/signup/signup.html";
+  location.pathname = location.pathname.replace(
+    "information.html",
+    "signup.html"
+  );
 }
 
 let choices = document.querySelector(".choices"),

@@ -112,6 +112,9 @@ signupForm.addEventListener("submit", (e) => {
   ];
   if (checkAll(checkArray)) {
     sessionStorage.setItem("Data", JSON.stringify(infObj));
-    location.pathname = "/signup/information.html";
+    location.pathname = location.pathname.replace(
+      "signup.html",
+      "information.html"
+    );
   }
 });
