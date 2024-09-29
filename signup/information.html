@@ -4,7 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>More Information</title>
-    <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon" />
+    <link
+      rel="shortcut icon"
+      href="../images/favicon.png"
+      type="image/x-icon"
+    />
     <link rel="stylesheet" href="../fontawesome/all.min.css" />
     <link rel="stylesheet" href="information.css" />
   </head>
@@ -16,7 +20,7 @@
           <p>OR</p>
           <div class="line"></div>
         </div>
-        <div class="employer choice">Sign up as an employer</div>
+        <div class="employer choice">Sign up as an employee</div>
       </div>
       <div class="return">
         <i class="fa-solid fa-chevron-right"></i>
@@ -143,11 +147,11 @@
             <h3>How many experience do you have?</h3>
             <div class="con">
               <div class="years">
-                <h4>Years</h4>
+                <h4>Years:</h4>
                 <input type="number" name="years" id="years" />
               </div>
               <div class="months">
-                <h4>Months</h4>
+                <h4>Months:</h4>
                 <input type="number" name="months" id="months" />
               </div>
             </div>
@@ -162,13 +166,45 @@
             <p class="not-valid">Not Valid Job Type</p>
           </div>
         </div>
-        <div class="row">
+        <div class="row flex upload">
           <div class="cv">
             <h3>Upload Your CV</h3>
-            <label>
-              <i class="fa-solid fa-cloud-arrow-up"></i>
-              <input type="file" name="cv" id="cv" accept=".pdf" />
-            </label>
+            <input type="file" name="cv" id="cv" accept=".pdf" />
+            <div class="button">
+              <button class="input-image">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <span>Choose a file</span>
+              </button>
+              <div class="details">
+                <p>Name: <span class="file-name"></span></p>
+                <p>Size: <span class="file-size"></span></p>
+              </div>
+            </div>
+            <p class="not-valid">The file doesn't match the requirements</p>
+            <p class="not-found">No file found</p>
+            <p class="note">- The file must be PDF.</p>
+            <p class="note">- Max size is <span class="max-cv-size"></span>.</p>
+            <p class="note">- Required only if you are graduated.</p>
+          </div>
+          <div class="photo">
+            <h3>Upload Your Id Photo</h3>
+            <input type="file" name="photo" id="photo" />
+            <div class="button">
+              <button class="input-image">
+                <i class="fa-solid fa-image"></i>
+                <span>Choose a photo</span>
+              </button>
+              <div class="details">
+                <p>Name: <span class="file-name"></span></p>
+                <p>Size: <span class="file-size"></span></p>
+              </div>
+            </div>
+            <p class="not-valid">The file doesn't match the requirements</p>
+            <p class="not-found">No file found</p>
+            <p class="note">- The file must be an image.</p>
+            <p class="note">
+              - Max size is <span class="max-photo-size"></span>.
+            </p>
           </div>
         </div>
         <div class="nav">

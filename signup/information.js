@@ -13,8 +13,8 @@ let choices = document.querySelector(".choices"),
   exitChoices = document.querySelector(".choices .exit"),
   companyChoice = document.querySelector(".company"),
   employerChoice = document.querySelector(".employer"),
-  employerForm = document.querySelector(".employer-form"),
-  employerSecondForm = document.querySelector(".employer-second-form"),
+  employeeForm = document.querySelector(".employer-form"),
+  employeeSecondForm = document.querySelector(".employer-second-form"),
   companyForm = document.querySelector(".company-form"),
   back = document.querySelector("form .back"),
   submit = document.querySelector("form .submit"),
@@ -37,23 +37,29 @@ let choices = document.querySelector(".choices"),
   numberInputs = document.querySelectorAll("input[type=number]"),
   experienceMonths = document.getElementById("months"),
   jobType = document.getElementById("job-type"),
+  cv = document.getElementById("cv"),
+  photo = document.getElementById("photo"),
+  uploadButtons = document.querySelectorAll(".upload button"),
+  maxCvSize = 5,
+  maxPhotoSize = 5,
+  maxCv = document.querySelector(".max-cv-size"),
+  maxPhoto = document.querySelector(".max-photo-size"),
   date = new Date();
 
 employerChoice.addEventListener("click", () => {
   choices.style.marginLeft = "-100%";
   companyForm.style.display = "none";
-  employerForm.style.display = "block";
-  employerSecondForm.style.display = "block";
+  employeeForm.style.display = "block";
+  employeeSecondForm.style.display = "block";
   setTimeout(() => {
     exitChoices.style.display = "initial";
   }, 300);
 });
 companyChoice.addEventListener("click", () => {
   choices.style.marginLeft = "-100%";
-  employerForm.style.display = "none";
-  employerSecondForm.style.display = "none";
+  employeeForm.style.display = "none";
+  employeeSecondForm.style.display = "none";
   companyForm.style.display = "block";
-  exitChoices.style.display = "initial";
   setTimeout(() => {
     exitChoices.style.display = "initial";
   }, 300);
@@ -141,7 +147,7 @@ userName.addEventListener("input", () => {
 });
 
 function checkPhone(value) {
-  let regex = /\d{11}/;
+  let regex = /(010|011|012|015)\d{8}/;
   if (regex.test(value)) {
     return true;
   } else {
@@ -282,16 +288,16 @@ genderSelect.forEach((input) => {
   });
 });
 
-employerForm.addEventListener("submit", (e) => {
+employeeForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  employerForm.classList.add("finish");
-  employerSecondForm.classList.add("active");
+  employeeForm.classList.add("finish");
+  employeeSecondForm.classList.add("active");
 });
 
 back.addEventListener("click", (e) => {
   e.preventDefault();
-  employerSecondForm.classList.remove("active");
-  employerForm.classList.remove("finish");
+  employeeSecondForm.classList.remove("active");
+  employeeForm.classList.remove("finish");
 });
 
 setInterval(() => {
@@ -319,6 +325,108 @@ jobType.addEventListener("input", () => {
   }
 });
 
-employerSecondForm.addEventListener("submit", (e) => {
+uploadButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    btn.parentElement.parentElement.querySelector("input").click();
+  });
+});
+maxCv.textContent = `${maxCvSize}MB`;
+maxPhoto.textContent = `${maxPhotoSize}MB`;
+function checkCvRequired() {
+  if (currentLevel.value === "Graduated") {
+    if (cv.files[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return true;
+  }
+}
+function checkCvType(value) {
+  if (value.type === "application/pdf") {
+    return true;
+  } else {
+    return false;
+  }
+}
+function convertSizeIntoMB(size) {
+  return size / Math.pow(1024, 2);
+}
+function convertSizeIntoKB(size) {
+  return size / 1024;
+}
+function checkCvSize(value) {
+  if (convertSizeIntoMB(value.size) <= maxCvSize) {
+    return true;
+  } else {
+    return false;
+  }
+}
+function checkPhotoType(value) {
+  if (value.type.startsWith("image")) {
+    return true;
+  } else {
+    return false;
+  }
+}
+function checkPhotoSize(value) {
+  if (convertSizeIntoMB(value.size) <= maxPhotoSize) {
+    return true;
+  } else {
+    return false;
+  }
+}
+function process(input) {
+  if (input.files[0]) {
+    input.parentElement.querySelector(".not-found").style.display = "none";
+    let checkSize, checkType;
+    if (input === cv) {
+      checkSize = checkCvSize(input.files[0]);
+      checkType = checkCvType(input.files[0]);
+    } else {
+      checkSize = checkPhotoSize(input.files[0]);
+      checkType = checkPhotoType(input.files[0]);
+    }
+    let check = [checkSize, checkType];
+    let result = check.every((e) => {
+      return e;
+    });
+    if (!result) {
+      input.parentElement.querySelector(".details").style.display = "none";
+      input.parentElement.querySelector(".not-valid").style.display = "block";
+    } else {
+      input.parentElement.querySelector(".not-valid").style.display = "none";
+      input.parentElement.querySelector(".details").style.display = "block";
+      input.parentElement.querySelector(".details .file-name").textContent =
+        input.files[0].name;
+      if (convertSizeIntoMB(input.files[0].size).toFixed(2) < 0.1) {
+        input.parentElement.querySelector(
+          ".details .file-size"
+        ).textContent = `${convertSizeIntoKB(input.files[0].size).toFixed(
+          2
+        )}KB`;
+      } else {
+        input.parentElement.querySelector(
+          ".details .file-size"
+        ).textContent = `${convertSizeIntoMB(input.files[0].size).toFixed(
+          2
+        )}MB`;
+      }
+    }
+  } else {
+    input.parentElement.querySelector(".details").style.display = "none";
+    input.parentElement.querySelector(".not-valid").style.display = "none";
+    input.parentElement.querySelector(".not-found").style.display = "block";
+  }
+}
+cv.addEventListener("input", (e) => {
+  process(e.target);
+});
+photo.addEventListener("input", (e) => {
+  process(e.target);
+});
+
+employeeSecondForm.addEventListener("submit", (e) => {
   e.preventDefault();
 });
