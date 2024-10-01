@@ -34,12 +34,12 @@
         <div class="row flex">
           <div class="fname">
             <h3>First Name</h3>
-            <input type="text" name="fname" id="fname" />
+            <input type="text" name="fname" id="fname" readonly />
             <i class="readonly fa-solid fa-lock"></i>
           </div>
           <div class="lname">
             <h3>Last Name</h3>
-            <input type="text" name="lname" id="lname" />
+            <input type="text" name="lname" id="lname" readonly />
             <i class="readonly fa-solid fa-lock"></i>
           </div>
         </div>
@@ -50,12 +50,12 @@
             <p class="taken">This username is already taken</p>
             <p class="not-valid">
               The username must be at least 8 characters and have at least one
-              english letter and the numbers are optional
+              english letter and the numbers are optional and not have spaces
             </p>
           </div>
           <div class="email">
             <h3 for="email">Email Address</h3>
-            <input type="text" name="email" id="email" />
+            <input type="text" name="email" id="email" readonly />
             <i class="readonly fa-solid fa-lock"></i>
           </div>
         </div>
@@ -97,12 +97,12 @@
             <h3 for="level">Your Current Level</h3>
             <select name="level" id="level">
               <option value="0">Current Level</option>
-              <option>Level 1</option>
-              <option>Level 2</option>
-              <option>Level 3</option>
-              <option>Level 4</option>
-              <option>Level 5</option>
-              <option>Graduated</option>
+              <option value="Level 1">Level 1</option>
+              <option value="Level 2">Level 2</option>
+              <option value="Level 3">Level 3</option>
+              <option value="Level 4">Level 4</option>
+              <option value="Level 5">Level 5</option>
+              <option value="Graduated">Graduated</option>
             </select>
             <p class="not-valid">Not Valid Level</p>
           </div>
@@ -110,21 +110,21 @@
             <h3 for="military">Military Status</h3>
             <select name="military" id="military">
               <option value="0">Military Status</option>
-              <option>Exempted</option>
-              <option>Postponed</option>
-              <option>Serving</option>
-              <option>Fulfilled</option>
+              <option value="Exempted">Exempted</option>
+              <option value="Postponed">Postponed</option>
+              <option value="Serving">Serving</option>
+              <option value="Fulfilled">Fulfilled</option>
             </select>
             <p class="not-valid">Not Valid Status</p>
           </div>
           <div class="gender">
             <h3>Gender</h3>
             <label>
-              <input type="radio" name="gender" id="male" />
+              <input type="radio" name="gender" id="male" value="Male" />
               Male
             </label>
             <label for="female">
-              <input type="radio" name="gender" id="female" />
+              <input type="radio" name="gender" id="female" value="Female" />
               Female
             </label>
             <p class="not-valid">You must choose a gender</p>
@@ -148,11 +148,11 @@
             <div class="con">
               <div class="years">
                 <h4>Years:</h4>
-                <input type="number" name="years" id="years" />
+                <input type="number" name="years" id="years" value="0" />
               </div>
               <div class="months">
                 <h4>Months:</h4>
-                <input type="number" name="months" id="months" />
+                <input type="number" name="months" id="months" value="0" />
               </div>
             </div>
           </div>
@@ -160,8 +160,8 @@
             <h3>What type of job are you open to?</h3>
             <select name="job-type" id="job-type">
               <option value="0">Job Type</option>
-              <option>Full Time</option>
-              <option>Part Time</option>
+              <option value="Full Time">Full Time</option>
+              <option value="Part Time">Part Time</option>
             </select>
             <p class="not-valid">Not Valid Job Type</p>
           </div>
@@ -209,8 +209,9 @@
         </div>
         <div class="nav">
           <button class="back">Back</button>
-          <input class="submit" type="submit" value="Submit" />
+          <input class="submit" type="submit" value="Submit" id="submit" />
         </div>
+        <p class="warning">The fields are not completed</p>
       </form>
       <form class="company-form">
         <h2>Company Information</h2>
