@@ -835,7 +835,6 @@ employeeSecondForm.addEventListener("submit", async (e) => {
         console.log(object);
         let request = await fetch(`https://api.${domain}/v1/auth/register`, {
           method: "POST",
-          mode: "no-cors",
           headers: {
             "Content-Type": "application/json",
           },
