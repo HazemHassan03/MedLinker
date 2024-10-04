@@ -5,6 +5,7 @@
   --blue-alt-color: #003b68;
   --white-color: #dbe2ef;
   --red-color: #f44336;
+  --green-color: #22c55e;
   --english-font: "League Spartan", system-ui;
   --arabic-font: "Alexandria", sans-serif;
   --arabic-second-font: "Cairo", sans-serif;
@@ -191,21 +192,40 @@ h2 {
   color: var(--alt-color);
   font-size: 26px;
 }
-.employer-form {
+.employee-form {
   left: 0;
   display: none;
 }
-.employer-form.finish {
+.employee-form.finish {
   left: -100%;
 }
-.employer-second-form {
+.employee-second-form {
   right: -110%;
 }
-.employer-second-form.active {
+.employee-second-form.active {
   right: 0;
 }
 .company-form {
+  left: 0;
   display: none;
+}
+.company-form.finish {
+  left: -100%;
+}
+.company-second-form {
+  right: -110%;
+}
+.company-second-form.finish {
+  right: 100%;
+}
+.company-second-form.active {
+  right: 0;
+}
+.company-third-form {
+  right: -110%;
+}
+.company-third-form.active {
+  right: 0;
 }
 form {
   transition: var(--transition);
@@ -277,7 +297,7 @@ form select {
 form input[type="text"] {
   width: 100%;
 }
-form input[type="text"]:focus,
+form input[type="text"]:not(:read-only):focus,
 form input[type="number"]:focus,
 form select:focus {
   border-color: var(--main-color);
@@ -350,7 +370,6 @@ form .row i.readonly {
   color: rgb(0, 0, 0, 20%);
 }
 form .row p.not-valid,
-form .row p.taken,
 form .row p.not-found {
   margin-top: 5px;
   font-size: 15px;
@@ -359,30 +378,27 @@ form .row p.not-found {
   display: none;
 }
 form .row p.not-valid.active,
-form .row p.taken.active {
+form .row p.not-found.active {
   display: block;
 }
 option[value="0"] {
   display: none;
 }
-form .experience .con {
+.con {
   display: flex;
   gap: 10px;
 }
-form .experience .con > div {
+.con > div {
   flex: 1;
   display: flex;
   gap: 10px;
   align-items: center;
 }
-form .experience h4 {
+.con h4 {
   font-weight: 500;
   margin-bottom: 5px;
 }
-form .experience input[type="number"] {
-  border: 1px solid #ddd;
-  outline: none;
-  padding: 5px 10px;
+.con input[type="number"] {
   width: 100%;
 }
 form .cv i {
@@ -426,6 +442,9 @@ form .button .details {
   gap: 3px;
   display: none;
 }
+form .button .details.active {
+  display: flex;
+}
 form .cv input,
 form .photo input {
   display: none;
@@ -456,11 +475,101 @@ form .photo button:hover {
   background-color: var(--main-color);
   color: white;
 }
-form .warning {
-  text-align: center;
-  margin-top: 10px;
+form .empty {
   color: var(--red-color);
-  font-size: 18px;
-  font-weight: 500;
+  margin: 0 10px 0 5px;
   display: none;
+}
+.message {
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+  font-weight: 500;
+  font-family: var(--arabic-font);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  line-height: 1.8;
+  background-color: white;
+  padding: 40px 20px;
+  transform: translate(-50%, -50%) scale(0);
+  -webkit-transform: translate(-50%, -50%) scale(0);
+  -moz-transform: translate(-50%, -50%) scale(0);
+  -ms-transform: translate(-50%, -50%) scale(0);
+  -o-transform: translate(-50%, -50%) scale(0);
+  transition: transform var(--transition);
+  -webkit-transition: transform var(--transition);
+  -moz-transition: transform var(--transition);
+  -ms-transition: transform var(--transition);
+  -o-transition: transform var(--transition);
+  z-index: 99999;
+  border-radius: 20px;
+  direction: rtl;
+}
+.message h3 {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+.message .main-message {
+  font-size: 16px;
+  margin-top: 10px;
+  color: var(--main-color);
+  line-height: 1.8;
+}
+.message .another-messages {
+  direction: ltr;
+  color: black;
+  text-align: left;
+  margin-top: 20px;
+  font-family: var(--english-font);
+}
+.message .another-messages p {
+  border-top: 1px solid #ddd;
+  margin-top: 10px;
+  padding-top: 10px;
+}
+.message.active {
+  transform: translate(-50%, -50%) scale(1);
+  -webkit-transform: translate(-50%, -50%) scale(1);
+  -moz-transform: translate(-50%, -50%) scale(1);
+  -ms-transform: translate(-50%, -50%) scale(1);
+  -o-transform: translate(-50%, -50%) scale(1);
+}
+.message i {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  cursor: pointer;
+}
+.empty-message h3,
+.not-valid-message h3,
+.failed-message h3 {
+  color: var(--red-color);
+}
+.empty-message i,
+.not-valid-message i,
+.failed-message i {
+  font-size: 30px;
+  color: var(--red-color);
+}
+.success-message h3 {
+  color: var(--green-color);
+}
+.overlay {
+  background-color: rgb(0 0 0 / 0%);
+  width: 100dvw;
+  height: 100dvh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  transition: var(--transition);
+  -webkit-transition: var(--transition);
+  -moz-transition: var(--transition);
+  -ms-transition: var(--transition);
+  -o-transition: var(--transition);
+}
+.overlay.active {
+  z-index: 9999;
+  background-color: rgb(0 0 0 / 50%);
 }

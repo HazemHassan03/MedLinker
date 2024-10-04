@@ -1,3 +1,4 @@
+import { domain } from "../constants.js";
 let infObj;
 if (sessionStorage.getItem("Data")) {
   infObj = JSON.parse(sessionStorage.getItem("Data"));
@@ -7,29 +8,50 @@ if (sessionStorage.getItem("Data")) {
     "signup.html"
   );
 }
+if (JSON.parse(sessionStorage.getItem("Data")).comingFrom) {
+  sessionStorage.removeItem("User Type");
+  sessionStorage.removeItem("MedLinker Form");
+  sessionStorage.removeItem("Active Messages");
+  console.log(infObj);
+  delete infObj.comingFrom;
+  sessionStorage.setItem("Data", JSON.stringify(infObj));
+}
 
 let userType,
   choices = document.querySelector(".choices"),
   returnChoices = document.querySelector(".choices .return"),
   exitChoices = document.querySelector(".choices .exit"),
   companyChoice = document.querySelector(".company"),
-  employeeChoice = document.querySelector(".employer"),
-  employeeForm = document.querySelector(".employer-form"),
-  employeeSecondForm = document.querySelector(".employer-second-form"),
+  employeeChoice = document.querySelector(".employee"),
+  employeeForm = document.querySelector(".employee-form"),
+  employeeSecondForm = document.querySelector(".employee-second-form"),
   companyForm = document.querySelector(".company-form"),
   back = document.querySelector("form .back"),
-  submit = document.querySelector("form .submit"),
   allInputs = [
     ...document.querySelectorAll(
       "input:not([type=submit], [type=file], [readonly])"
     ),
     ...document.querySelectorAll("select"),
   ],
-  firstName = document.getElementById("fname"),
-  lastName = document.getElementById("lname"),
-  userName = document.getElementById("username"),
-  email = document.getElementById("email"),
-  phoneNumber = document.getElementById("phone"),
+  allEmployeeInputs = [
+    ...document.querySelectorAll(
+      ".employee-form input:not([type=submit], [readonly])"
+    ),
+    ...document.querySelectorAll(
+      ".employee-second-form input:not([type=submit], [readonly])"
+    ),
+    ...document.querySelectorAll("select"),
+  ],
+  firstName = document.querySelectorAll("input[name=fname]"),
+  lastName = document.querySelectorAll("input[name=lname]"),
+  email = document.querySelectorAll("input[name=email]"),
+  companyName = document.getElementById("company-name"),
+  userName = document.querySelectorAll("input[name=username]"),
+  employeeUserName = document.getElementById("username"),
+  companyUserName = document.getElementById("company-username"),
+  phoneNumber = document.querySelectorAll("input[name=phone]"),
+  companyPhoneNumber = document.getElementById("company-phone"),
+  employeePhoneNumber = document.getElementById("phone"),
   address = document.getElementById("address"),
   day = document.getElementById("day"),
   month = document.getElementById("month"),
@@ -40,7 +62,6 @@ let userType,
   graduation = document.getElementById("graduation"),
   genderSelect = document.querySelectorAll(".gender input[type=radio]"),
   checkedGender,
-  next = document.querySelector(".next"),
   jobTitle = document.getElementById("job-title"),
   numberInputs = document.querySelectorAll("input[type=number]"),
   experienceYears = document.getElementById("years"),
@@ -55,8 +76,19 @@ let userType,
   maxPhoto = document.querySelector(".max-photo-size"),
   date = new Date(),
   finalSubmit = document.getElementById("submit"),
-  warning = document.querySelector(".warning");
+  emptyMessage = document.querySelector(".empty-message"),
+  notValidMessage = document.querySelector(".not-valid-message"),
+  failedMessage = document.querySelector(".failed-message"),
+  errorMessages = document.querySelectorAll(".message:not(.success-message)"),
+  closeErrorMessages = document.querySelectorAll(
+    ".message:not(.success-message) i"
+  ),
+  success = document.querySelector(".success-message"),
+  successTimer = document.querySelector(".success-message span"),
+  overlay = document.querySelector(".overlay"),
+  anotherMessages = document.querySelector(".message .another-messages");
 
+// console.log(errorMessagesClose);
 function employeeMode() {
   choices.style.marginLeft = "-100%";
   companyForm.style.display = "none";
@@ -109,17 +141,36 @@ if (userType) {
     companyMode();
   }
 }
+// function checkUserType() {
+//   if (userType === "job-seeker" || userType === "company") {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// }
 
 let nameArray = infObj.fullName.split(" ");
-firstName.value = nameArray[0];
+firstName.forEach((input) => {
+  input.value = nameArray[0];
+});
 nameArray.shift();
-lastName.value = nameArray.join(" ");
-email.value = infObj.email;
+lastName.forEach((input) => {
+  input.value = nameArray.join(" ");
+});
+email.forEach((input) => {
+  input.value = infObj.email;
+});
 
 setInterval(() => {
-  firstName.setAttributeNode(document.createAttribute("readonly"));
-  lastName.setAttributeNode(document.createAttribute("readonly"));
-  email.setAttributeNode(document.createAttribute("readonly"));
+  firstName.forEach((input) => {
+    input.setAttributeNode(document.createAttribute("readonly"));
+  });
+  lastName.forEach((input) => {
+    input.setAttributeNode(document.createAttribute("readonly"));
+  });
+  email.forEach((input) => {
+    input.setAttributeNode(document.createAttribute("readonly"));
+  });
 });
 
 for (let i = 1; i <= 31; i++) {
@@ -160,182 +211,153 @@ for (let i = date.getFullYear() + 5; i >= date.getFullYear() - 50; i--) {
   graduation.append(option);
 }
 
-function checkUsernameValid(value) {
-  let regex = /[a-zA-Z0-9]{8,}/;
-  if (regex.test(value)) {
-    return true;
-  } else {
-    return false;
+if (!sessionStorage.getItem("Active Messages")) {
+  let activeMessages = {};
+  sessionStorage.setItem("Active Messages", JSON.stringify(activeMessages));
+} else {
+  let ids = Object.values(
+    JSON.parse(sessionStorage.getItem("Active Messages"))
+  );
+  console.log(ids);
+  for (let id of ids) {
+    console.log(id);
+    document.getElementById(id).classList.add("active");
   }
 }
-function checkUserNameMessage() {
-  let check = checkUsernameValid(userName.value);
-  if (userName.value.length > 0) {
+function addActiveMessage(input, name = input.id) {
+  let object = JSON.parse(sessionStorage.getItem("Active Messages"));
+  object[name] = input.parentElement.querySelector(".not-valid").id;
+  sessionStorage.setItem("Active Messages", JSON.stringify(object));
+}
+function deleteActiveMessage(input, name = input.id) {
+  let object = JSON.parse(sessionStorage.getItem("Active Messages"));
+  delete object[name];
+  sessionStorage.setItem("Active Messages", JSON.stringify(object));
+}
+
+function checkUserNameMessage(input) {
+  let check = checkInputValidation(input).check;
+  if (input.value.length > 0) {
     if (check) {
-      userName.parentElement
+      input.parentElement
         .querySelector(".not-valid")
         .classList.remove("active");
+      deleteActiveMessage(input);
     } else {
-      userName.parentElement
-        .querySelector(".not-valid")
-        .classList.add("active");
+      input.parentElement.querySelector(".not-valid").classList.add("active");
+      addActiveMessage(input);
     }
   } else {
-    userName.parentElement
-      .querySelector(".not-valid")
-      .classList.remove("active");
+    input.parentElement.querySelector(".not-valid").classList.remove("active");
+    deleteActiveMessage(input);
   }
 }
-userName.addEventListener("input", () => {
-  checkUserNameMessage();
+// userName.forEach((input) => {
+//   input.addEventListener("input", () => {
+//     checkUserNameMessage(input);
+//   });
+// });
+employeeUserName.addEventListener("input", () => {
+  checkUserNameMessage(employeeUserName);
 });
 
-function checkPhone(value) {
-  let regex = /(010|011|012|015)\d{8}/;
-  if (regex.test(value)) {
-    return true;
-  } else {
-    return false;
-  }
-}
-function checkPhoneMessage() {
-  let check = checkPhone(phoneNumber.value);
-  if (phoneNumber.value.length > 0) {
-    if (!check) {
-      phoneNumber.parentElement
-        .querySelector(".not-valid")
-        .classList.add("active");
-    } else {
-      phoneNumber.parentElement
+function checkPhoneMessage(input) {
+  let check = checkInputValidation(input).check;
+  if (input.value.length > 0) {
+    if (check) {
+      input.parentElement
         .querySelector(".not-valid")
         .classList.remove("active");
+      deleteActiveMessage(input);
+    } else {
+      input.parentElement.querySelector(".not-valid").classList.add("active");
+      addActiveMessage(input);
     }
   } else {
-    phoneNumber.parentElement
-      .querySelector(".not-valid")
-      .classList.remove("active");
+    input.parentElement.querySelector(".not-valid").classList.remove("active");
+    deleteActiveMessage(input);
   }
 }
-phoneNumber.addEventListener("input", () => {
-  checkPhoneMessage();
+phoneNumber.forEach((input) => {
+  input.addEventListener("input", () => {
+    checkPhoneMessage(input);
+  });
 });
 
-function checkAddress(value) {
-  if (value.length > 1) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-function checkDayMonth() {
+function checkBirthMessage(input) {
+  let check = checkInputValidation(input).check;
   if (day.value > 0 && month.value > 0 && year.value > 0) {
-    if (
-      month.value == "04" ||
-      month.value == "06" ||
-      month.value == "09" ||
-      month.value == "11"
-    ) {
-      if (day.value == "31") {
-        return false;
-      } else {
-        return true;
-      }
-    } else if (month.value == "02") {
-      if (day.value == "30" || day.value == "31") {
-        return false;
-      } else {
-        return true;
-      }
+    if (check) {
+      input.parentElement
+        .querySelector(".not-valid")
+        .classList.remove("active");
+      deleteActiveMessage(input, "birth");
     } else {
-      return true;
+      input.parentElement.querySelector(".not-valid").classList.add("active");
+      addActiveMessage(input, "birth");
     }
-  } else {
-    return false;
   }
 }
 birthDaySelection.forEach((input) => {
   input.addEventListener("input", () => {
-    let check = checkDayMonth();
-    if (day.value > 0 && month.value > 0 && year.value > 0) {
-      if (!check) {
-        input.parentElement.querySelector(".not-valid").classList.add("active");
-      } else {
-        input.parentElement
-          .querySelector(".not-valid")
-          .classList.remove("active");
-      }
-    }
+    checkBirthMessage(input);
   });
 });
 
-function checkGraduation(value) {
-  if (value == 0) {
-    return false;
+function checkGraduationMessage() {
+  let check = checkInputValidation(graduation).check;
+  if (check) {
+    graduation.parentElement
+      .querySelector(".not-valid")
+      .classList.remove("active");
+    deleteActiveMessage(graduation);
   } else {
-    return true;
+    graduation.parentElement
+      .querySelector(".not-valid")
+      .classList.add("active");
+    addActiveMessage(graduation);
   }
 }
 graduation.addEventListener("input", () => {
-  let check = checkGraduation(graduation.value);
-  if (!check) {
-    graduation.parentElement
-      .querySelector(".not-valid")
-      .classList.add("active");
-  } else {
-    graduation.parentElement
-      .querySelector(".not-valid")
-      .classList.remove("active");
-  }
+  checkGraduationMessage();
 });
 
-function checkLevel(value) {
-  if (value == "0") {
-    return false;
+function checkLevelMessage() {
+  let check = checkInputValidation(currentLevel).check;
+  if (check) {
+    currentLevel.parentElement
+      .querySelector(".not-valid")
+      .classList.remove("active");
+    deleteActiveMessage(currentLevel);
   } else {
-    return true;
+    currentLevel.parentElement
+      .querySelector(".not-valid")
+      .classList.add("active");
+    addActiveMessage(currentLevel);
   }
 }
 currentLevel.addEventListener("input", () => {
-  let check = checkMilitary(currentLevel.value);
-  if (!check) {
-    currentLevel.parentElement
-      .querySelector(".not-valid")
-      .classList.add("active");
-  } else {
-    currentLevel.parentElement
-      .querySelector(".not-valid")
-      .classList.remove("active");
-  }
+  checkLevelMessage();
 });
 
-function checkMilitary(value) {
-  if (value == "0") {
-    return false;
+function checkMilitaryMessage() {
+  let check = checkInputValidation(militaryStatus).check;
+  if (check) {
+    militaryStatus.parentElement
+      .querySelector(".not-valid")
+      .classList.remove("active");
+    deleteActiveMessage(militaryStatus);
   } else {
-    return true;
+    militaryStatus.parentElement
+      .querySelector(".not-valid")
+      .classList.add("active");
+    addActiveMessage(militaryStatus);
   }
 }
 militaryStatus.addEventListener("input", () => {
-  let check = checkMilitary(militaryStatus.value);
-  if (!check) {
-    militaryStatus.parentElement
-      .querySelector(".not-valid")
-      .classList.add("active");
-  } else {
-    militaryStatus.parentElement
-      .querySelector(".not-valid")
-      .classList.remove("active");
-  }
+  checkMilitaryMessage();
 });
 
-function checkGender() {
-  if (checkedGender) {
-    return true;
-  } else {
-    return false;
-  }
-}
 genderSelect.forEach((input) => {
   input.addEventListener("change", () => {
     checkedGender = document.querySelector("input[type=radio]:checked");
@@ -354,44 +376,27 @@ back.addEventListener("click", (e) => {
   employeeForm.classList.remove("finish");
 });
 
-function checkJobTitle(value) {
-  if (value.length > 1) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
 setInterval(() => {
   numberInputs.forEach((input) => {
     input.setAttribute("min", "0");
   });
   experienceMonths.setAttribute("max", "12");
 });
-function checkExperience(years, months) {
-  if (years !== "" && months !== "") {
-    return true;
-  } else {
-    return false;
-  }
-}
 
-function checkJobType(value) {
-  if (value == "0") {
-    return false;
-  } else {
-    return true;
-  }
-}
-jobType.addEventListener("input", () => {
-  let check = checkMilitary(jobType.value);
-  if (!check) {
-    jobType.parentElement.querySelector(".not-valid").classList.add("active");
-  } else {
+function checkJobTypeMessage() {
+  let check = checkInputValidation(jobType).check;
+  if (check) {
     jobType.parentElement
       .querySelector(".not-valid")
       .classList.remove("active");
+    deleteActiveMessage(jobType);
+  } else {
+    jobType.parentElement.querySelector(".not-valid").classList.add("active");
+    addActiveMessage(jobType);
   }
+}
+jobType.addEventListener("input", () => {
+  checkJobTypeMessage();
 });
 
 uploadButtons.forEach((btn) => {
@@ -401,61 +406,6 @@ uploadButtons.forEach((btn) => {
 });
 maxCv.textContent = `${maxCvSize}MB`;
 maxPhoto.textContent = `${maxPhotoSize}MB`;
-function checkCvRequired() {
-  if (currentLevel.value === "Graduated") {
-    if (cv.files[0]) {
-      return true;
-    } else {
-      return false;
-    }
-  } else {
-    return true;
-  }
-}
-function checkCvType(value) {
-  if (value) {
-    if (value.type === "application/pdf") {
-      return true;
-    } else {
-      return false;
-    }
-  } else {
-    return false;
-  }
-}
-function checkCvSize(value) {
-  if (value) {
-    if (convertSizeIntoMB(value.size) <= maxCvSize) {
-      return true;
-    } else {
-      return false;
-    }
-  } else {
-    return false;
-  }
-}
-function checkPhotoType(value) {
-  if (value) {
-    if (value.type.startsWith("image")) {
-      return true;
-    } else {
-      return false;
-    }
-  } else {
-    return false;
-  }
-}
-function checkPhotoSize(value) {
-  if (value) {
-    if (convertSizeIntoMB(value.size) <= maxPhotoSize) {
-      return true;
-    } else {
-      return false;
-    }
-  } else {
-    return false;
-  }
-}
 function convertSizeIntoMB(size) {
   return size / Math.pow(1024, 2);
 }
@@ -464,25 +414,13 @@ function convertSizeIntoKB(size) {
 }
 function process(input) {
   if (input.files[0]) {
-    input.parentElement.querySelector(".not-found").style.display = "none";
-    let checkSize, checkType;
-    if (input === cv) {
-      checkSize = checkCvSize(input.files[0]);
-      checkType = checkCvType(input.files[0]);
-    } else {
-      checkSize = checkPhotoSize(input.files[0]);
-      checkType = checkPhotoType(input.files[0]);
-    }
-    let check = [checkSize, checkType];
-    let result = check.every((e) => {
-      return e;
-    });
-    if (!result) {
-      input.parentElement.querySelector(".details").style.display = "none";
-      input.parentElement.querySelector(".not-valid").style.display = "block";
-    } else {
-      input.parentElement.querySelector(".not-valid").style.display = "none";
-      input.parentElement.querySelector(".details").style.display = "flex";
+    input.parentElement.querySelector(".not-found").classList.remove("active");
+    let check = checkInputValidation(input).check;
+    if (check) {
+      input.parentElement
+        .querySelector(".not-valid")
+        .classList.remove("active");
+      input.parentElement.querySelector(".details").classList.add("active");
       input.parentElement.querySelector(".details .file-name").textContent =
         input.files[0].name;
       if (convertSizeIntoMB(input.files[0].size) < 1) {
@@ -498,64 +436,278 @@ function process(input) {
           2
         )}MB`;
       }
+    } else {
+      input.parentElement.querySelector(".details").classList.remove("active");
+      input.parentElement.querySelector(".not-valid").classList.add("active");
     }
   } else {
-    input.parentElement.querySelector(".details").style.display = "none";
-    input.parentElement.querySelector(".not-valid").style.display = "none";
-    input.parentElement.querySelector(".not-found").style.display = "block";
+    input.parentElement.querySelector(".details").classList.remove("active");
+    input.parentElement.querySelector(".not-valid").classList.remove("active");
+    input.parentElement.querySelector(".not-found").classList.add("active");
   }
 }
 cv.addEventListener("input", (e) => {
   process(e.target);
 });
-photo.addEventListener("input", async (e) => {
+photo.addEventListener("input", (e) => {
   process(e.target);
-  // let formData = new FormData();
-  // formData.append("image", photo.files[0]);
-  // console.log(formData);
-  // // let req = await fetch("https://api.escuelajs.co/api/v1/files/upload", {
-  // //   method: "POST",
-  // //   mode: "no-cors",
-  // //   headers: {
-  // //     "Content-Type": "multipart/form-data",
-  // //   },
-  // //   body: formData,
-  // // });
-  // // console.log(req);
-  // // resp = await req.json();
-  // console.log(formData.get("image"));
 });
 
-function checkAll() {
-  let checkArray = [
-    checkUsernameValid(userName.value),
-    checkPhone(phoneNumber.value),
-    checkAddress(address.value),
-    checkDayMonth(),
-    checkGraduation(graduation.value),
-    checkLevel(currentLevel.value),
-    checkMilitary(militaryStatus.value),
-    checkGender(),
-    checkJobTitle(jobTitle.value),
-    checkExperience(experienceYears.value, experienceMonths.value),
-    checkJobType(jobType.value),
-    checkCvType(cv.files[0]),
-    checkCvSize(cv.files[0]),
-    checkPhotoType(photo.files[0]),
-    checkPhotoSize(photo.files[0]),
-  ];
-  let check = checkArray.every((e) => {
-    return e;
-  });
-  if (check) {
-    return true;
+companyForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+});
+
+function checkEmpty(input) {
+  let info = {
+    input: input,
+    name: input.name,
+  };
+  if (input.type === "text") {
+    if (input.value.length > 0) {
+      info.check = true;
+    } else {
+      info.check = false;
+    }
+  } else if (input.tagName === "SELECT") {
+    if (input.value == "0") {
+      info.check = false;
+    } else {
+      info.check = true;
+    }
+  } else if (input.type === "radio") {
+    if (document.querySelector(`input[name="${input.name}"]:checked`)) {
+      info.check = true;
+    } else {
+      info.check = false;
+    }
+  } else if (input.type === "number") {
+    if (input.value) {
+      info.check = true;
+    } else {
+      info.check = false;
+    }
+  } else if (input.type === "file") {
+    if (input.files[0]) {
+      info.check = true;
+    } else {
+      if (input.name === "cv") {
+        if (currentLevel.value === "Graduated") {
+          info.check = false;
+        } else {
+          info.check = true;
+        }
+      } else {
+        info.check = false;
+      }
+    }
+  }
+  return info;
+}
+function checkAllEmpty() {
+  let checks = [];
+  if (userType === "job-seeker") {
+    allEmployeeInputs.forEach((input) => {
+      checks.push(checkEmpty(input));
+    });
+    console.log(checks);
+  } else if (userType === "company") {
+    // company
   } else {
     return false;
   }
+  let thereIsAFalse = checks.some((check) => {
+    return check.check === false;
+  });
+  if (thereIsAFalse) {
+    let findFalseElements = checks.filter((check) => {
+      return check.check === false;
+    });
+    let falseElements = [];
+    for (let falseElement of findFalseElements) {
+      falseElements.push(falseElement.input);
+    }
+    return falseElements;
+  } else {
+    return true;
+  }
+}
+function checkInputValidation(input) {
+  let info = {
+    input: input,
+    name: input.name,
+  };
+  if (input.type === "text") {
+    if (input.name === "username") {
+      let regex = /^[a-zA-Z0-9]{8,}$/;
+      if (regex.test(input.value)) {
+        info.check = true;
+      } else {
+        info.check = false;
+      }
+    } else if (input.name === "phone") {
+      let regex = /^(010|011|012|015)\d{8}$/;
+      if (regex.test(input.value)) {
+        info.check = true;
+      } else {
+        info.check = false;
+      }
+    }
+  } else if (input.tagName === "SELECT") {
+    if (
+      input.name === "graduation" ||
+      input.name === "level" ||
+      input.name === "military"
+    ) {
+      if (input.value == 0) {
+        info.check = false;
+      } else {
+        info.check = true;
+      }
+    } else if (input.parentElement.id === "birth") {
+      if (day.value > 0 && month.value > 0 && year.value > 0) {
+        if (
+          month.value == "04" ||
+          month.value == "06" ||
+          month.value == "09" ||
+          month.value == "11"
+        ) {
+          if (day.value == "31") {
+            info.check = false;
+          } else {
+            info.check = true;
+          }
+        } else if (month.value == "02") {
+          if (day.value == "30" || day.value == "31") {
+            info.check = false;
+          } else {
+            info.check = true;
+          }
+        } else {
+          info.check = true;
+        }
+      } else {
+        info.check = false;
+      }
+    }
+  } else if (input.type === "file") {
+    let value = input.files[0];
+    if (input.name === "cv") {
+      if (value) {
+        if (
+          value.type === "application/pdf" &&
+          convertSizeIntoMB(value.size) <= maxCvSize
+        ) {
+          info.check = true;
+        } else {
+          info.check = false;
+        }
+      } else {
+        if (currentLevel.value === "Graduated") {
+          info.check = false;
+        } else {
+          info.check = true;
+        }
+      }
+    } else if (input.name === "photo") {
+      if (value) {
+        if (
+          value.type.startsWith("image") &&
+          convertSizeIntoMB(value.size) <= maxPhotoSize
+        ) {
+          info.check = true;
+        } else {
+          info.check = false;
+        }
+      } else {
+        info.check = false;
+      }
+    }
+  }
+  return info;
+}
+function checkAllInputsValidation() {
+  let checks = [];
+  if (userType === "job-seeker") {
+    allEmployeeInputs.forEach((input) => {
+      checks.push(checkInputValidation(input));
+    });
+    console.log(checks);
+  } else if (userType === "company") {
+    // company
+  } else {
+    return false;
+  }
+  let thereIsAFalse = checks.some((check) => {
+    return check.check === false;
+  });
+  if (thereIsAFalse) {
+    let findFalseElements = checks.filter((check) => {
+      return check.check === false;
+    });
+    let falseElements = [];
+    for (let falseElement of findFalseElements) {
+      falseElements.push(falseElement.input);
+    }
+    return falseElements;
+  } else {
+    return true;
+  }
+}
+// function checkAll() {
+//   let checkArray = [
+//     checkUserType(),
+//     checkUsernameValid(userName.value),
+//     checkPhone(phoneNumber.value),
+//     checkAddress(address.value),
+//     checkDayMonth(),
+//     checkGraduation(graduation.value),
+//     checkLevel(currentLevel.value),
+//     checkMilitary(militaryStatus.value),
+//     checkGender(),
+//     checkJobTitle(jobTitle.value),
+//     checkExperience(experienceYears.value, experienceMonths.value),
+//     checkJobType(jobType.value),
+//     checkCvRequired(),
+//     checkCvType(cv.files[0]),
+//     checkCvSize(cv.files[0]),
+//     checkPhotoType(photo.files[0]),
+//     checkPhotoSize(photo.files[0]),
+//   ];
+//   let check = checkArray.every((e) => {
+//     return e;
+//   });
+//   if (check) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// }
+
+function encodeFiles(file, object, store) {
+  let reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.addEventListener("load", () => {
+    object[store] = reader.result;
+  });
 }
 
 function assignValues() {
   let userObject;
+  let currentLevelValue = {
+    "Level 1": "1",
+    "Level 2": "2",
+    "Level 3": "3",
+    "Level 4": "4",
+    "Level 5": "5",
+    Graduated: "graduated",
+  };
+  let genderValue = {
+    Male: "1",
+    Female: "2",
+  };
+  let experienceValue = Math.round(
+    (experienceYears.value * 12 + +experienceMonths.value) / 12
+  );
   if (userType === "job-seeker") {
     userObject = {
       user: {
@@ -566,45 +718,29 @@ function assignValues() {
         email: email.value,
         user_type: "job_seeker",
       },
-      resume: "string",
+      resume: "",
       birthdate: `${year.value}-${month.value}-${day.value}`,
       location_city: address.value,
-      years_of_experience: `${experienceYears.value} year(s) and ${experienceMonths.value} month(s)`,
-      gender: checkedGender.value,
+      years_of_experience: experienceValue,
+      gender: genderValue[checkedGender.value],
       contact_number: phoneNumber.value,
-      current_level: currentLevel.value,
-      military_status: militaryStatus.value,
-      job_type: jobType.value,
+      current_level: currentLevelValue[currentLevel.value],
+      military_status: militaryStatus.value.toLowerCase(),
+      job_type: jobType.value.toLowerCase(),
       graduation_year: graduation.value,
     };
+    if (cv.files[0]) {
+      encodeFiles(cv.files[0], userObject, "resume");
+    }
+    encodeFiles(photo.files[0], userObject, "photo");
   }
   return userObject;
 }
-
-function fillValues() {
-  allInputs.forEach((input) => {
-    if (sessionStorage.getItem("MedLinker Form")) {
-      let object = JSON.parse(sessionStorage.getItem("MedLinker Form"));
-      if (object[input.name]) {
-        if (input.tagName === "SELECT") {
-          document
-            .querySelector(
-              `select[name=${input.name}] option[value="${object[input.name]}"]`
-            )
-            .setAttributeNode(document.createAttribute("selected"));
-        } else if (input.type === "radio") {
-          document
-            .querySelector(`input[value="${object[input.name]}"]`)
-            .setAttributeNode(document.createAttribute("checked"));
-          checkedGender = document.querySelector("input[type=radio]:checked");
-        } else {
-          input.value = object[input.name];
-        }
-      }
-    }
-  });
-}
-fillValues();
+/*
+resume
+: 
+['The submitted data was not a file. Check the encoding type on the form.']
+*/
 
 if (!sessionStorage.getItem("MedLinker Form")) {
   let sessionStorageObject = {};
@@ -616,27 +752,126 @@ if (!sessionStorage.getItem("MedLinker Form")) {
 allInputs.forEach((input) => {
   input.addEventListener("input", () => {
     let object = JSON.parse(sessionStorage.getItem("MedLinker Form"));
-    object[input.name] = input.value;
+    object[input.id] = input.value;
     sessionStorage.setItem("MedLinker Form", JSON.stringify(object));
   });
 });
+function fillValues() {
+  allInputs.forEach((input) => {
+    if (sessionStorage.getItem("MedLinker Form")) {
+      let object = JSON.parse(sessionStorage.getItem("MedLinker Form"));
+      if (object[input.id]) {
+        if (input.tagName === "SELECT") {
+          document
+            .querySelector(
+              `select[name=${input.id}] option[value="${object[input.id]}"]`
+            )
+            .setAttributeNode(document.createAttribute("selected"));
+        } else if (input.type === "radio") {
+          document
+            .querySelector(`input[value="${object[input.id]}"]`)
+            .setAttributeNode(document.createAttribute("checked"));
+          checkedGender = document.querySelector("input[type=radio]:checked");
+        } else {
+          input.value = object[input.id];
+        }
+      }
+    }
+  });
+}
+fillValues();
 
-employeeSecondForm.addEventListener("submit", (e) => {
-  if (e.submitter.tagName === "BUTTON") {
-    e.preventDefault();
-  } else {
-    e.preventDefault();
-    finalSubmit.setAttributeNode(document.createAttribute("disabled"));
-    if (checkAll()) {
-      let object = assignValues();
-      console.log(object);
+// function errorMessage() {
+//   overlay.classList.add("active");
+//   warning.classList.add("active");
+//   closeWarning.addEventListener("click", () => {
+//     warning.classList.remove("active");
+//     overlay.classList.remove("active");
+//   });
+// }
+// function failedMessage() {
+//   overlay.classList.add("active");
+//   failed.classList.add("active");
+//   closeFailed.addEventListener("click", () => {
+//     failed.classList.remove("active");
+//     overlay.classList.remove("active");
+//   });
+// }
+function showEmptyMessage() {
+  emptyMessage.classList.add("active");
+  overlay.classList.add("active");
+}
+function showNotValidMessage() {
+  notValidMessage.classList.add("active");
+  overlay.classList.add("active");
+}
+function showFailedMessage() {
+  failedMessage.classList.add("active");
+  overlay.classList.add("active");
+}
+function successMessage() {
+  success.classList.add("active");
+  successTimer.textContent = 3;
+  let interval = setInterval(() => {
+    successTimer.textContent -= 1;
+    if (successTimer.textContent == 0) {
+      clearInterval(interval);
+      location.pathname = location.pathname.replace(
+        "signup/information.html",
+        "login/login.html"
+      );
+    }
+  }, 1000);
+}
+employeeSecondForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (e.submitter.tagName !== "BUTTON") {
+    let interval = setInterval(() => {
+      finalSubmit.setAttributeNode(document.createAttribute("disabled"));
+    });
+    if (checkAllEmpty() === true) {
+      if (checkAllInputsValidation() === true) {
+        let object = assignValues();
+        console.log(object);
+        let request = await fetch(`https://api.${domain}/v1/auth/register`, {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(object),
+        });
+        if (request.status === 201) {
+          successMessage();
+        } else {
+          showFailedMessage();
+          let messages = await request.json();
+          console.log(messages);
+          let messagesArray = Object.entries(messages);
+          for (let message of messagesArray) {
+            let p = document.createElement("p");
+            let pText = document.createTextNode(message.join(": "));
+            p.append(pText);
+            anotherMessages.append(p);
+            console.log(message.join(": "));
+          }
+          console.log(messagesArray);
+        }
+      } else {
+        clearInterval(interval);
+        finalSubmit.removeAttribute("disabled");
+        showNotValidMessage();
+      }
     } else {
-      console.log(e);
-      warning.style.display = "block";
-      setTimeout(() => {
-        warning.style.display = "none";
-      }, 3000);
+      clearInterval(interval);
       finalSubmit.removeAttribute("disabled");
+      showEmptyMessage();
     }
   }
+});
+closeErrorMessages.forEach((closeIcon) => {
+  closeIcon.addEventListener("click", () => {
+    closeIcon.parentElement.classList.remove("active");
+    overlay.classList.remove("active");
+  });
 });

@@ -11,6 +11,7 @@ let infObj = {
   fullName: "",
   email: "",
   password: "",
+  comingFrom: "sign up",
 };
 
 function checkFullName(name) {
