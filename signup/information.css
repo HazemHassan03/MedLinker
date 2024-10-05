@@ -7,6 +7,7 @@
   --red-color: #f44336;
   --green-color: #22c55e;
   --english-font: "League Spartan", system-ui;
+  --english-second-font: "Open Sans", sans-serif;
   --arabic-font: "Alexandria", sans-serif;
   --arabic-second-font: "Cairo", sans-serif;
   --transition: 0.3s;
@@ -30,7 +31,14 @@
   background-color: var(--blue-alt-color);
 }
 body {
+  font-family: var(--english-second-font);
+}
+h2 {
   font-family: var(--english-font);
+}
+input[type="submit"],
+button {
+  font-family: var(--english-second-font);
 }
 
 .choices {
@@ -168,12 +176,18 @@ body {
 .container {
   width: 88%;
   margin: auto;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
   max-width: 1500px;
   position: relative;
   overflow-x: hidden;
   overflow-y: auto;
   height: calc(100dvh - 100px);
+}
+@media (max-width: 715px) {
+  .container {
+    width: 97%;
+    margin-right: 0;
+  }
 }
 .container::-webkit-scrollbar {
   width: 5px;
@@ -190,7 +204,7 @@ body {
 h2 {
   margin-bottom: 20px;
   color: var(--alt-color);
-  font-size: 26px;
+  font-size: 30px;
 }
 .employee-form {
   left: 0;
@@ -249,7 +263,7 @@ form input:-webkit-autofill {
   -webkit-background-clip: text;
 }
 form .row {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 form .row.flex {
   display: flex;
@@ -271,7 +285,7 @@ form .row.flex > div {
 }
 form h3 {
   margin-bottom: 10px;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 18px;
   line-height: 1.6;
 }
@@ -292,7 +306,6 @@ form select {
   -ms-transition: border-color 0.5s;
   -o-transition: border-color 0.5s;
   font-size: 16px;
-  font-family: var(--english-font);
 }
 form input[type="text"] {
   width: 100%;
@@ -309,7 +322,6 @@ form label {
   font-size: 16px;
   margin-right: 15px;
   cursor: pointer;
-  font-family: var(--english-font);
 }
 form input[type="radio"] {
   cursor: pointer;
@@ -475,14 +487,20 @@ form .photo button:hover {
   background-color: var(--main-color);
   color: white;
 }
-form .empty {
+form .check-false {
   color: var(--red-color);
-  margin: 0 10px 0 5px;
+  position: absolute;
+  right: 0;
+  top: 7px;
+  font-size: 18px;
   display: none;
+}
+form .check-false.active {
+  display: initial;
 }
 .message {
   text-align: center;
-  width: 100%;
+  width: 90%;
   max-width: 500px;
   font-weight: 500;
   font-family: var(--arabic-font);
@@ -521,7 +539,6 @@ form .empty {
   color: black;
   text-align: left;
   margin-top: 20px;
-  font-family: var(--english-font);
 }
 .message .another-messages p {
   border-top: 1px solid #ddd;
@@ -540,6 +557,10 @@ form .empty {
   top: 7px;
   right: 7px;
   cursor: pointer;
+}
+.message .error-code {
+  direction: rtl;
+  text-align: right;
 }
 .empty-message h3,
 .not-valid-message h3,

@@ -1,13 +1,20 @@
 :root {
   --main-color: #133a5e;
   --alt-color: #137c8c;
+  --alt-alt-color: #106774;
   --blue-color: #004b84;
   --blue-alt-color: #003b68;
   --white-color: #dbe2ef;
   --green-color: #22c55e;
   --red-color: #f44336;
   --english-font: "League Spartan", system-ui;
+  --english-second-font: "Open Sans", sans-serif;
+  --arabic-font: "Alexandria", sans-serif;
+  --arabic-second-font: "Cairo", sans-serif;
   --transition: 0.3s;
+}
+html {
+  font-size: 18px;
 }
 * {
   margin: 0;
@@ -63,32 +70,44 @@ body {
   margin-bottom: 30px;
   display: none;
 }
+h1 {
+  color: white;
+  font-weight: 500;
+  font-size: 30px;
+  margin-bottom: 25px;
+}
 form {
   width: 100%;
   max-width: 350px;
 }
 .row {
   position: relative;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 label:not(.show-password) {
   position: absolute;
-  top: -12px;
+  top: 0;
+  transform: translateY(-50%);
   left: 10px;
   padding: 0 5px;
   color: white;
   background-color: var(--main-color);
   font-weight: 500;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  letter-spacing: 0.5px;
 }
 input {
   width: 100%;
-  padding: 12px 30px 12px 10px;
+  padding: 15px 30px 15px 10px;
   background-color: transparent;
   border: 2px solid white;
   outline: none;
   color: white;
   border-radius: 6px;
-  font-size: 17px;
+  font-size: 18px;
   font-family: var(--english-font);
   margin-bottom: 5px;
   transition: border-color var(--transition);
@@ -117,6 +136,14 @@ input[type="submit"] {
   -ms-border-radius: 30px;
   -o-border-radius: 30px;
   cursor: pointer;
+  transition: background-color var(--transition);
+  -webkit-transition: background-color var(--transition);
+  -moz-transition: background-color var(--transition);
+  -ms-transition: background-color var(--transition);
+  -o-transition: background-color var(--transition);
+}
+input[type="submit"]:hover {
+  background-color: var(--alt-alt-color);
 }
 .not-have-account {
   color: white;

@@ -11,6 +11,24 @@
     />
     <link rel="stylesheet" href="../fontawesome/all.min.css" />
     <link rel="stylesheet" href="information.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="choices">
@@ -34,42 +52,50 @@
         <div class="row flex">
           <div class="fname">
             <h3>First Name</h3>
-            <input type="text" name="fname" id="fname" readonly />
+            <input type="text" name="fname" id="employee-fname" readonly />
             <i class="readonly fa-solid fa-lock"></i>
+            <i class="check-false fa-solid fa-circle-exclamation"></i>
           </div>
           <div class="lname">
             <h3>Last Name</h3>
-            <input type="text" name="lname" id="lname" readonly />
+            <input type="text" name="lname" id="employee-lname" readonly />
             <i class="readonly fa-solid fa-lock"></i>
+            <i class="check-false fa-solid fa-circle-exclamation"></i>
           </div>
         </div>
         <div class="row flex">
           <div class="username">
-            <h3 for="username">Username</h3>
-            <input type="text" name="username" id="username" />
-            <i class="empty fa-solid fa-circle-exclamation"></i>
+            <h3>Username</h3>
+            <input type="text" name="username" id="employee-username" />
             <p class="not-valid" id="username-not-valid">
               The username must be at least 8 characters and have at least one
               english letter and the numbers are optional and not have spaces
             </p>
+            <i class="check-false fa-solid fa-circle-exclamation"></i>
           </div>
           <div class="email">
-            <h3 for="email">Email Address</h3>
-            <input type="text" name="email" id="email" readonly />
+            <h3>Email Address</h3>
+            <input type="text" name="email" id="employee-email" readonly />
             <i class="readonly fa-solid fa-lock"></i>
+            <i class="check-false fa-solid fa-circle-exclamation"></i>
           </div>
         </div>
         <div class="row flex">
           <div class="phone">
-            <h3 for="phone">Phone Number</h3>
-            <input type="text" name="phone" id="phone" maxlength="11" />
-            <i class="empty fa-solid fa-circle-exclamation"></i>
+            <h3>Phone Number</h3>
+            <input
+              type="text"
+              name="phone"
+              id="employee-phone"
+              maxlength="11"
+            />
+            <i class="check-false fa-solid fa-circle-exclamation"></i>
             <p class="not-valid" id="phone-not-valid">Not Valid Number</p>
           </div>
           <div class="address">
-            <h3 for="address">Address</h3>
+            <h3>Address</h3>
             <input type="text" name="address" id="address" />
-            <i class="empty fa-solid fa-circle-exclamation"></i>
+            <i class="check-false fa-solid fa-circle-exclamation"></i>
           </div>
         </div>
         <div class="row flex">
@@ -78,29 +104,29 @@
             <select name="day" id="day">
               <option value="0">Day</option>
             </select>
-            <i class="empty fa-solid fa-circle-exclamation"></i>
+            <i class="check-false fa-solid fa-circle-exclamation"></i>
             <select name="month" id="month">
               <option value="0">Month</option>
             </select>
-            <i class="empty fa-solid fa-circle-exclamation"></i>
+            <i class="check-false fa-solid fa-circle-exclamation"></i>
             <select name="year" id="year">
               <option value="0">Year</option>
             </select>
-            <i class="empty fa-solid fa-circle-exclamation"></i>
+            <i class="check-false fa-solid fa-circle-exclamation"></i>
             <p class="not-valid" id="birth-not-valid">Not Valid Date</p>
           </div>
           <div class="graduation">
-            <h3 for="graduation">Graduation Year (or expected)</h3>
+            <h3>Graduation Year (or expected)</h3>
             <select name="graduation" id="graduation">
               <option value="0">Year</option>
             </select>
-            <i class="empty fa-solid fa-circle-exclamation"></i>
+            <i class="check-false fa-solid fa-circle-exclamation"></i>
             <p class="not-valid" id="graduation-not-valid">Not Valid Year</p>
           </div>
         </div>
         <div class="row flex no-block">
           <div class="level">
-            <h3 for="level">Your Current Level</h3>
+            <h3>Your Current Level</h3>
             <select name="level" id="level">
               <option value="0">Current Level</option>
               <option value="Level 1">Level 1</option>
@@ -110,11 +136,11 @@
               <option value="Level 5">Level 5</option>
               <option value="Graduated">Graduated</option>
             </select>
-            <i class="empty fa-solid fa-circle-exclamation"></i>
+            <i class="check-false fa-solid fa-circle-exclamation"></i>
             <p class="not-valid" id="level-not-valid">Not Valid Level</p>
           </div>
           <div class="military">
-            <h3 for="military">Military Status</h3>
+            <h3>Military Status</h3>
             <select name="military" id="military">
               <option value="0">Military Status</option>
               <option value="Exempted">Exempted</option>
@@ -122,7 +148,7 @@
               <option value="Serving">Serving</option>
               <option value="Fulfilled">Fulfilled</option>
             </select>
-            <i class="empty fa-solid fa-circle-exclamation"></i>
+            <i class="check-false fa-solid fa-circle-exclamation"></i>
             <p class="not-valid" id="military-not-valid">Not Valid Status</p>
           </div>
           <div class="gender">
@@ -135,7 +161,7 @@
               <input type="radio" name="gender" id="female" value="Female" />
               Female
             </label>
-            <i class="empty fa-solid fa-circle-exclamation"></i>
+            <i class="check-false fa-solid fa-circle-exclamation"></i>
             <p class="not-valid" id="gender-not-valid">
               You must choose a gender
             </p>
@@ -151,7 +177,7 @@
               What is the job title that describe what you are looking for?
             </h3>
             <input type="text" name="job-title" id="job-title" />
-            <i class="empty fa-solid fa-circle-exclamation"></i>
+            <i class="check-false fa-solid fa-circle-exclamation"></i>
           </div>
         </div>
         <div class="row flex">
@@ -161,12 +187,12 @@
               <div class="years">
                 <h4>Years:</h4>
                 <input type="number" name="years" id="years" />
-                <i class="empty fa-solid fa-circle-exclamation"></i>
+                <i class="check-false fa-solid fa-circle-exclamation"></i>
               </div>
               <div class="months">
                 <h4>Months:</h4>
                 <input type="number" name="months" id="months" />
-                <i class="empty fa-solid fa-circle-exclamation"></i>
+                <i class="check-false fa-solid fa-circle-exclamation"></i>
               </div>
             </div>
           </div>
@@ -177,7 +203,7 @@
               <option value="Full Time">Full Time</option>
               <option value="Part Time">Part Time</option>
             </select>
-            <i class="empty fa-solid fa-circle-exclamation"></i>
+            <i class="check-false fa-solid fa-circle-exclamation"></i>
             <p class="not-valid" id="job-type-not-valid">Not Valid Job Type</p>
           </div>
         </div>
@@ -190,7 +216,7 @@
                 <i class="fa-solid fa-cloud-arrow-up"></i>
                 <span>Choose a file</span>
               </button>
-              <i class="empty fa-solid fa-circle-exclamation"></i>
+              <i class="check-false fa-solid fa-circle-exclamation"></i>
               <div class="details">
                 <p>Name: <span class="file-name"></span></p>
                 <p>Size: <span class="file-size"></span></p>
@@ -212,7 +238,7 @@
                 <i class="fa-solid fa-image"></i>
                 <span>Choose a photo</span>
               </button>
-              <i class="empty fa-solid fa-circle-exclamation"></i>
+              <i class="check-false fa-solid fa-circle-exclamation"></i>
               <div class="details">
                 <p>Name: <span class="file-name"></span></p>
                 <p>Size: <span class="file-size"></span></p>
@@ -230,7 +256,12 @@
         </div>
         <div class="nav">
           <button class="back">Back</button>
-          <input class="submit" type="submit" value="Submit" id="submit" />
+          <input
+            class="submit"
+            type="submit"
+            value="Submit"
+            id="employee-submit"
+          />
         </div>
       </form>
       <form class="company-form">
@@ -240,42 +271,48 @@
             <h3>First Name</h3>
             <input type="text" name="fname" id="company-fname" readonly />
             <i class="readonly fa-solid fa-lock"></i>
+            <i class="check-false fa-solid fa-circle-exclamation"></i>
           </div>
           <div class="lname">
             <h3>Last Name</h3>
             <input type="text" name="lname" id="company-lname" readonly />
             <i class="readonly fa-solid fa-lock"></i>
+            <i class="check-false fa-solid fa-circle-exclamation"></i>
           </div>
         </div>
         <div class="row flex">
           <div class="company-name">
-            <h3 for="username">Company Name</h3>
+            <h3>Company Name</h3>
             <input type="text" name="company-name" id="company-name" />
+            <i class="check-false fa-solid fa-circle-exclamation"></i>
           </div>
           <div class="username">
-            <h3 for="username">Username</h3>
+            <h3>Username</h3>
             <input type="text" name="username" id="company-username" />
             <p class="not-valid" id="company-username-not-valid">
               The username must be at least 8 characters and have at least one
               english letter and the numbers are optional and not have spaces
             </p>
+            <i class="check-false fa-solid fa-circle-exclamation"></i>
           </div>
         </div>
         <div class="row flex">
           <div class="email">
-            <h3 for="email">Business Email</h3>
+            <h3>Business Email</h3>
             <input type="text" name="email" id="company-email" readonly />
             <i class="readonly fa-solid fa-lock"></i>
+            <i class="check-false fa-solid fa-circle-exclamation"></i>
           </div>
           <div class="phone">
-            <h3 for="phone">Phone Number</h3>
+            <h3>Phone Number</h3>
             <input type="text" name="phone" id="company-phone" maxlength="11" />
             <p class="not-valid" id="company-phone-not-valid">
               Not Valid Number
             </p>
+            <i class="check-false fa-solid fa-circle-exclamation"></i>
           </div>
         </div>
-        <input class="next" type="submit" value="Submit" />
+        <input class="next" type="submit" value="Submit" id="company-submit" />
       </form>
     </div>
     <div class="empty-message message">
