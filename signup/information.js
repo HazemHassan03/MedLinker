@@ -85,6 +85,7 @@ let userType,
   emptyMessage = document.querySelector(".empty-message"),
   notValidMessage = document.querySelector(".not-valid-message"),
   failedMessage = document.querySelector(".failed-message"),
+  failedCauseMessage = document.querySelector(".failed-cause-message"),
   errorMessages = document.querySelectorAll(".message:not(.success-message)"),
   closeErrorMessages = document.querySelectorAll(
     ".message:not(.success-message) i"
@@ -92,8 +93,8 @@ let userType,
   errorCode = document.querySelector(".message .error-code"),
   success = document.querySelector(".success-message"),
   successTimer = document.querySelector(".success-message span"),
-  overlay = document.querySelector(".overlay"),
-  anotherMessages = document.querySelector(".message .another-messages");
+  loading = document.querySelector(".loading"),
+  overlay = document.querySelector(".overlay");
 
 // console.log(errorMessagesClose);
 function employeeMode() {
@@ -534,14 +535,25 @@ function checkAllEmpty() {
       falseElements.push(falseElement.input);
     }
     falseElements.forEach((element) => {
-      element.parentElement
-        .querySelector(".check-false")
-        .classList.add("active");
-      element.addEventListener("input", () => {
+      if (element.parentElement.classList.contains(element.name)) {
         element.parentElement
           .querySelector(".check-false")
-          .classList.remove("active");
-      });
+          .classList.add("active");
+        element.addEventListener("input", () => {
+          element.parentElement
+            .querySelector(".check-false")
+            .classList.remove("active");
+        });
+      } else {
+        element.parentElement.parentElement
+          .querySelector(".check-false")
+          .classList.add("active");
+        element.addEventListener("input", () => {
+          element.parentElement.parentElement
+            .querySelector(".check-false")
+            .classList.remove("active");
+        });
+      }
     });
     return falseElements;
   } else {
@@ -738,7 +750,7 @@ function assignValues() {
         email: employeeEmail.value,
         user_type: "job_seeker",
       },
-      // resume: "",
+      resume: "",
       birthdate: `${year.value}-${month.value}-${day.value}`,
       location_city: address.value,
       years_of_experience: experienceValue,
@@ -749,9 +761,9 @@ function assignValues() {
       job_type: jobType.value.toLowerCase(),
       graduation_year: graduation.value,
     };
-    // if (cv.files[0]) {
-    //   encodeFiles(cv.files[0], userObject, "resume");
-    // }
+    if (cv.files[0]) {
+      encodeFiles(cv.files[0], userObject, "resume");
+    }
     // encodeFiles(photo.files[0], userObject, "photo");
   } else if (userType === "company") {
     userObject = {
@@ -800,13 +812,15 @@ function fillValues() {
               `select[name=${input.id}] option[value="${object[input.id]}"]`
             )
             .setAttributeNode(document.createAttribute("selected"));
-        } else if (input.type === "radio") {
+        } else {
+          input.value = object[input.id];
+        }
+      } else if (object[input.name]) {
+        if (input.type === "radio") {
           document
             .querySelector(`input[value="${object[input.name]}"]`)
             .setAttributeNode(document.createAttribute("checked"));
           checkedGender = document.querySelector("input[type=radio]:checked");
-        } else {
-          input.value = object[input.id];
         }
       }
     }
@@ -822,9 +836,13 @@ function showNotValidMessage() {
   notValidMessage.classList.add("active");
   overlay.classList.add("active");
 }
-function showFailedMessage(status, messages) {
+function showFailedMessage(status) {
+  let anotherMessages = failedMessage.querySelector(".another-messages");
   failedMessage.classList.add("active");
   overlay.classList.add("active");
+  Array.from(anotherMessages.children).forEach((e) => {
+    e.remove();
+  });
   if (status) {
     let p = document.createElement("p");
     let pText = document.createTextNode(`كود الخطأ: ${status}`);
@@ -832,28 +850,53 @@ function showFailedMessage(status, messages) {
     p.classList.add("error-code");
     anotherMessages.append(p);
   }
-  // if (messages) {
-  //   let messagesArray = Object.values(messages);
-  //   console.log(messages);
-  //   console.log(messagesArray);
-  //   for (let message of messagesArray) {
-  //     if (typeof message === "object") {
-  //       for (let msg of message) {
-  //         let p = document.createElement("p");
-  //         let pText = document.createTextNode(msg.join(": "));
-  //         p.append(pText);
-  //         anotherMessages.append(p);
-  //         console.log(msg.join(": "));
-  //       }
-  //     } else {
-  //       let p = document.createElement("p");
-  //       let pText = document.createTextNode(message.join(": "));
-  //       p.append(pText);
-  //       anotherMessages.append(p);
-  //       console.log(message.join(": "));
-  //     }
-  //   }
-  // }
+}
+function showFailedCauseMessage(status, messages) {
+  let anotherMessages = failedCauseMessage.querySelector(".another-messages");
+  failedCauseMessage.classList.add("active");
+  overlay.classList.add("active");
+  Array.from(anotherMessages.children).forEach((e) => {
+    e.remove();
+  });
+  if (status) {
+    // if (failedMessage.querySelector(".error-code")) {
+    //   failedMessage.querySelector(
+    //     ".error-code"
+    //   ).textContent = `كود الخطأ: ${status}`;
+    // } else {
+    let p = document.createElement("p");
+    let pText = document.createTextNode(`كود الخطأ: ${status}`);
+    p.append(pText);
+    p.classList.add("error-code");
+    anotherMessages.append(p);
+    // }
+  }
+  for (let message of messages) {
+    let msg;
+    if (message[0] === "user") {
+      msg = Object.entries(message[1])[0];
+      console.log(message);
+      console.log(message[1]);
+    } else {
+      msg = message;
+    }
+    let p = document.createElement("p");
+    let pText = document.createTextNode(msg.join(": "));
+    p.append(pText);
+    p.classList.add(msg[0]);
+    anotherMessages.append(p);
+    console.log(msg.join(": "));
+    console.log(msg);
+  }
+  console.log(messages);
+}
+function loadingMessage() {
+  loading.classList.add("active");
+  overlay.classList.add("active");
+}
+function removeLoadingMessage() {
+  loading.classList.remove("active");
+  overlay.classList.remove("active");
 }
 function successMessage() {
   success.classList.add("active");
@@ -871,11 +914,11 @@ function successMessage() {
 }
 function removeDisabled(interval) {
   clearInterval(interval);
-  employeeSubmit.removeAttribute("disabled");
-  // if (userType === "job-seeker") {
-  // } else if (userType === "job-seeker") {
-  //   companySubmit.removeAttribute("disabled");
-  // }
+  if (userType === "job-seeker") {
+    employeeSubmit.removeAttribute("disabled");
+  } else if (userType === "company") {
+    companySubmit.removeAttribute("disabled");
+  }
 }
 employeeSecondForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -887,6 +930,7 @@ employeeSecondForm.addEventListener("submit", async (e) => {
       if (checkAllInputsValidation() === true) {
         let object = assignValues();
         console.log(object);
+        loadingMessage();
         let request = await fetch(
           `https://api.${domain}/${apiVersion}/auth/register`,
           {
@@ -897,25 +941,21 @@ employeeSecondForm.addEventListener("submit", async (e) => {
             body: JSON.stringify(object),
           }
         );
+        if (request) {
+          removeLoadingMessage();
+        }
         if (request.status === 201) {
           successMessage();
+          console.log(await request.json());
+        } else if (request.status === 400) {
+          removeDisabled(interval);
+          let json = await request.json();
+          showFailedCauseMessage(request.status, Object.entries(json));
         } else {
           removeDisabled(interval);
           showFailedMessage(request.status);
           console.log(request);
-          console.log(await request.json());
-          console.log(request.status);
-          // let messages = await request.json();
-          // console.log(messages);
-          // let messagesArray = Object.entries(messages);
-          // for (let message of messagesArray) {
-          //   let p = document.createElement("p");
-          //   let pText = document.createTextNode(message.join(": "));
-          //   p.append(pText);
-          //   anotherMessages.append(p);
-          //   console.log(message.join(": "));
-          // }
-          // console.log(messagesArray);
+          console.log(json);
         }
       } else {
         removeDisabled(interval);
@@ -952,23 +992,20 @@ companyForm.addEventListener("submit", async (e) => {
         if (request.status == 201) {
           successMessage();
         } else {
-          clearInterval(interval);
-          companySubmit.removeAttribute("disabled");
+          removeDisabled(interval);
           let response = await request.json();
-          showFailedMessage(request.status, response);
+          showFailedMessage(request.status, Object.entries(json));
           console.log(response);
           console.log(interval);
         }
         console.log(request);
       }
     } else {
-      clearInterval(interval);
-      companySubmit.removeAttribute("disabled");
+      removeDisabled(interval);
       showNotValidMessage();
     }
   } else {
-    clearInterval(interval);
-    companySubmit.removeAttribute("disabled");
+    removeDisabled(interval);
     showEmptyMessage();
   }
 });

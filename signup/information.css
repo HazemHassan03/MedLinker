@@ -564,17 +564,33 @@ form .check-false.active {
 }
 .empty-message h3,
 .not-valid-message h3,
-.failed-message h3 {
+.failed-message h3,
+.failed-cause-message h3 {
   color: var(--red-color);
 }
 .empty-message i,
 .not-valid-message i,
-.failed-message i {
+.failed-message i,
+.failed-cause-message i {
   font-size: 30px;
   color: var(--red-color);
 }
 .success-message h3 {
   color: var(--green-color);
+}
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  font-weight: bold;
+  color: white;
+  z-index: 99999;
+  display: none;
+}
+.loading.active {
+  display: block;
 }
 .overlay {
   background-color: rgb(0 0 0 / 0%);

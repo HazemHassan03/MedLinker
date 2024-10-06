@@ -39,10 +39,15 @@
           alt="The Logo"
         />
         <h1>Welcome Again!</h1>
-        <form class="signup-form">
+        <form class="login-form">
           <div class="row">
             <label for="name">Username</label>
-            <input type="text" name="name" id="name" placeholder="Username" />
+            <input
+              type="text"
+              name="username"
+              id="username"
+              placeholder="Username"
+            />
           </div>
           <div class="row">
             <label for="password">Password</label>
@@ -52,7 +57,7 @@
               id="password"
               placeholder="Password"
             />
-            <p class="show-hide">Show</p>
+            <i class="show-hide fa-regular fa-eye"></i>
           </div>
           <div class="row">
             <input type="submit" value="Login" />
@@ -61,11 +66,16 @@
         <p class="not-have-account">
           Don't have an account? <a href="../signup/signup.html">Sign up</a>
         </p>
+        <p class="loading message">Loading...</p>
+        <p class="message success">Successful</p>
+        <p class="not-found message">لا يوجد حساب مطابق لهذه البيانات</p>
+        <p class="empty message">من فضلك قم بإدخال البيانات</p>
+        <p class="error message">حدث خطأ من فضلك حاول مرة أخرى</p>
       </div>
       <div class="logo">
         <img src="../images/logo-blue.png" alt="The Logo" />
       </div>
     </div>
-    <script src="login.js"></script>
+    <script src="login.js" type="module"></script>
   </body>
 </html>
