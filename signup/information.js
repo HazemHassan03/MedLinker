@@ -868,6 +868,7 @@ function removeLoadingMessage() {
 }
 function successMessage() {
   success.classList.add("active");
+  overlay.classList.add("active");
   successTimer.textContent = 3;
   let interval = setInterval(() => {
     successTimer.textContent -= 1;
