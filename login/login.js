@@ -29,6 +29,7 @@ function assignValues() {
   };
   return loginObject;
 }
+
 function showMessage(message) {
   messages.forEach((msg) => {
     msg.classList.remove("active");
@@ -38,6 +39,18 @@ function showMessage(message) {
     message.classList.remove("active");
   }, 3000);
 }
+
+function generateDateExpire() {
+  let now = Date.now();
+  let accessExpire = now + 2 * 60 * 60 * 1000;
+  let refreshExpire = now + 30 * 24 * 60 * 60 * 1000;
+  let accessDate = new Date(accessExpire);
+  let refreshDate = new Date(refreshExpire);
+  let accessExpiryDate = accessDate.toUTCString().replace("GMT", "UTC");
+  let refreshExpiryDate = refreshDate.toUTCString().replace("GMT", "UTC");
+  return [accessExpiryDate, refreshExpiryDate];
+}
+
 loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   if (userName.value.length === 0 || password.value.length === 0) {
@@ -57,8 +70,12 @@ loginForm.addEventListener("submit", async (e) => {
   if (request.status == 200) {
     showMessage(success);
     let json = await request.json();
-    document.cookie = `access=${json.access};`;
-    document.cookie = `refresh=${json.refresh};`;
+    document.cookie = `access=${json.access}; expires=${
+      generateDateExpire()[0]
+    }; path=/`;
+    document.cookie = `refresh=${json.refresh}; expires=${
+      generateDateExpire()[1]
+    }; path=/`;
     console.log(json);
     location.pathname = location.pathname.replace(
       "login/login.html",

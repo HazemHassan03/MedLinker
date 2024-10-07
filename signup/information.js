@@ -12,7 +12,6 @@ if (JSON.parse(sessionStorage.getItem("Data")).comingFrom) {
   sessionStorage.removeItem("User Type");
   sessionStorage.removeItem("MedLinker Form");
   sessionStorage.removeItem("Active Messages");
-  console.log(infObj);
   delete infObj.comingFrom;
   sessionStorage.setItem("Data", JSON.stringify(infObj));
 }
@@ -50,7 +49,6 @@ let userType,
   email = document.querySelectorAll("input[name=email]"),
   employeeEmail = document.getElementById("employee-email"),
   companyEmail = document.getElementById("company-email"),
-  companyName = document.getElementById("company-name"),
   userName = document.querySelectorAll("input[name=username]"),
   employeeUserName = document.getElementById("employee-username"),
   companyUserName = document.getElementById("company-username"),
@@ -67,7 +65,6 @@ let userType,
   graduation = document.getElementById("graduation"),
   genderSelect = document.querySelectorAll(".gender input[type=radio]"),
   checkedGender,
-  jobTitle = document.getElementById("job-title"),
   numberInputs = document.querySelectorAll("input[type=number]"),
   experienceYears = document.getElementById("years"),
   experienceMonths = document.getElementById("months"),
@@ -86,17 +83,14 @@ let userType,
   notValidMessage = document.querySelector(".not-valid-message"),
   failedMessage = document.querySelector(".failed-message"),
   failedCauseMessage = document.querySelector(".failed-cause-message"),
-  errorMessages = document.querySelectorAll(".message:not(.success-message)"),
   closeErrorMessages = document.querySelectorAll(
     ".message:not(.success-message) i"
   ),
-  errorCode = document.querySelector(".message .error-code"),
   success = document.querySelector(".success-message"),
   successTimer = document.querySelector(".success-message span"),
   loading = document.querySelector(".loading"),
   overlay = document.querySelector(".overlay");
 
-// console.log(errorMessagesClose);
 function employeeMode() {
   choices.style.marginLeft = "-100%";
   companyForm.style.display = "none";
@@ -149,13 +143,6 @@ if (userType) {
     companyMode();
   }
 }
-// function checkUserType() {
-//   if (userType === "job-seeker" || userType === "company") {
-//     return true;
-//   } else {
-//     return false;
-//   }
-// }
 
 let nameArray = infObj.fullName.split(" ");
 let firstNameValue = nameArray[0];
@@ -228,9 +215,7 @@ if (!sessionStorage.getItem("Active Messages")) {
   let ids = Object.values(
     JSON.parse(sessionStorage.getItem("Active Messages"))
   );
-  console.log(ids);
   for (let id of ids) {
-    console.log(id);
     document.getElementById(id).classList.add("active");
   }
 }
@@ -392,8 +377,6 @@ setInterval(() => {
 
 function checkJobTypeMessage() {
   let check = checkInputValidation(jobType).check;
-  console.log(checkInputValidation(jobType));
-  console.log(check);
   if (check) {
     jobType.parentElement
       .querySelector(".not-valid")
@@ -514,12 +497,10 @@ function checkAllEmpty() {
     allEmployeeInputs.forEach((input) => {
       checks.push(checkEmpty(input));
     });
-    console.log(checks);
   } else if (userType === "company") {
     allCompanyInputs.forEach((input) => {
       checks.push(checkEmpty(input));
     });
-    console.log(checks);
   } else {
     return false;
   }
@@ -679,12 +660,10 @@ function checkAllInputsValidation() {
     allEmployeeInputs.forEach((input) => {
       checks.push(checkInputValidation(input));
     });
-    console.log(checks);
   } else if (userType === "company") {
     allCompanyInputs.forEach((input) => {
       checks.push(checkInputValidation(input));
     });
-    console.log(checks);
   } else {
     return false;
   }
@@ -859,24 +838,16 @@ function showFailedCauseMessage(status, messages) {
     e.remove();
   });
   if (status) {
-    // if (failedMessage.querySelector(".error-code")) {
-    //   failedMessage.querySelector(
-    //     ".error-code"
-    //   ).textContent = `كود الخطأ: ${status}`;
-    // } else {
     let p = document.createElement("p");
     let pText = document.createTextNode(`كود الخطأ: ${status}`);
     p.append(pText);
     p.classList.add("error-code");
     anotherMessages.append(p);
-    // }
   }
   for (let message of messages) {
     let msg;
     if (message[0] === "user") {
       msg = Object.entries(message[1])[0];
-      console.log(message);
-      console.log(message[1]);
     } else {
       msg = message;
     }
@@ -885,10 +856,7 @@ function showFailedCauseMessage(status, messages) {
     p.append(pText);
     p.classList.add(msg[0]);
     anotherMessages.append(p);
-    console.log(msg.join(": "));
-    console.log(msg);
   }
-  console.log(messages);
 }
 function loadingMessage() {
   loading.classList.add("active");
@@ -920,85 +888,36 @@ function removeDisabled(interval) {
     companySubmit.removeAttribute("disabled");
   }
 }
-employeeSecondForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  if (e.submitter.tagName !== "BUTTON") {
-    let interval = setInterval(() => {
-      employeeSubmit.setAttributeNode(document.createAttribute("disabled"));
-    });
-    if (checkAllEmpty() === true) {
-      if (checkAllInputsValidation() === true) {
-        let object = assignValues();
-        console.log(object);
-        loadingMessage();
-        let request = await fetch(
-          `https://api.${domain}/${apiVersion}/auth/register`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(object),
-          }
-        );
-        if (request) {
-          removeLoadingMessage();
-        }
-        if (request.status === 201) {
-          successMessage();
-          console.log(await request.json());
-        } else if (request.status === 400) {
-          removeDisabled(interval);
-          let json = await request.json();
-          showFailedCauseMessage(request.status, Object.entries(json));
-        } else {
-          removeDisabled(interval);
-          showFailedMessage(request.status);
-          console.log(request);
-          console.log(json);
-        }
-      } else {
-        removeDisabled(interval);
-        showNotValidMessage();
-      }
-    } else {
-      removeDisabled(interval);
-      showEmptyMessage();
-    }
-  }
-});
-
-companyForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
+async function fetchData(from) {
   let interval = setInterval(() => {
-    companySubmit.setAttributeNode(document.createAttribute("disabled"));
+    from.setAttributeNode(document.createAttribute("disabled"));
   });
   if (checkAllEmpty() === true) {
     if (checkAllInputsValidation() === true) {
       let object = assignValues();
-      if (object) {
-        console.log(object);
-        console.log(JSON.stringify(object));
-        let request = await fetch(
-          `https://api.${domain}/${apiVersion}/auth/register`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(object),
-          }
-        );
-        if (request.status == 201) {
-          successMessage();
-        } else {
-          removeDisabled(interval);
-          let response = await request.json();
-          showFailedMessage(request.status, Object.entries(json));
-          console.log(response);
-          console.log(interval);
+      loadingMessage();
+      let request = await fetch(
+        `https://api.${domain}/${apiVersion}/auth/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(object),
         }
-        console.log(request);
+      );
+      if (request) {
+        removeLoadingMessage();
+      }
+      if (request.status === 201) {
+        successMessage();
+      } else if (request.status === 400) {
+        removeDisabled(interval);
+        let json = await request.json();
+        showFailedCauseMessage(request.status, Object.entries(json));
+      } else {
+        removeDisabled(interval);
+        showFailedMessage(request.status);
       }
     } else {
       removeDisabled(interval);
@@ -1008,6 +927,17 @@ companyForm.addEventListener("submit", async (e) => {
     removeDisabled(interval);
     showEmptyMessage();
   }
+}
+employeeSecondForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (e.submitter.tagName !== "BUTTON") {
+    fetchData(employeeSubmit);
+  }
+});
+
+companyForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  fetchData(companySubmit);
 });
 
 closeErrorMessages.forEach((closeIcon) => {
