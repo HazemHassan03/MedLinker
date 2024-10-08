@@ -1,11 +1,45 @@
 if (
-  !document.cookie.includes("access") ||
-  !document.cookie.includes("refresh")
+  (!document.cookie.includes("access") &&
+    !document.cookie.includes("refresh")) ||
+  (document.cookie.includes("access") && !document.cookie.includes("refresh"))
 ) {
   location.pathname = location.pathname.replace(
     "home/home.html",
     "login/login.html"
   );
+} else if (
+  !document.cookie.includes("access") &&
+  document.cookie.includes("refresh")
+) {
+  storeNewAccess();
+}
+
+async function storeNewAccess() {
+  let cookies = document.cookie.split("; ");
+  let neededCookie = cookies.filter((cookie) => {
+    return cookie.startsWith("refresh");
+  });
+  let refreshToken = neededCookie[0].split("=")[1];
+  // let refreshToken = document.cookie
+  //   .match(/refresh=.+;*/g)[0]
+  //   .replace("refresh=", "");
+  let request = await fetch(`https://api.medlinker.org/v1/auth/token/refresh`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      refresh: refreshToken,
+    }),
+  });
+  if (request.status == 200) {
+    let json = await request.json();
+    let now = Date.now();
+    let accessExpire = now + 15 * 60 * 1000;
+    let accessDate = new Date(accessExpire);
+    let accessExpiryDate = accessDate.toUTCString();
+    document.cookie = `access=${json.access}; expires=${accessExpiryDate}; path=/`;
+  }
 }
 
 let account = document.querySelector(".account > div"),

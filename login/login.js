@@ -42,12 +42,12 @@ function showMessage(message) {
 
 function generateDateExpire() {
   let now = Date.now();
-  let accessExpire = now + 2 * 60 * 60 * 1000;
+  let accessExpire = now + 15 * 60 * 1000;
   let refreshExpire = now + 30 * 24 * 60 * 60 * 1000;
   let accessDate = new Date(accessExpire);
   let refreshDate = new Date(refreshExpire);
-  let accessExpiryDate = accessDate.toUTCString().replace("GMT", "UTC");
-  let refreshExpiryDate = refreshDate.toUTCString().replace("GMT", "UTC");
+  let accessExpiryDate = accessDate.toUTCString();
+  let refreshExpiryDate = refreshDate.toUTCString();
   return [accessExpiryDate, refreshExpiryDate];
 }
 
@@ -76,7 +76,6 @@ loginForm.addEventListener("submit", async (e) => {
     document.cookie = `refresh=${json.refresh}; expires=${
       generateDateExpire()[1]
     }; path=/`;
-    console.log(json);
     location.pathname = location.pathname.replace(
       "login/login.html",
       "home/home.html"
@@ -86,5 +85,4 @@ loginForm.addEventListener("submit", async (e) => {
   } else {
     showMessage(error);
   }
-  console.log(request);
 });
