@@ -42,7 +42,7 @@ function showMessage(message) {
 
 function generateDateExpire() {
   let now = Date.now();
-  let accessExpire = now + 15 * 60 * 1000;
+  let accessExpire = now + 10 * 60 * 1000;
   let refreshExpire = now + 30 * 24 * 60 * 60 * 1000;
   let accessDate = new Date(accessExpire);
   let refreshDate = new Date(refreshExpire);
@@ -76,10 +76,14 @@ loginForm.addEventListener("submit", async (e) => {
     document.cookie = `refresh=${json.refresh}; expires=${
       generateDateExpire()[1]
     }; path=/`;
-    location.pathname = location.pathname.replace(
-      "login/login.html",
-      "home/home.html"
-    );
+    if (sessionStorage.getItem("post job") === "true") {
+      // post job page
+    } else {
+      location.pathname = location.pathname.replace(
+        "login/login.html",
+        "home/home.html"
+      );
+    }
   } else if (request.status == 401) {
     showMessage(wrong);
   } else {

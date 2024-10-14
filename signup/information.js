@@ -1,4 +1,5 @@
 import { domain, apiVersion } from "../constants.js";
+
 let infObj;
 if (sessionStorage.getItem("Data")) {
   infObj = JSON.parse(sessionStorage.getItem("Data"));
@@ -743,7 +744,7 @@ function assignValues() {
     if (cv.files[0]) {
       encodeFiles(cv.files[0], userObject, "resume");
     }
-    // encodeFiles(photo.files[0], userObject, "photo");
+    encodeFiles(photo.files[0], userObject, "photo");
   } else if (userType === "company") {
     userObject = {
       user: {
@@ -889,6 +890,12 @@ function removeDisabled(interval) {
     companySubmit.removeAttribute("disabled");
   }
 }
+function clearSessionStorage() {
+  sessionStorage.removeItem("User Type");
+  sessionStorage.removeItem("MedLinker Form");
+  sessionStorage.removeItem("Active Messages");
+  sessionStorage.removeItem("Data");
+}
 async function fetchData(from) {
   let interval = setInterval(() => {
     from.setAttributeNode(document.createAttribute("disabled"));
@@ -912,6 +919,7 @@ async function fetchData(from) {
       }
       if (request.status === 201) {
         successMessage();
+        clearSessionStorage();
       } else if (request.status === 400) {
         removeDisabled(interval);
         let json = await request.json();

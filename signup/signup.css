@@ -219,6 +219,14 @@ input[type="submit"]:hover {
 .show-hide.active {
   display: block;
 }
+.message {
+  margin-top: 20px;
+  color: var(--red-color);
+  display: none;
+}
+.message.active {
+  display: block;
+}
 
 @media (max-width: 665px) {
   .container {

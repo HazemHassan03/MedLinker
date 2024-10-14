@@ -3,7 +3,8 @@ let headerBar = document.getElementById("header-bar"),
   toTop = document.getElementById("to-top"),
   presentation = document.querySelectorAll(".presentation .body div"),
   copyrightDate = document.getElementById("copyright-date"),
-  date = new Date();
+  date = new Date(),
+  postJob = document.querySelector(".post-job");
 
 headerBar.addEventListener("click", () => {
   nav.classList.toggle("active");
@@ -39,3 +40,16 @@ for (let i = 0; i < presentation.length; i++) {
 }
 
 copyrightDate.textContent = date.getFullYear();
+
+postJob.addEventListener("click", (e) => {
+  e.preventDefault();
+  if (document.cookie.includes("access")) {
+    // postJob.href = // post job page
+  } else {
+    location.pathname = location.pathname.replace(
+      "index.html",
+      "login/login.html"
+    );
+    sessionStorage.setItem("post job", "true");
+  }
+});

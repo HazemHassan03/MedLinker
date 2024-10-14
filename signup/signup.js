@@ -5,7 +5,7 @@ let signupForm = document.querySelector(".signup-form"),
   inputs = document.querySelectorAll("input:not([type=submit])"),
   showPassword = document.querySelector(".show-hide"),
   rules = document.querySelectorAll(".rules"),
-  allMustValid = document.querySelector(".all-valid");
+  warning = document.querySelector(".message");
 
 let infObj = {
   fullName: "",
@@ -50,6 +50,9 @@ function checkAll(array) {
 
 inputs.forEach((input) => {
   input.addEventListener("focus", () => {
+    if (input.value.length > 0) {
+      checkInput(input);
+    }
     rules.forEach((rule) => {
       rule.classList.remove("active");
     });
@@ -73,39 +76,42 @@ showPassword.addEventListener("click", () => {
   password.focus();
 });
 
+function checkInput(input) {
+  let check;
+  switch (input) {
+    case fullName:
+      check = checkFullName(input.value);
+      break;
+    case email:
+      check = checkEmail(input.value);
+      break;
+    case password:
+      check = checkPassword(input.value);
+      break;
+  }
+  if (check) {
+    input.classList.remove("not-valid-value");
+    input.classList.add("valid-value");
+    input.parentElement.querySelector(".not-valid").style.opacity = "0";
+    input.parentElement.querySelector(".valid").style.opacity = "1";
+  } else {
+    input.classList.remove("valid-value");
+    input.classList.add("not-valid-value");
+    input.parentElement.querySelector(".valid").style.opacity = "0";
+    input.parentElement.querySelector(".not-valid").style.opacity = "1";
+  }
+}
 inputs.forEach((input) => {
   input.addEventListener("input", () => {
-    let check;
-    switch (input) {
-      case fullName:
-        check = checkFullName(input.value);
-        break;
-      case email:
-        check = checkEmail(input.value);
-        break;
-      case password:
-        check = checkPassword(input.value);
-        break;
-    }
-    if (check) {
-      input.classList.remove("not-valid-value");
-      input.classList.add("valid-value");
-      input.parentElement.querySelector(".not-valid").style.opacity = "0";
-      input.parentElement.querySelector(".valid").style.opacity = "1";
-    } else {
-      input.classList.remove("valid-value");
-      input.classList.add("not-valid-value");
-      input.parentElement.querySelector(".valid").style.opacity = "0";
-      input.parentElement.querySelector(".not-valid").style.opacity = "1";
-    }
+    checkInput(input);
   });
 });
 
 signupForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  infObj.fullName = fullName.value;
-  infObj.email = email.value;
-  infObj.password = password.value;
+  infObj.fullName = fullName.value.trim();
+  infObj.email = email.value.trim();
+  infObj.password = password.value.trim();
   let checkArray = [
     checkFullName(infObj.fullName),
     checkEmail(infObj.email),
@@ -117,5 +123,11 @@ signupForm.addEventListener("submit", (e) => {
       "signup.html",
       "information.html"
     );
+  } else {
+    warning.textContent = "تأكد من صحة البيانات المدخلة";
+    warning.classList.add("active");
+    setTimeout(() => {
+      warning.classList.remove("active");
+    }, 3000);
   }
 });
