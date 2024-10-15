@@ -42,7 +42,6 @@ async function checkAccess() {
     document.cookie.includes("refresh")
   ) {
     let status = await storeNewAccess();
-    console.log(status);
     if (status != 200) {
       location.pathname = location.pathname.replace(
         "home/home.html",
@@ -60,4 +59,24 @@ async function checkAccess() {
   }
 }
 
-export { domain, apiVersion, storeNewAccess, checkAccess, logoutFunction };
+async function fetchUserData() {
+  let cookies = document.cookie.split("; ");
+  let neededCookie = cookies.filter((cookie) => {
+    return cookie.startsWith("access");
+  });
+  let accessToken = neededCookie[0].split("=")[1];
+  let request = await fetch("https://api.medlinker.org/v1/users/jobseeker/me", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  if (request.status == 200) {
+    let userData = await request.json();
+    return userData;
+  } else if (request.status == 401) {
+    checkAccess();
+  }
+}
+
+export { domain, apiVersion, storeNewAccess, checkAccess, logoutFunction, fetchUserData };

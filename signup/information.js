@@ -730,7 +730,7 @@ function assignValues() {
         email: employeeEmail.value,
         user_type: "job_seeker",
       },
-      resume: "",
+      // resume: "",
       birthdate: `${year.value}-${month.value}-${day.value}`,
       location_city: address.value,
       years_of_experience: experienceValue,
@@ -741,10 +741,10 @@ function assignValues() {
       job_type: jobType.value.toLowerCase(),
       graduation_year: graduation.value,
     };
-    if (cv.files[0]) {
-      encodeFiles(cv.files[0], userObject, "resume");
-    }
-    encodeFiles(photo.files[0], userObject, "photo");
+    // if (cv.files[0]) {
+    //   encodeFiles(cv.files[0], userObject, "resume");
+    // }
+    // encodeFiles(photo.files[0], userObject, "photo");
   } else if (userType === "company") {
     userObject = {
       user: {
