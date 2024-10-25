@@ -596,7 +596,7 @@ form .check-false.active {
   display: block;
 }
 .overlay {
-  background-color: rgb(0 0 0 / 0%);
+  background-color: transparent;
   width: 100dvw;
   height: 100dvh;
   position: absolute;

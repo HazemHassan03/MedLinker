@@ -31,55 +31,1131 @@
     />
   </head>
   <body>
-    <header>
-      <div class="container">
-        <div class="logo">
-          <a href="home.html"
-            ><img src="../images/logo-blue-expand.png" alt="The Logo"
-          /></a>
-        </div>
-        <div class="search">
-          <input type="search" name="search" id="search" placeholder="Search" />
-          <i class="search-icon fa-solid fa-magnifying-glass"></i>
-        </div>
-        <div class="account">
-          <div>
-            <div class="img">
-              <i class="fa-solid fa-user"></i>
-            </div>
-            <button><i class="fa-solid fa-caret-down"></i>حسابي</button>
-          </div>
-        </div>
-        <ul class="nav-list">
-          <li><a href="">الملف الشخصي</a></li>
-          <li><a href="">الإعدادات</a></li>
-          <li><button id="logout">تسجيل خروج</button></li>
-        </ul>
-      </div>
-    </header>
-    <section class="landing">
-      <div class="container">
-        <div class="image">
-          <img src="../images/home-landing.png" alt="Check" />
-        </div>
-        <div class="welcome">
-          <h1 class="header">
-            تهانينا<span class="name"></span>! تم تسجيل بياناتك بنجاح في
-            <img src="../images/logo-blue-expand.png" alt="The Logo" />
-          </h1>
-          <p class="details">
-            نحن حاليًا بصدد مراجعة ملفك الشخصي لتحديد أبرز خبراتك ومهاراتك. سيتم
-            إبلاغك بأي تطورات جديدة، وسنعمل جاهدين لإيجاد الفرصة الوظيفية الأنسب
-            لك في قطاع الصحة.
-          </p>
-        </div>
-      </div>
-    </section>
-    <div class="loading">
+    <div class="loading active">
       <div class="one"></div>
       <div class="two"></div>
       <div class="three"></div>
     </div>
+    <div class="job-seeker-body">
+      <header>
+        <div class="container">
+          <div class="logo">
+            <a href="home.html"
+              ><img src="../images/logo-blue-expand.png" alt="The Logo"
+            /></a>
+          </div>
+          <div class="search">
+            <input
+              type="search"
+              name="search"
+              id="search"
+              placeholder="Search"
+            />
+            <i class="search-icon fa-solid fa-magnifying-glass"></i>
+          </div>
+          <div class="account">
+            <div>
+              <div class="img">
+                <i class="fa-solid fa-user"></i>
+              </div>
+              <button><i class="fa-solid fa-caret-down"></i>حسابي</button>
+            </div>
+          </div>
+          <ul class="nav-list">
+            <li><a href="../profile/profile.html">الملف الشخصي</a></li>
+            <li><a href="">الإعدادات</a></li>
+            <li><button id="logout">تسجيل خروج</button></li>
+          </ul>
+        </div>
+      </header>
+      <div class="welcome">
+        <div class="container">
+          <h1 class="header">
+            أهلا بك <span class="name">يا</span>
+            <i class="fa-regular fa-handshake"></i>
+          </h1>
+          <p class="details">
+            يمكنك الآن تصفح الوظائف والتقديم عليها مع تمنياتنا لك بالتوفيق
+            <i class="fa-regular fa-heart"></i>
+          </p>
+        </div>
+      </div>
+      <div class="main-content">
+        <div class="container">
+          <main class="jobs">
+            <div class="job">
+              <h2 class="job-title">Pharmacist</h2>
+              <p class="company-name">
+                <i class="fa-regular fa-building fa-fw"></i> Sehha Pharmacy
+              </p>
+              <p class="location">
+                <i class="fa-solid fa-location-dot fa-fw"></i> New Cairo
+              </p>
+              <div class="job-inf">
+                <span class="employment-type">Job</span>
+                |
+                <span class="job-type">Full Time</span>
+                |
+                <span class="workplace">On-site</span>
+              </div>
+              <div class="expand">
+                <!-- <div class="employment-type">
+                  <span class="title">Employment Type: </span>
+                  <span class="value">Job</span>
+                </div>
+                <div class="job-type">
+                  <span class="title">Job Type: </span>
+                  <span class="value">Full Time</span>
+                </div>
+                <div class="workplace">
+                  <span class="title">Workplace: </span>
+                  <span class="value">On-site</span>
+                </div> -->
+                <div class="working-hours">
+                  <span class="title">Working Hours: </span>
+                  <span class="value"
+                    >From 00:00 To 06:00 | From 06:00 To 12:00 | From 12:00 To
+                    18:00 | From 18:00 To 00:00</span
+                  >
+                </div>
+                <div class="job-description">
+                  <span class="title">Job Description: </span>
+                  <span class="value"
+                    >As a pharmacist you will be responsible for preparing and
+                    administering appropriate pharmaceuticals to patients. You
+                    will achieve this either by executing a physician’s order or
+                    by addressing the patient’s problems and needs. The job
+                    entails a high level of responsibility and knowledge. A
+                    pharmacist does not merely hand out prescribed medicine;
+                    he/she has the expertise and willingness to assist people
+                    and provide them with information and solutions. The
+                    pharmacist must be fully qualified to interpret symptoms so
+                    that the patient can either be given immediate treatment for
+                    a trifling condition or to be referred to the suitable
+                    doctor. Pharmacists must also be able to provide
+                    professional advice on cosmetics or parapharmaceuticals. The
+                    goal is to ensure effective medication use and become the
+                    people’s trusted ally against health issues. That way you
+                    can deliver maximum value to both the pharmacy and
+                    society.</span
+                  >
+                </div>
+                <div class="job-requirements">
+                  <span class="title">Job Requirements: </span>
+                  <span class="value"
+                    >Proven experience as a pharmacist Thorough understanding of
+                    dosage administration and measurement, chemical compounds,
+                    medical brands etc. Outstanding knowledge of MS Office and
+                    Pharmacy information systems (eg. MediTech, Mediware etc.)
+                    Good organizing skills Excellent communication skills with a
+                    customer oriented approach Integrity and compassion Degree
+                    in Pharmacy/Pharmacology Valid licence to practice the
+                    profession.</span
+                  >
+                </div>
+                <button class="apply">Apply</button>
+              </div>
+              <div class="explore-more">
+                عرض المزيد <i class="fa-solid fa-angle-down"></i>
+              </div>
+            </div>
+            <div class="job">
+              <h2 class="job-title">Pharmacist</h2>
+              <p class="company-name">
+                <i class="fa-regular fa-building fa-fw"></i> Sehha Pharmacy
+              </p>
+              <p class="location">
+                <i class="fa-solid fa-location-dot fa-fw"></i> New Cairo
+              </p>
+              <div class="job-inf">
+                <span class="employment-type">Job</span>
+                |
+                <span class="job-type">Full Time</span>
+                |
+                <span class="workplace">On-site</span>
+              </div>
+              <div class="expand">
+                <!-- <div class="employment-type">
+                  <span class="title">Employment Type: </span>
+                  <span class="value">Job</span>
+                </div>
+                <div class="job-type">
+                  <span class="title">Job Type: </span>
+                  <span class="value">Full Time</span>
+                </div>
+                <div class="workplace">
+                  <span class="title">Workplace: </span>
+                  <span class="value">On-site</span>
+                </div> -->
+                <div class="working-hours">
+                  <span class="title">Working Hours: </span>
+                  <span class="value"
+                    >From 00:00 To 06:00 | From 06:00 To 12:00 | From 12:00 To
+                    18:00 | From 18:00 To 00:00</span
+                  >
+                </div>
+                <div class="job-description">
+                  <span class="title">Job Description: </span>
+                  <span class="value"
+                    >As a pharmacist you will be responsible for preparing and
+                    administering appropriate pharmaceuticals to patients. You
+                    will achieve this either by executing a physician’s order or
+                    by addressing the patient’s problems and needs. The job
+                    entails a high level of responsibility and knowledge. A
+                    pharmacist does not merely hand out prescribed medicine;
+                    he/she has the expertise and willingness to assist people
+                    and provide them with information and solutions. The
+                    pharmacist must be fully qualified to interpret symptoms so
+                    that the patient can either be given immediate treatment for
+                    a trifling condition or to be referred to the suitable
+                    doctor. Pharmacists must also be able to provide
+                    professional advice on cosmetics or parapharmaceuticals. The
+                    goal is to ensure effective medication use and become the
+                    people’s trusted ally against health issues. That way you
+                    can deliver maximum value to both the pharmacy and
+                    society.</span
+                  >
+                </div>
+                <div class="job-requirements">
+                  <span class="title">Job Requirements: </span>
+                  <span class="value"
+                    >Proven experience as a pharmacist Thorough understanding of
+                    dosage administration and measurement, chemical compounds,
+                    medical brands etc. Outstanding knowledge of MS Office and
+                    Pharmacy information systems (eg. MediTech, Mediware etc.)
+                    Good organizing skills Excellent communication skills with a
+                    customer oriented approach Integrity and compassion Degree
+                    in Pharmacy/Pharmacology Valid licence to practice the
+                    profession.</span
+                  >
+                </div>
+                <button class="apply">Apply</button>
+              </div>
+              <div class="explore-more">
+                عرض المزيد <i class="fa-solid fa-angle-down"></i>
+              </div>
+            </div>
+            <div class="job">
+              <h2 class="job-title">Pharmacist</h2>
+              <p class="company-name">
+                <i class="fa-regular fa-building fa-fw"></i> Sehha Pharmacy
+              </p>
+              <p class="location">
+                <i class="fa-solid fa-location-dot fa-fw"></i> New Cairo
+              </p>
+              <div class="job-inf">
+                <span class="employment-type">Job</span>
+                |
+                <span class="job-type">Full Time</span>
+                |
+                <span class="workplace">On-site</span>
+              </div>
+              <div class="expand">
+                <!-- <div class="employment-type">
+                  <span class="title">Employment Type: </span>
+                  <span class="value">Job</span>
+                </div>
+                <div class="job-type">
+                  <span class="title">Job Type: </span>
+                  <span class="value">Full Time</span>
+                </div>
+                <div class="workplace">
+                  <span class="title">Workplace: </span>
+                  <span class="value">On-site</span>
+                </div> -->
+                <div class="working-hours">
+                  <span class="title">Working Hours: </span>
+                  <span class="value"
+                    >From 00:00 To 06:00 | From 06:00 To 12:00 | From 12:00 To
+                    18:00 | From 18:00 To 00:00</span
+                  >
+                </div>
+                <div class="job-description">
+                  <span class="title">Job Description: </span>
+                  <span class="value"
+                    >As a pharmacist you will be responsible for preparing and
+                    administering appropriate pharmaceuticals to patients. You
+                    will achieve this either by executing a physician’s order or
+                    by addressing the patient’s problems and needs. The job
+                    entails a high level of responsibility and knowledge. A
+                    pharmacist does not merely hand out prescribed medicine;
+                    he/she has the expertise and willingness to assist people
+                    and provide them with information and solutions. The
+                    pharmacist must be fully qualified to interpret symptoms so
+                    that the patient can either be given immediate treatment for
+                    a trifling condition or to be referred to the suitable
+                    doctor. Pharmacists must also be able to provide
+                    professional advice on cosmetics or parapharmaceuticals. The
+                    goal is to ensure effective medication use and become the
+                    people’s trusted ally against health issues. That way you
+                    can deliver maximum value to both the pharmacy and
+                    society.</span
+                  >
+                </div>
+                <div class="job-requirements">
+                  <span class="title">Job Requirements: </span>
+                  <span class="value"
+                    >Proven experience as a pharmacist Thorough understanding of
+                    dosage administration and measurement, chemical compounds,
+                    medical brands etc. Outstanding knowledge of MS Office and
+                    Pharmacy information systems (eg. MediTech, Mediware etc.)
+                    Good organizing skills Excellent communication skills with a
+                    customer oriented approach Integrity and compassion Degree
+                    in Pharmacy/Pharmacology Valid licence to practice the
+                    profession.</span
+                  >
+                </div>
+                <button class="apply">Apply</button>
+              </div>
+              <div class="explore-more">
+                عرض المزيد <i class="fa-solid fa-angle-down"></i>
+              </div>
+            </div>
+            <div class="job">
+              <h2 class="job-title">Pharmacist</h2>
+              <p class="company-name">
+                <i class="fa-regular fa-building fa-fw"></i> Sehha Pharmacy
+              </p>
+              <p class="location">
+                <i class="fa-solid fa-location-dot fa-fw"></i> New Cairo
+              </p>
+              <div class="job-inf">
+                <span class="employment-type">Job</span>
+                |
+                <span class="job-type">Full Time</span>
+                |
+                <span class="workplace">On-site</span>
+              </div>
+              <div class="expand">
+                <!-- <div class="employment-type">
+                  <span class="title">Employment Type: </span>
+                  <span class="value">Job</span>
+                </div>
+                <div class="job-type">
+                  <span class="title">Job Type: </span>
+                  <span class="value">Full Time</span>
+                </div>
+                <div class="workplace">
+                  <span class="title">Workplace: </span>
+                  <span class="value">On-site</span>
+                </div> -->
+                <div class="working-hours">
+                  <span class="title">Working Hours: </span>
+                  <span class="value"
+                    >From 00:00 To 06:00 | From 06:00 To 12:00 | From 12:00 To
+                    18:00 | From 18:00 To 00:00</span
+                  >
+                </div>
+                <div class="job-description">
+                  <span class="title">Job Description: </span>
+                  <span class="value"
+                    >As a pharmacist you will be responsible for preparing and
+                    administering appropriate pharmaceuticals to patients. You
+                    will achieve this either by executing a physician’s order or
+                    by addressing the patient’s problems and needs. The job
+                    entails a high level of responsibility and knowledge. A
+                    pharmacist does not merely hand out prescribed medicine;
+                    he/she has the expertise and willingness to assist people
+                    and provide them with information and solutions. The
+                    pharmacist must be fully qualified to interpret symptoms so
+                    that the patient can either be given immediate treatment for
+                    a trifling condition or to be referred to the suitable
+                    doctor. Pharmacists must also be able to provide
+                    professional advice on cosmetics or parapharmaceuticals. The
+                    goal is to ensure effective medication use and become the
+                    people’s trusted ally against health issues. That way you
+                    can deliver maximum value to both the pharmacy and
+                    society.</span
+                  >
+                </div>
+                <div class="job-requirements">
+                  <span class="title">Job Requirements: </span>
+                  <span class="value"
+                    >Proven experience as a pharmacist Thorough understanding of
+                    dosage administration and measurement, chemical compounds,
+                    medical brands etc. Outstanding knowledge of MS Office and
+                    Pharmacy information systems (eg. MediTech, Mediware etc.)
+                    Good organizing skills Excellent communication skills with a
+                    customer oriented approach Integrity and compassion Degree
+                    in Pharmacy/Pharmacology Valid licence to practice the
+                    profession.</span
+                  >
+                </div>
+                <button class="apply">Apply</button>
+              </div>
+              <div class="explore-more">
+                عرض المزيد <i class="fa-solid fa-angle-down"></i>
+              </div>
+            </div>
+            <div class="job">
+              <h2 class="job-title">Pharmacist</h2>
+              <p class="company-name">
+                <i class="fa-regular fa-building fa-fw"></i> Sehha Pharmacy
+              </p>
+              <p class="location">
+                <i class="fa-solid fa-location-dot fa-fw"></i> New Cairo
+              </p>
+              <div class="job-inf">
+                <span class="employment-type">Job</span>
+                |
+                <span class="job-type">Full Time</span>
+                |
+                <span class="workplace">On-site</span>
+              </div>
+              <div class="expand">
+                <!-- <div class="employment-type">
+                  <span class="title">Employment Type: </span>
+                  <span class="value">Job</span>
+                </div>
+                <div class="job-type">
+                  <span class="title">Job Type: </span>
+                  <span class="value">Full Time</span>
+                </div>
+                <div class="workplace">
+                  <span class="title">Workplace: </span>
+                  <span class="value">On-site</span>
+                </div> -->
+                <div class="working-hours">
+                  <span class="title">Working Hours: </span>
+                  <span class="value"
+                    >From 00:00 To 06:00 | From 06:00 To 12:00 | From 12:00 To
+                    18:00 | From 18:00 To 00:00</span
+                  >
+                </div>
+                <div class="job-description">
+                  <span class="title">Job Description: </span>
+                  <span class="value"
+                    >As a pharmacist you will be responsible for preparing and
+                    administering appropriate pharmaceuticals to patients. You
+                    will achieve this either by executing a physician’s order or
+                    by addressing the patient’s problems and needs. The job
+                    entails a high level of responsibility and knowledge. A
+                    pharmacist does not merely hand out prescribed medicine;
+                    he/she has the expertise and willingness to assist people
+                    and provide them with information and solutions. The
+                    pharmacist must be fully qualified to interpret symptoms so
+                    that the patient can either be given immediate treatment for
+                    a trifling condition or to be referred to the suitable
+                    doctor. Pharmacists must also be able to provide
+                    professional advice on cosmetics or parapharmaceuticals. The
+                    goal is to ensure effective medication use and become the
+                    people’s trusted ally against health issues. That way you
+                    can deliver maximum value to both the pharmacy and
+                    society.</span
+                  >
+                </div>
+                <div class="job-requirements">
+                  <span class="title">Job Requirements: </span>
+                  <span class="value"
+                    >Proven experience as a pharmacist Thorough understanding of
+                    dosage administration and measurement, chemical compounds,
+                    medical brands etc. Outstanding knowledge of MS Office and
+                    Pharmacy information systems (eg. MediTech, Mediware etc.)
+                    Good organizing skills Excellent communication skills with a
+                    customer oriented approach Integrity and compassion Degree
+                    in Pharmacy/Pharmacology Valid licence to practice the
+                    profession.</span
+                  >
+                </div>
+                <button class="apply">Apply</button>
+              </div>
+              <div class="explore-more">
+                عرض المزيد <i class="fa-solid fa-angle-down"></i>
+              </div>
+            </div>
+            <div class="job">
+              <h2 class="job-title">Pharmacist</h2>
+              <p class="company-name">
+                <i class="fa-regular fa-building fa-fw"></i> Sehha Pharmacy
+              </p>
+              <p class="location">
+                <i class="fa-solid fa-location-dot fa-fw"></i> New Cairo
+              </p>
+              <div class="job-inf">
+                <span class="employment-type">Job</span>
+                |
+                <span class="job-type">Full Time</span>
+                |
+                <span class="workplace">On-site</span>
+              </div>
+              <div class="expand">
+                <!-- <div class="employment-type">
+                  <span class="title">Employment Type: </span>
+                  <span class="value">Job</span>
+                </div>
+                <div class="job-type">
+                  <span class="title">Job Type: </span>
+                  <span class="value">Full Time</span>
+                </div>
+                <div class="workplace">
+                  <span class="title">Workplace: </span>
+                  <span class="value">On-site</span>
+                </div> -->
+                <div class="working-hours">
+                  <span class="title">Working Hours: </span>
+                  <span class="value"
+                    >From 00:00 To 06:00 | From 06:00 To 12:00 | From 12:00 To
+                    18:00 | From 18:00 To 00:00</span
+                  >
+                </div>
+                <div class="job-description">
+                  <span class="title">Job Description: </span>
+                  <span class="value"
+                    >As a pharmacist you will be responsible for preparing and
+                    administering appropriate pharmaceuticals to patients. You
+                    will achieve this either by executing a physician’s order or
+                    by addressing the patient’s problems and needs. The job
+                    entails a high level of responsibility and knowledge. A
+                    pharmacist does not merely hand out prescribed medicine;
+                    he/she has the expertise and willingness to assist people
+                    and provide them with information and solutions. The
+                    pharmacist must be fully qualified to interpret symptoms so
+                    that the patient can either be given immediate treatment for
+                    a trifling condition or to be referred to the suitable
+                    doctor. Pharmacists must also be able to provide
+                    professional advice on cosmetics or parapharmaceuticals. The
+                    goal is to ensure effective medication use and become the
+                    people’s trusted ally against health issues. That way you
+                    can deliver maximum value to both the pharmacy and
+                    society.</span
+                  >
+                </div>
+                <div class="job-requirements">
+                  <span class="title">Job Requirements: </span>
+                  <span class="value"
+                    >Proven experience as a pharmacist Thorough understanding of
+                    dosage administration and measurement, chemical compounds,
+                    medical brands etc. Outstanding knowledge of MS Office and
+                    Pharmacy information systems (eg. MediTech, Mediware etc.)
+                    Good organizing skills Excellent communication skills with a
+                    customer oriented approach Integrity and compassion Degree
+                    in Pharmacy/Pharmacology Valid licence to practice the
+                    profession.</span
+                  >
+                </div>
+                <button class="apply">Apply</button>
+              </div>
+              <div class="explore-more">
+                عرض المزيد <i class="fa-solid fa-angle-down"></i>
+              </div>
+            </div>
+            <div class="job">
+              <h2 class="job-title">Pharmacist</h2>
+              <p class="company-name">
+                <i class="fa-regular fa-building fa-fw"></i> Sehha Pharmacy
+              </p>
+              <p class="location">
+                <i class="fa-solid fa-location-dot fa-fw"></i> New Cairo
+              </p>
+              <div class="job-inf">
+                <span class="employment-type">Job</span>
+                |
+                <span class="job-type">Full Time</span>
+                |
+                <span class="workplace">On-site</span>
+              </div>
+              <div class="expand">
+                <!-- <div class="employment-type">
+                  <span class="title">Employment Type: </span>
+                  <span class="value">Job</span>
+                </div>
+                <div class="job-type">
+                  <span class="title">Job Type: </span>
+                  <span class="value">Full Time</span>
+                </div>
+                <div class="workplace">
+                  <span class="title">Workplace: </span>
+                  <span class="value">On-site</span>
+                </div> -->
+                <div class="working-hours">
+                  <span class="title">Working Hours: </span>
+                  <span class="value"
+                    >From 00:00 To 06:00 | From 06:00 To 12:00 | From 12:00 To
+                    18:00 | From 18:00 To 00:00</span
+                  >
+                </div>
+                <div class="job-description">
+                  <span class="title">Job Description: </span>
+                  <span class="value"
+                    >As a pharmacist you will be responsible for preparing and
+                    administering appropriate pharmaceuticals to patients. You
+                    will achieve this either by executing a physician’s order or
+                    by addressing the patient’s problems and needs. The job
+                    entails a high level of responsibility and knowledge. A
+                    pharmacist does not merely hand out prescribed medicine;
+                    he/she has the expertise and willingness to assist people
+                    and provide them with information and solutions. The
+                    pharmacist must be fully qualified to interpret symptoms so
+                    that the patient can either be given immediate treatment for
+                    a trifling condition or to be referred to the suitable
+                    doctor. Pharmacists must also be able to provide
+                    professional advice on cosmetics or parapharmaceuticals. The
+                    goal is to ensure effective medication use and become the
+                    people’s trusted ally against health issues. That way you
+                    can deliver maximum value to both the pharmacy and
+                    society.</span
+                  >
+                </div>
+                <div class="job-requirements">
+                  <span class="title">Job Requirements: </span>
+                  <span class="value"
+                    >Proven experience as a pharmacist Thorough understanding of
+                    dosage administration and measurement, chemical compounds,
+                    medical brands etc. Outstanding knowledge of MS Office and
+                    Pharmacy information systems (eg. MediTech, Mediware etc.)
+                    Good organizing skills Excellent communication skills with a
+                    customer oriented approach Integrity and compassion Degree
+                    in Pharmacy/Pharmacology Valid licence to practice the
+                    profession.</span
+                  >
+                </div>
+                <button class="apply">Apply</button>
+              </div>
+              <div class="explore-more">
+                عرض المزيد <i class="fa-solid fa-angle-down"></i>
+              </div>
+            </div>
+            <div class="job">
+              <h2 class="job-title">Pharmacist</h2>
+              <p class="company-name">
+                <i class="fa-regular fa-building fa-fw"></i> Sehha Pharmacy
+              </p>
+              <p class="location">
+                <i class="fa-solid fa-location-dot fa-fw"></i> New Cairo
+              </p>
+              <div class="job-inf">
+                <span class="employment-type">Job</span>
+                |
+                <span class="job-type">Full Time</span>
+                |
+                <span class="workplace">On-site</span>
+              </div>
+              <div class="expand">
+                <!-- <div class="employment-type">
+                  <span class="title">Employment Type: </span>
+                  <span class="value">Job</span>
+                </div>
+                <div class="job-type">
+                  <span class="title">Job Type: </span>
+                  <span class="value">Full Time</span>
+                </div>
+                <div class="workplace">
+                  <span class="title">Workplace: </span>
+                  <span class="value">On-site</span>
+                </div> -->
+                <div class="working-hours">
+                  <span class="title">Working Hours: </span>
+                  <span class="value"
+                    >From 00:00 To 06:00 | From 06:00 To 12:00 | From 12:00 To
+                    18:00 | From 18:00 To 00:00</span
+                  >
+                </div>
+                <div class="job-description">
+                  <span class="title">Job Description: </span>
+                  <span class="value"
+                    >As a pharmacist you will be responsible for preparing and
+                    administering appropriate pharmaceuticals to patients. You
+                    will achieve this either by executing a physician’s order or
+                    by addressing the patient’s problems and needs. The job
+                    entails a high level of responsibility and knowledge. A
+                    pharmacist does not merely hand out prescribed medicine;
+                    he/she has the expertise and willingness to assist people
+                    and provide them with information and solutions. The
+                    pharmacist must be fully qualified to interpret symptoms so
+                    that the patient can either be given immediate treatment for
+                    a trifling condition or to be referred to the suitable
+                    doctor. Pharmacists must also be able to provide
+                    professional advice on cosmetics or parapharmaceuticals. The
+                    goal is to ensure effective medication use and become the
+                    people’s trusted ally against health issues. That way you
+                    can deliver maximum value to both the pharmacy and
+                    society.</span
+                  >
+                </div>
+                <div class="job-requirements">
+                  <span class="title">Job Requirements: </span>
+                  <span class="value"
+                    >Proven experience as a pharmacist Thorough understanding of
+                    dosage administration and measurement, chemical compounds,
+                    medical brands etc. Outstanding knowledge of MS Office and
+                    Pharmacy information systems (eg. MediTech, Mediware etc.)
+                    Good organizing skills Excellent communication skills with a
+                    customer oriented approach Integrity and compassion Degree
+                    in Pharmacy/Pharmacology Valid licence to practice the
+                    profession.</span
+                  >
+                </div>
+                <button class="apply">Apply</button>
+              </div>
+              <div class="explore-more">
+                عرض المزيد <i class="fa-solid fa-angle-down"></i>
+              </div>
+            </div>
+            <div class="job">
+              <h2 class="job-title">Pharmacist</h2>
+              <p class="company-name">
+                <i class="fa-regular fa-building fa-fw"></i> Sehha Pharmacy
+              </p>
+              <p class="location">
+                <i class="fa-solid fa-location-dot fa-fw"></i> New Cairo
+              </p>
+              <div class="job-inf">
+                <span class="employment-type">Job</span>
+                |
+                <span class="job-type">Full Time</span>
+                |
+                <span class="workplace">On-site</span>
+              </div>
+              <div class="expand">
+                <!-- <div class="employment-type">
+                  <span class="title">Employment Type: </span>
+                  <span class="value">Job</span>
+                </div>
+                <div class="job-type">
+                  <span class="title">Job Type: </span>
+                  <span class="value">Full Time</span>
+                </div>
+                <div class="workplace">
+                  <span class="title">Workplace: </span>
+                  <span class="value">On-site</span>
+                </div> -->
+                <div class="working-hours">
+                  <span class="title">Working Hours: </span>
+                  <span class="value"
+                    >From 00:00 To 06:00 | From 06:00 To 12:00 | From 12:00 To
+                    18:00 | From 18:00 To 00:00</span
+                  >
+                </div>
+                <div class="job-description">
+                  <span class="title">Job Description: </span>
+                  <span class="value"
+                    >As a pharmacist you will be responsible for preparing and
+                    administering appropriate pharmaceuticals to patients. You
+                    will achieve this either by executing a physician’s order or
+                    by addressing the patient’s problems and needs. The job
+                    entails a high level of responsibility and knowledge. A
+                    pharmacist does not merely hand out prescribed medicine;
+                    he/she has the expertise and willingness to assist people
+                    and provide them with information and solutions. The
+                    pharmacist must be fully qualified to interpret symptoms so
+                    that the patient can either be given immediate treatment for
+                    a trifling condition or to be referred to the suitable
+                    doctor. Pharmacists must also be able to provide
+                    professional advice on cosmetics or parapharmaceuticals. The
+                    goal is to ensure effective medication use and become the
+                    people’s trusted ally against health issues. That way you
+                    can deliver maximum value to both the pharmacy and
+                    society.</span
+                  >
+                </div>
+                <div class="job-requirements">
+                  <span class="title">Job Requirements: </span>
+                  <span class="value"
+                    >Proven experience as a pharmacist Thorough understanding of
+                    dosage administration and measurement, chemical compounds,
+                    medical brands etc. Outstanding knowledge of MS Office and
+                    Pharmacy information systems (eg. MediTech, Mediware etc.)
+                    Good organizing skills Excellent communication skills with a
+                    customer oriented approach Integrity and compassion Degree
+                    in Pharmacy/Pharmacology Valid licence to practice the
+                    profession.</span
+                  >
+                </div>
+                <button class="apply">Apply</button>
+              </div>
+              <div class="explore-more">
+                عرض المزيد <i class="fa-solid fa-angle-down"></i>
+              </div>
+            </div>
+            <div class="job">
+              <h2 class="job-title">Pharmacist</h2>
+              <p class="company-name">
+                <i class="fa-regular fa-building fa-fw"></i> Sehha Pharmacy
+              </p>
+              <p class="location">
+                <i class="fa-solid fa-location-dot fa-fw"></i> New Cairo
+              </p>
+              <div class="job-inf">
+                <span class="employment-type">Job</span>
+                |
+                <span class="job-type">Full Time</span>
+                |
+                <span class="workplace">On-site</span>
+              </div>
+              <div class="expand">
+                <!-- <div class="employment-type">
+                  <span class="title">Employment Type: </span>
+                  <span class="value">Job</span>
+                </div>
+                <div class="job-type">
+                  <span class="title">Job Type: </span>
+                  <span class="value">Full Time</span>
+                </div>
+                <div class="workplace">
+                  <span class="title">Workplace: </span>
+                  <span class="value">On-site</span>
+                </div> -->
+                <div class="working-hours">
+                  <span class="title">Working Hours: </span>
+                  <span class="value"
+                    >From 00:00 To 06:00 | From 06:00 To 12:00 | From 12:00 To
+                    18:00 | From 18:00 To 00:00</span
+                  >
+                </div>
+                <div class="job-description">
+                  <span class="title">Job Description: </span>
+                  <span class="value"
+                    >As a pharmacist you will be responsible for preparing and
+                    administering appropriate pharmaceuticals to patients. You
+                    will achieve this either by executing a physician’s order or
+                    by addressing the patient’s problems and needs. The job
+                    entails a high level of responsibility and knowledge. A
+                    pharmacist does not merely hand out prescribed medicine;
+                    he/she has the expertise and willingness to assist people
+                    and provide them with information and solutions. The
+                    pharmacist must be fully qualified to interpret symptoms so
+                    that the patient can either be given immediate treatment for
+                    a trifling condition or to be referred to the suitable
+                    doctor. Pharmacists must also be able to provide
+                    professional advice on cosmetics or parapharmaceuticals. The
+                    goal is to ensure effective medication use and become the
+                    people’s trusted ally against health issues. That way you
+                    can deliver maximum value to both the pharmacy and
+                    society.</span
+                  >
+                </div>
+                <div class="job-requirements">
+                  <span class="title">Job Requirements: </span>
+                  <span class="value"
+                    >Proven experience as a pharmacist Thorough understanding of
+                    dosage administration and measurement, chemical compounds,
+                    medical brands etc. Outstanding knowledge of MS Office and
+                    Pharmacy information systems (eg. MediTech, Mediware etc.)
+                    Good organizing skills Excellent communication skills with a
+                    customer oriented approach Integrity and compassion Degree
+                    in Pharmacy/Pharmacology Valid licence to practice the
+                    profession.</span
+                  >
+                </div>
+                <button class="apply">Apply</button>
+              </div>
+              <div class="explore-more">
+                عرض المزيد <i class="fa-solid fa-angle-down"></i>
+              </div>
+            </div>
+            <div class="job">
+              <h2 class="job-title">Pharmacist</h2>
+              <p class="company-name">
+                <i class="fa-regular fa-building fa-fw"></i> Sehha Pharmacy
+              </p>
+              <p class="location">
+                <i class="fa-solid fa-location-dot fa-fw"></i> New Cairo
+              </p>
+              <div class="job-inf">
+                <span class="employment-type">Job</span>
+                |
+                <span class="job-type">Full Time</span>
+                |
+                <span class="workplace">On-site</span>
+              </div>
+              <div class="expand">
+                <!-- <div class="employment-type">
+                  <span class="title">Employment Type: </span>
+                  <span class="value">Job</span>
+                </div>
+                <div class="job-type">
+                  <span class="title">Job Type: </span>
+                  <span class="value">Full Time</span>
+                </div>
+                <div class="workplace">
+                  <span class="title">Workplace: </span>
+                  <span class="value">On-site</span>
+                </div> -->
+                <div class="working-hours">
+                  <span class="title">Working Hours: </span>
+                  <span class="value"
+                    >From 00:00 To 06:00 | From 06:00 To 12:00 | From 12:00 To
+                    18:00 | From 18:00 To 00:00</span
+                  >
+                </div>
+                <div class="job-description">
+                  <span class="title">Job Description: </span>
+                  <span class="value"
+                    >As a pharmacist you will be responsible for preparing and
+                    administering appropriate pharmaceuticals to patients. You
+                    will achieve this either by executing a physician’s order or
+                    by addressing the patient’s problems and needs. The job
+                    entails a high level of responsibility and knowledge. A
+                    pharmacist does not merely hand out prescribed medicine;
+                    he/she has the expertise and willingness to assist people
+                    and provide them with information and solutions. The
+                    pharmacist must be fully qualified to interpret symptoms so
+                    that the patient can either be given immediate treatment for
+                    a trifling condition or to be referred to the suitable
+                    doctor. Pharmacists must also be able to provide
+                    professional advice on cosmetics or parapharmaceuticals. The
+                    goal is to ensure effective medication use and become the
+                    people’s trusted ally against health issues. That way you
+                    can deliver maximum value to both the pharmacy and
+                    society.</span
+                  >
+                </div>
+                <div class="job-requirements">
+                  <span class="title">Job Requirements: </span>
+                  <span class="value"
+                    >Proven experience as a pharmacist Thorough understanding of
+                    dosage administration and measurement, chemical compounds,
+                    medical brands etc. Outstanding knowledge of MS Office and
+                    Pharmacy information systems (eg. MediTech, Mediware etc.)
+                    Good organizing skills Excellent communication skills with a
+                    customer oriented approach Integrity and compassion Degree
+                    in Pharmacy/Pharmacology Valid licence to practice the
+                    profession.</span
+                  >
+                </div>
+                <button class="apply">Apply</button>
+              </div>
+              <div class="explore-more">
+                عرض المزيد <i class="fa-solid fa-angle-down"></i>
+              </div>
+            </div>
+          </main>
+          <aside class="side">
+            <div class="personal-information">
+              <i class="account-icon fa-solid fa-user"></i>
+              <h2 class="full-name"></h2>
+              <p class="username">@</p>
+              <p class="job-title"><i class="fa-solid fa-briefcase"></i></p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+    <div class="company-body">
+      <header>
+        <div class="container">
+          <div class="logo">
+            <a href="home.html"
+              ><img src="../images/logo-blue-expand.png" alt="The Logo"
+            /></a>
+          </div>
+          <div class="search">
+            <input
+              type="search"
+              name="search"
+              id="search"
+              placeholder="Search"
+            />
+            <i class="search-icon fa-solid fa-magnifying-glass"></i>
+          </div>
+          <div class="account">
+            <div>
+              <div class="img">
+                <i class="fa-solid fa-user"></i>
+              </div>
+              <button><i class="fa-solid fa-caret-down"></i>حسابي</button>
+            </div>
+          </div>
+          <ul class="nav-list">
+            <li><a href="">الملف الشخصي</a></li>
+            <li><a href="">الإعدادات</a></li>
+            <li><button id="logout">تسجيل خروج</button></li>
+          </ul>
+        </div>
+      </header>
+      <section class="landing">
+        <div class="container">
+          <div class="welcome">
+            <h1 class="header">
+              أهلا بك <span class="name">يا</span> في
+              <img src="../images/logo-blue-expand.png" alt="The Logo" />
+            </h1>
+            <p class="details">
+              يمكنك الآن نشر الوظائف على موقعنا لتحصل على أفضل الكفاءات من
+              المتقدمين
+            </p>
+          </div>
+          <button class="post-job">Post Job</button>
+        </div>
+      </section>
+      <div class="post-job-box">
+        <i class="close fa-solid fa-xmark"></i>
+        <h2>Post Job</h2>
+        <form class="post-job-form">
+          <div class="row">
+            <h3>Job Title</h3>
+            <input
+              type="text"
+              name="job-title"
+              id="job-title"
+              placeholder="Ex: Pharmacist"
+            />
+            <i class="not-valid fa-solid fa-circle-exclamation"></i>
+          </div>
+          <div class="row">
+            <h3>Employment Type</h3>
+            <select name="employment-type" id="employment-type">
+              <option value="0">Select</option>
+              <option value="Job">Job</option>
+              <option value="Internship">Internship</option>
+            </select>
+            <i class="not-valid fa-solid fa-circle-exclamation"></i>
+          </div>
+          <div class="row">
+            <h3>Job Type</h3>
+            <select name="job-type" id="job-type">
+              <option value="0">Select</option>
+              <option value="Full Time">Full Time</option>
+              <option value="Part Time">Part Time</option>
+            </select>
+            <i class="not-valid fa-solid fa-circle-exclamation"></i>
+          </div>
+          <div class="row">
+            <h3>Workplace</h3>
+            <select name="workplace" id="workplace">
+              <option value="0">Select</option>
+              <option value="On-site">On-site</option>
+              <option value="Remote">Remote</option>
+              <option value="Hybrid">Hybrid</option>
+            </select>
+            <i class="not-valid fa-solid fa-circle-exclamation"></i>
+          </div>
+          <div class="row">
+            <h3>Job Location</h3>
+            <input
+              type="text"
+              name="job-location"
+              id="job-location"
+              placeholder="Country, City"
+            />
+            <i class="not-valid fa-solid fa-circle-exclamation"></i>
+          </div>
+          <div class="row">
+            <h3>Job Description</h3>
+            <textarea name="job-description" id="job-description"></textarea>
+            <i class="not-valid fa-solid fa-circle-exclamation"></i>
+          </div>
+          <div class="row">
+            <h3>Job Requirements</h3>
+            <textarea name="job-requirements" id="job-requirements"></textarea>
+            <i class="not-valid fa-solid fa-circle-exclamation"></i>
+          </div>
+          <div class="row">
+            <h3>Working Hours</h3>
+            <div class="time-row">
+              <h4>From</h4>
+              <div class="from">
+                <input
+                  type="number"
+                  min="0"
+                  max="23"
+                  placeholder="Hour"
+                  name="from-hour1"
+                  id="from-hour1"
+                />
+                <p>:</p>
+                <input
+                  type="number"
+                  min="0"
+                  max="59"
+                  placeholder="Minute"
+                  name="from-minute1"
+                  id="from-minute1"
+                />
+              </div>
+              <h4>To</h4>
+              <div class="to">
+                <input
+                  type="number"
+                  min="0"
+                  max="23"
+                  placeholder="Hour"
+                  name="to-hour1"
+                  id="to-hour1"
+                />
+                <p>:</p>
+                <input
+                  type="number"
+                  min="0"
+                  max="59"
+                  placeholder="Minute"
+                  name="to-minute1"
+                  id="to-minute1"
+                />
+              </div>
+              <i class="add fa-solid fa-circle-plus"></i>
+            </div>
+            <i class="not-valid fa-solid fa-circle-exclamation"></i>
+          </div>
+          <div class="row">
+            <h3>Interview Available Time And Date</h3>
+            <div class="time-row interview">
+              <h4>Day</h4>
+              <select name="interview-day" id="interview-day">
+                <option value="0">Select</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+              </select>
+              <h4>From</h4>
+              <div class="from">
+                <input
+                  type="number"
+                  min="0"
+                  max="23"
+                  placeholder="Hour"
+                  name="from-hour-interview1"
+                  id="from-hour-interview1"
+                />
+                <p>:</p>
+                <input
+                  type="number"
+                  min="0"
+                  max="59"
+                  placeholder="Minute"
+                  name="from-minute-interview1"
+                  id="from-minute-interview1"
+                />
+              </div>
+              <h4>To</h4>
+              <div class="to">
+                <input
+                  type="number"
+                  min="0"
+                  max="23"
+                  placeholder="Hour"
+                  name="to-hour-interview1"
+                  id="to-hour-interview1"
+                />
+                <p>:</p>
+                <input
+                  type="number"
+                  min="0"
+                  max="59"
+                  placeholder="Minute"
+                  name="to-minute-interview1"
+                  id="to-minute-interview1"
+                />
+              </div>
+              <i class="add fa-solid fa-circle-plus"></i>
+            </div>
+            <i class="not-valid fa-solid fa-circle-exclamation"></i>
+          </div>
+          <input type="submit" value="Post" />
+        </form>
+      </div>
+    </div>
+    <div class="message">
+      <h3 class="title"></h3>
+      <p class="main-message"></p>
+      <div class="another-messages"></div>
+      <i class="fa-solid fa-circle-xmark"></i>
+    </div>
+    <div class="overlay"></div>
     <script src="home.js" type="module"></script>
   </body>
 </html>

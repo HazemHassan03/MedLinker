@@ -47,6 +47,8 @@ async function checkAccess() {
         "home/home.html",
         "login/login.html"
       );
+    } else {
+      return true;
     }
   } else if (
     !document.cookie.includes("access") &&
@@ -56,6 +58,8 @@ async function checkAccess() {
       "home/home.html",
       "login/login.html"
     );
+  } else {
+    return true;
   }
 }
 
@@ -65,18 +69,34 @@ async function fetchUserData() {
     return cookie.startsWith("access");
   });
   let accessToken = neededCookie[0].split("=")[1];
-  let request = await fetch("https://api.medlinker.org/v1/users/jobseeker/me", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+  let request = await fetch(
+    `https://api.${domain}/${apiVersion}/users/jobseeker/me`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
   if (request.status == 200) {
     let userData = await request.json();
     return userData;
   } else if (request.status == 401) {
-    checkAccess();
+    let check = await checkAccess();
+    if (check === true) {
+      await fetchUserData();
+    }
+  } else {
+    return false;
   }
+  console.log(request);
 }
 
-export { domain, apiVersion, storeNewAccess, checkAccess, logoutFunction, fetchUserData };
+export {
+  domain,
+  apiVersion,
+  storeNewAccess,
+  checkAccess,
+  logoutFunction,
+  fetchUserData,
+};
