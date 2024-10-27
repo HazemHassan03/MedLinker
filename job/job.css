@@ -43,7 +43,6 @@ img {
 }
 body {
   font-family: var(--arabic-font);
-  overflow: hidden;
   background-color: #eee;
   padding-bottom: 50px;
 }
