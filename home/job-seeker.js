@@ -11,7 +11,8 @@ console.log(landingName);
 landingName.textContent += ` ${userData.user.first_name}`;
 sideFullName.textContent = `${userData.user.first_name} ${userData.user.last_name}`;
 sideUsername.textContent += userData.user.username;
-sideJobTitle.innerHTML += ` ${userData.jobTitle}`;
+// sideJobTitle.innerHTML += ` ${userData.jobTitle}`;
+sideJobTitle.innerHTML += ` Pharmacist`;
 
 expandJob.forEach((expand) => {
   expand.addEventListener("click", () => {
