@@ -1,4 +1,11 @@
-import { userData, overlay, createMessage } from "./home.js";
+import { userData, overlay } from "./home.js";
+import {
+  domain,
+  apiVersion,
+  getAccessToken,
+  finish,
+  createMessage,
+} from "../constants.js";
 
 let landingName = document.querySelector(".welcome .name"),
   postJobBtn = document.querySelector(".post-job"),
@@ -9,20 +16,25 @@ let landingName = document.querySelector(".welcome .name"),
   employmentType = document.getElementById("employment-type"),
   jobType = document.getElementById("job-type"),
   workplace = document.getElementById("workplace"),
-  jobLocation = document.getElementById("job-location"),
+  jobLocationCountry = document.getElementById("job-location-country"),
+  jobLocationCity = document.getElementById("job-location-city"),
   jobDescription = document.getElementById("job-description"),
   jobRequirements = document.getElementById("job-requirements"),
-  timeInputs = document.querySelectorAll(".time-row input[type=number]"),
-  hoursRow = document.querySelector(".time-row"),
-  addHoursRow = document.querySelector(".time-row .add"),
-  interviewDateTimeRow = document.querySelector(".time-row.interview"),
-  addInterviewDateTimeRow = document.querySelector(".time-row.interview .add"),
+  numberOfVacancies = document.getElementById("vacancies"),
+  addQuestionRow = document.querySelector(".question-row .add"),
+  removeQuestionRow = document.querySelectorAll(".question-row .remove"),
+  questionsInputs = document.querySelectorAll(".question-row input"),
+  // timeInputs = document.querySelectorAll(".time-row input[type=number]"),
+  // hoursRow = document.querySelector(".time-row"),
+  // addHoursRow = document.querySelector(".time-row .add"),
+  // interviewDateTimeRow = document.querySelector(".time-row.interview"),
+  // addInterviewDateTimeRow = document.querySelector(".time-row.interview .add"),
+  postJob = document.querySelector(".post-job-form .submit"),
   allPostJobInputs = [
     ...document.querySelectorAll(".post-job-form input:not([type=submit])"),
     ...document.querySelectorAll(".post-job-form select"),
     ...document.querySelectorAll(".post-job-form textarea"),
   ];
-console.log(allPostJobInputs);
 
 landingName.textContent += ` ${userData.user.first_name}`;
 
@@ -36,122 +48,133 @@ closePostJob.addEventListener("click", () => {
   postJobBox.classList.remove("active");
 });
 
-let hoursRowNumber = 1;
-addHoursRow.addEventListener("click", () => {
-  ++hoursRowNumber;
-  let elements = `<div class="time-row">
-              <h4>From</h4>
-              <div class="from">
-                <input type="number" min="0" max="23" placeholder="Hour" name="from-hour${hoursRowNumber}" id="from-hour${hoursRowNumber}" />
-                <p>:</p>
-                <input type="number" min="0" max="59" placeholder="Minute" name="from-minute${hoursRowNumber}" id="from-minute${hoursRowNumber}"/>
-              </div>
-              <h4>To</h4>
-              <div class="to">
-                <input type="number" min="0" max="23" placeholder="Hour" name="to-hour${hoursRowNumber}" id="to-hour${hoursRowNumber}"/>
-                <p>:</p>
-                <input type="number" min="0" max="59" placeholder="Minute" name="to-minute${hoursRowNumber}" id="to-minute${hoursRowNumber}"/>
-              </div>
-              <i class="remove-row fa-solid fa-circle-minus"></i>
-            </div>`;
-  hoursRow.parentElement.insertAdjacentHTML("beforeend", elements);
-  timeInputs = document.querySelectorAll(".time-row input[type=number]");
-  timeInputs.forEach((input) => {
-    input.addEventListener("input", () => {
-      if (input.value <= 9) {
-        if (input.value.length < 2) {
-          input.value = `0${input.value}`;
-        }
-      }
-    });
-  });
-});
-
-let interviewRowNumber = 1;
-addInterviewDateTimeRow.addEventListener("click", () => {
-  ++interviewRowNumber;
-  let elements = `<div class="time-row interview">
-              <h4>Day</h4>
-              <select name="interview-day" id="interview-day">
-                <option value="0">Select</option>
-                <option value="Saturday">Saturday</option>
-                <option value="Sunday">Sunday</option>
-                <option value="Monday">Monday</option>
-                <option value="Tuesday">Tuesday</option>
-                <option value="Wednesday">Wednesday</option>
-                <option value="Thursday">Thursday</option>
-                <option value="Friday">Friday</option>
-              </select>
-              <h4>From</h4>
-              <div class="from">
-                <input
-                  type="number"
-                  min="0"
-                  max="23"
-                  placeholder="Hour"
-                  name="from-hour-interview${interviewRowNumber}"
-                  id="from-hour-interview${interviewRowNumber}"
-                />
-                <p>:</p>
-                <input
-                  type="number"
-                  min="0"
-                  max="59"
-                  placeholder="Minute"
-                  name="from-minute-interview${interviewRowNumber}"
-                  id="from-minute-interview${interviewRowNumber}"
-                />
-              </div>
-              <h4>To</h4>
-              <div class="to">
-                <input
-                  type="number"
-                  min="0"
-                  max="23"
-                  placeholder="Hour"
-                  name="to-hour-interview${interviewRowNumber}"
-                  id="to-hour-interview${interviewRowNumber}"
-                />
-                <p>:</p>
-                <input
-                  type="number"
-                  min="0"
-                  max="59"
-                  placeholder="Minute"
-                  name="to-minute-interview${interviewRowNumber}"
-                  id="to-minute-interview${interviewRowNumber}"
-                />
-              </div>
-              <i class="remove-row fa-solid fa-circle-minus"></i>
-            </div>`;
-  interviewDateTimeRow.parentElement.insertAdjacentHTML("beforeend", elements);
-  timeInputs = document.querySelectorAll(".time-row input[type=number]");
-  timeInputs.forEach((input) => {
-    input.addEventListener("input", () => {
-      if (input.value <= 9) {
-        if (input.value.length < 2) {
-          input.value = `0${input.value}`;
-        }
-      }
-    });
-  });
-});
-
-document.addEventListener("click", (e) => {
-  if (e.target.classList.contains("remove-row")) {
-    e.target.parentElement.remove();
+if (localStorage.getItem("Post Job Form")) {
+  let object = JSON.parse(localStorage.getItem("Post Job Form"));
+  let keys = Object.keys(object);
+  for (let key of keys) {
+    document.getElementById(`${key}`).value = object[key];
   }
-});
-
-timeInputs.forEach((input) => {
+}
+function addInputToSessionStorage(input) {
+  let object = JSON.parse(localStorage.getItem("Post Job Form"));
+  object[input.id] = input.value;
+  localStorage.setItem("Post Job Form", JSON.stringify(object));
+}
+allPostJobInputs.forEach((input) => {
   input.addEventListener("input", () => {
-    if (input.value <= 9) {
-      if (input.value.length < 2) {
-        input.value = `0${input.value}`;
-      }
+    if (localStorage.getItem("Post Job Form")) {
+      addInputToSessionStorage(input);
+    } else {
+      localStorage.setItem("Post Job Form", JSON.stringify({}));
+      addInputToSessionStorage(input);
     }
   });
 });
+
+let questionsNumber = 1;
+addQuestionRow.addEventListener("click", () => {
+  questionsNumber++;
+  let elements = `<div class="question-row">
+              <div class="question">
+                <input
+                  type="text"
+                  name="interview-questions"
+                  data-type="question"
+                  id="question${questionsNumber}"
+                  placeholder="Add Question"
+                />
+                <input
+                  type="text"
+                  name="interview-questions"
+                  data-type="answer"
+                  id="answer${questionsNumber}"
+                  placeholder="Add Answer"
+                />
+              </div>
+              <i class="remove fa-solid fa-circle-minus"></i>
+            </div>`;
+  document
+    .querySelector(`.interview-questions`)
+    .insertAdjacentHTML("beforeend", elements);
+  allPostJobInputs = [
+    ...document.querySelectorAll(".post-job-form input:not([type=submit])"),
+    ...document.querySelectorAll(".post-job-form select"),
+    ...document.querySelectorAll(".post-job-form textarea"),
+  ];
+  removeQuestionRow = document.querySelectorAll(".question-row .remove");
+  removeQuestionRow.forEach((removeRow) => {
+    removeRow.addEventListener("click", () => {
+      removeRow.parentElement.remove();
+      allPostJobInputs = [
+        ...document.querySelectorAll(".post-job-form input:not([type=submit])"),
+        ...document.querySelectorAll(".post-job-form select"),
+        ...document.querySelectorAll(".post-job-form textarea"),
+      ];
+      let checkQuestionInputs = [];
+      questionsInputs.forEach((questionInput) => {
+        let checkObject = {
+          input: questionInput,
+          name: questionInput.id,
+        };
+        checkObject.check = questionInput.value.length > 0 ? true : false;
+        checkQuestionInputs.push(checkObject);
+      });
+      let checkArray = [];
+      for (let checkQuestionInput of checkQuestionInputs) {
+        checkArray.push(checkQuestionInput.check);
+      }
+      let finalCheck = checkArray.every((check) => {
+        return check === true;
+      });
+      if (finalCheck) {
+        document
+          .querySelector(".interview-questions .not-valid")
+          .classList.remove("active");
+      }
+    });
+  });
+  allPostJobInputs = [
+    ...document.querySelectorAll(".post-job-form input:not([type=submit])"),
+    ...document.querySelectorAll(".post-job-form select"),
+    ...document.querySelectorAll(".post-job-form textarea"),
+  ];
+});
+
+function assignValues() {
+  let workplaceValue;
+  if (workplace.value === "On-site") {
+    workplaceValue = "onsite";
+  } else {
+    workplaceValue = workplace.value;
+  }
+  let questionsRows = document.querySelectorAll(".question-row");
+  let interviewQuestionsArray = [];
+  questionsRows.forEach((questionsRow) => {
+    let question = questionsRow
+      .querySelector("[data-type=question]")
+      .value.trim();
+    console.log(question);
+    let answer = questionsRow.querySelector("[data-type=answer]").value.trim();
+    interviewQuestionsArray.push({
+      question: question,
+      answer: answer,
+    });
+  });
+  let object = {
+    title: jobTitle.value.trim(),
+    position_type: employmentType.value.toLowerCase(),
+    job_type: jobType.value.toLowerCase(),
+    work_place: workplaceValue.toLowerCase(),
+    location_country: jobLocationCountry.value.trim(),
+    location_city: jobLocationCity.value.trim(),
+    description: jobDescription.value.trim(),
+    requirements: jobRequirements.value.trim(),
+    number_of_vacancies: numberOfVacancies.value,
+    interview_questions: interviewQuestionsArray,
+    closing_date: "2024-10-30T10:43:39.591Z",
+  };
+  return object;
+}
 
 function checkInputRequired(input) {
   let check = {
@@ -160,6 +183,12 @@ function checkInputRequired(input) {
   };
   if (input.type === "text" || input.tagName === "TEXTAREA") {
     if (input.value.length > 0) {
+      check.result = true;
+    } else {
+      check.result = false;
+    }
+  } else if (input.type === "number") {
+    if (input.value > 0) {
       check.result = true;
     } else {
       check.result = false;
@@ -179,37 +208,66 @@ function checkAllRequired() {
   allPostJobInputs.forEach((input) => {
     checkArray.push(checkInputRequired(input));
   });
-  console.log(checkArray);
   let checkFalse = checkArray.some((check) => {
     return check.result === false;
   });
   if (checkFalse) {
-    console.log(checkFalse);
     return checkArray;
   } else {
     return true;
   }
 }
 
-function assignValues() {
-  let postJobObject = {
-    jobTitle: jobTitle.value,
-    employmentType: employmentType.value,
-    jobType: jobType.value,
-    workplace: workplace.value,
-    jobLocation: jobLocation.value,
-    jobDescription: jobDescription.value,
-    jobRequirements: jobRequirements.value,
-    // workingHours: workingHours.value,
-    interviewTime: interviewTime.value,
-  };
-  return postJobObject;
+function finalCheck() {
+  let checkArray = checkAllRequired();
+  let falseInputs = [];
+  for (let checkInput of checkArray) {
+    if (checkInput.result === false) {
+      falseInputs.push(checkInput.input);
+    }
+  }
+  falseInputs.forEach((input) => {
+    document.querySelector(`.${input.name} .not-valid`).classList.add("active");
+    input.addEventListener("input", () => {
+      document
+        .querySelector(`.${input.name} .not-valid`)
+        .classList.remove("active");
+    });
+  });
 }
 
-postJobForm.addEventListener("submit", (e) => {
+postJobForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   if (checkAllRequired() === true) {
     console.log(assignValues());
+    let request = await fetch(
+      `https://api.${domain}/${apiVersion}/company/me/jobs`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(assignValues()),
+      }
+    );
+    if (request.status == 201) {
+      createMessage(
+        "success",
+        postJobBox,
+        "تم نشر الوظيفة بنجاح",
+        "شكرا لاستخدامك لـMedLinker، سنعمل جاهدين لإيجاد أفضل الموظفين المناسبين لهذه الوظيفة"
+      );
+    } else {
+      createMessage(
+        "failed",
+        postJobBox,
+        "حدث خطأ",
+        "نأسف لحدوث ذلك، يرجى المحاولة مرة أخرى"
+      );
+    }
+    console.log(request);
+    console.log(await request.json());
   } else {
     createMessage(
       "failed",
@@ -217,20 +275,9 @@ postJobForm.addEventListener("submit", (e) => {
       "البيانات غير كاملة",
       "يرجى التأكد من أنك قد قمت بإدخل جميع البيانات المطلوبة"
     );
-    let checkArray = checkAllRequired();
-    let falseInputs = [];
-    for (let checkInput of checkArray) {
-      if (checkInput.result === false) {
-        falseInputs.push(checkInput.input);
-      }
-    }
-    falseInputs.forEach((input) => {
-      input.parentElement.querySelector(".not-valid").classList.add("active");
-      input.addEventListener("input", () => {
-        input.parentElement
-          .querySelector(".not-valid")
-          .classList.remove("active");
-      });
-    });
+    finalCheck();
   }
 });
+
+document.body.style.overflow = "initial";
+finish();

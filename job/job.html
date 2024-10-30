@@ -31,7 +31,7 @@
     />
   </head>
   <body>
-    <div class="loading">
+    <div class="loading active">
       <div class="one"></div>
       <div class="two"></div>
       <div class="three"></div>
@@ -62,29 +62,77 @@
         </ul>
       </div>
     </header>
+    <section class="landing">
+      <div class="container">
+        <h2 class="job-message not-found">
+          هذه الوظيفة غير موجودة أو لم تعد متاحة، نتمنى لك التوفيق في وظيفة
+          أخرى.
+        </h2>
+        <h2 class="job-message failed">
+          فشل في جلب الوظيفة، يرجى إعادة تحميل الصفحة مرة أخرى
+        </h2>
+      </div>
+    </section>
     <section class="job">
+      <div class="container">
+        <h2 class="job-title"></h2>
+        <p class="company-name">
+          <i class="fa-regular fa-building fa-fw"></i>
+        </p>
+        <p class="location">
+          <i class="fa-solid fa-location-dot fa-fw"></i>
+        </p>
+        <p class="vacancies">
+          <span class="title">Number Of Vacancies: </span>
+          <span class="value"></span>
+        </p>
+        <p class="employment-type">
+          <span class="title">Employment Type: </span>
+          <span class="value"></span>
+        </p>
+        <p class="job-type">
+          <span class="title">Job Type: </span>
+          <span class="value"></span>
+        </p>
+        <p class="workplace">
+          <span class="title">Workplace: </span>
+          <span class="value"></span>
+        </p>
+        <div class="job-description">
+          <span class="title">Job Description: </span>
+          <span class="value">.</span>
+        </div>
+        <div class="job-requirements">
+          <span class="title">Job Requirements: </span>
+          <span class="value"></span>
+        </div>
+      </div>
+    </section>
+    <!-- <section class="job">
       <div class="container">
         <h2 class="job-title">Pharmacist</h2>
         <p class="company-name">
           <i class="fa-regular fa-building fa-fw"></i> Sehha Pharmacy
         </p>
         <p class="location">
-          <i class="fa-solid fa-location-dot fa-fw"></i> New Cairo
+          <i class="fa-solid fa-location-dot fa-fw"></i> Cairo, New Cairo
         </p>
-        <div class="job-inf">
-          <span class="employment-type">Job</span>
-          |
-          <span class="job-type">Full Time</span>
-          |
-          <span class="workplace">On-site</span>
-        </div>
-        <div class="working-hours">
-          <span class="title">Working Hours: </span>
-          <span class="value"
-            >From 00:00 To 06:00 | From 06:00 To 12:00 | From 12:00 To 18:00 |
-            From 18:00 To 00:00</span
-          >
-        </div>
+        <p class="vacancies">
+          <span class="title">Number Of Vacancies: </span>
+          <span class="value">10</span>
+        </p>
+        <p class="employment-type">
+          <span class="title">Employment Type: </span>
+          <span class="value">Job</span>
+        </p>
+        <p class="job-type">
+          <span class="title">Job Type: </span>
+          <span class="value">Full Time</span>
+        </p>
+        <p class="workplace">
+          <span class="title">Workplace: </span>
+          <span class="value">On-site</span>
+        </p>
         <div class="job-description">
           <span class="title">Job Description: </span>
           <span class="value"
@@ -117,9 +165,31 @@
             licence to practice the profession.</span
           >
         </div>
-        <button class="apply">Apply</button>
       </div>
-    </section>
+    </section> -->
+    <!-- <section class="apply-form">
+      <div class="container">
+        <form class="apply-job-form">
+          <h2 class="form-title">Apply Form</h2>
+          <div class="resume">
+            <h3>Resume</h3>
+            <a href="" target="_blank" class="uploaded-resume">
+              <i class="fa-solid fa-file"></i> <span class="name"></span>
+            </a>
+            <button class="change-resume">Change</button>
+            <input type="file" name="resume" id="resume" />
+          </div>
+          <div class="location">
+            <h3>Location</h3>
+            <input type="text" name="resume" id="resume" placeholder="Your Current Location"/>
+          </div>
+          <div class="resume">
+            <h3>Location</h3>
+            <input type="text" name="resume" id="resume" placeholder="Your Current Location"/>
+          </div>
+        </form>
+      </div>
+    </section> -->
     <div class="message">
       <h3 class="title"></h3>
       <p class="main-message"></p>

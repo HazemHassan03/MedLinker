@@ -44,7 +44,7 @@ img {
 body {
   font-family: var(--arabic-font);
   background-color: #eee;
-  padding-bottom: 50px;
+  overflow: hidden;
 }
 .nav-list {
   list-style: none;
@@ -402,6 +402,22 @@ header .nav-list li button {
 }
 .message.success h3 {
   color: var(--green-color);
+}
+
+.landing .container {
+  height: calc(100dvh - 60px);
+  position: relative;
+}
+.landing .container .job-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  direction: rtl;
+  text-align: center;
+  line-height: 2;
+  color: var(--main-color);
 }
 
 .job {

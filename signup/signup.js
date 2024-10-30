@@ -119,10 +119,7 @@ signupForm.addEventListener("submit", (e) => {
   ];
   if (checkAll(checkArray)) {
     sessionStorage.setItem("Data", JSON.stringify(infObj));
-    location.pathname = location.pathname.replace(
-      "signup.html",
-      "information.html"
-    );
+    location.href = "../signup/information.html";
   } else {
     warning.textContent = "تأكد من صحة البيانات المدخلة";
     warning.classList.add("active");

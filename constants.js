@@ -42,39 +42,28 @@ async function checkAccess() {
     document.cookie.includes("refresh")
   ) {
     let status = await storeNewAccess();
-    if (status != 200) {
-      location.pathname = location.pathname.replace(
-        "home/home.html",
-        "login/login.html"
-      );
-    } else {
+    if (status == 200) {
       return true;
+    } else {
+      location.href = "../login/login.html";
     }
   } else if (
     !document.cookie.includes("access") &&
     !document.cookie.includes("refresh")
   ) {
-    location.pathname = location.pathname.replace(
-      "home/home.html",
-      "login/login.html"
-    );
+    location.href = "../login/login.html";
   } else {
     return true;
   }
 }
 
 async function fetchUserData() {
-  let cookies = document.cookie.split("; ");
-  let neededCookie = cookies.filter((cookie) => {
-    return cookie.startsWith("access");
-  });
-  let accessToken = neededCookie[0].split("=")[1];
   let request = await fetch(
     `https://api.${domain}/${apiVersion}/users/jobseeker/me`,
     {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${getAccessToken()}`,
       },
     }
   );
@@ -92,6 +81,66 @@ async function fetchUserData() {
   console.log(request);
 }
 
+function getAccessToken() {
+  let cookies = document.cookie.split("; ");
+  let neededCookie = cookies.filter((cookie) => {
+    return cookie.startsWith("access");
+  });
+  let accessToken = neededCookie[0].split("=")[1];
+  return accessToken;
+}
+
+function loading() {
+  document.querySelector(".loading").classList.add("active");
+}
+function finish() {
+  document.querySelector(".loading").classList.remove("active");
+}
+
+function createMessage(type, from, title, mainMessage, anotherMessages) {
+  let message = document.querySelector(".message"),
+    messageClose = document.querySelector(".message i"),
+    messageTitle = document.querySelector(".message .title"),
+    messageMain = document.querySelector(".message .main-message"),
+    messageAnother = document.querySelector(".message .another-messages");
+  if (type) {
+    switch (type) {
+      case "success":
+        message.classList.remove("failed");
+        message.classList.add("success");
+        break;
+      case "failed":
+        message.classList.remove("success");
+        message.classList.add("failed");
+        break;
+    }
+  }
+  if (title) {
+    messageTitle.textContent = title;
+  }
+  if (mainMessage) {
+    messageMain.textContent = mainMessage;
+  }
+  if (anotherMessages) {
+    for (let message of anotherMessages) {
+      let p = document.createElement("p"),
+        pText = document.createTextNode(message);
+      p.append(pText);
+      messageAnother.append(p);
+    }
+  }
+  if (from) {
+    from.classList.remove("active");
+  }
+  message.classList.add("active");
+  messageClose.addEventListener("click", () => {
+    message.classList.remove("active");
+    if (from) {
+      from.classList.add("active");
+    }
+  });
+}
+
 export {
   domain,
   apiVersion,
@@ -99,4 +148,8 @@ export {
   checkAccess,
   logoutFunction,
   fetchUserData,
+  getAccessToken,
+  loading,
+  finish,
+  createMessage,
 };

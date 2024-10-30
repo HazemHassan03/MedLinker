@@ -79,10 +79,7 @@ loginForm.addEventListener("submit", async (e) => {
     if (sessionStorage.getItem("post job") === "true") {
       // post job page
     } else {
-      location.pathname = location.pathname.replace(
-        "login/login.html",
-        "home/home.html"
-      );
+      location.href = "../home/home.html";
     }
   } else if (request.status == 401) {
     showMessage(wrong);

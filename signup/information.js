@@ -4,10 +4,7 @@ let infObj;
 if (sessionStorage.getItem("Data")) {
   infObj = JSON.parse(sessionStorage.getItem("Data"));
 } else {
-  location.pathname = location.pathname.replace(
-    "information.html",
-    "signup.html"
-  );
+  location.href = "../signup/signup.html";
 }
 if (JSON.parse(sessionStorage.getItem("Data")).comingFrom) {
   sessionStorage.removeItem("User Type");
@@ -51,6 +48,7 @@ let userType,
   employeeEmail = document.getElementById("employee-email"),
   companyEmail = document.getElementById("company-email"),
   userName = document.querySelectorAll("input[name=username]"),
+  companyName = document.getElementById("company-name"),
   employeeUserName = document.getElementById("employee-username"),
   companyUserName = document.getElementById("company-username"),
   phoneNumber = document.querySelectorAll("input[name=phone]"),
@@ -704,7 +702,7 @@ function encodeFiles(file, object, store) {
 }
 
 function assignValues() {
-  let userObject;
+  let formData = new FormData();
   let currentLevelValue = {
     "Level 1": "1",
     "Level 2": "2",
@@ -717,50 +715,37 @@ function assignValues() {
     Male: "1",
     Female: "2",
   };
-  let experienceValue = Math.round(
-    (experienceYears.value * 12 + +experienceMonths.value) / 12
-  );
   if (userType === "job-seeker") {
-    userObject = {
-      user: {
-        username: employeeUserName.value,
-        password: infObj.password,
-        first_name: employeeFirstName.value,
-        last_name: employeeLastName.value,
-        email: employeeEmail.value,
-        user_type: "job_seeker",
-      },
-      // resume: "",
-      birthdate: `${year.value}-${month.value}-${day.value}`,
-      location_city: address.value,
-      years_of_experience: experienceValue,
-      gender: genderValue[checkedGender.value],
-      contact_number: employeePhoneNumber.value,
-      current_level: currentLevelValue[currentLevel.value],
-      military_status: militaryStatus.value.toLowerCase(),
-      job_type: jobType.value.toLowerCase(),
-      graduation_year: graduation.value,
-    };
-    // if (cv.files[0]) {
-    //   encodeFiles(cv.files[0], userObject, "resume");
-    // }
-    // encodeFiles(photo.files[0], userObject, "photo");
+    formData.append("user.username", employeeUserName.value.trim());
+    formData.append("user.password", infObj.password);
+    formData.append("user.first_name", employeeFirstName.value.trim());
+    formData.append("user.last_name", employeeLastName.value.trim());
+    formData.append("user.email", employeeEmail.value.trim());
+    formData.append("user.user_type", "job_seeker");
+    formData.append("resume", cv.files[0]);
+    formData.append("birthdate", `${year.value}-${month.value}-${day.value}`);
+    formData.append("location_city", address.value.trim());
+    formData.append("years_of_experience", experienceYears.value);
+    formData.append("months_of_experience", experienceMonths.value);
+    formData.append("gender", genderValue[checkedGender.value]);
+    formData.append("contact_number", employeePhoneNumber.value.trim());
+    formData.append("current_level", currentLevelValue[currentLevel.value]);
+    formData.append("military_status", militaryStatus.value.toLowerCase());
+    formData.append("job_type", jobType.value.toLowerCase());
+    formData.append("graduation_year", graduation.value);
   } else if (userType === "company") {
-    userObject = {
-      user: {
-        username: companyUserName.value,
-        password: infObj.password,
-        first_name: companyFirstName.value,
-        last_name: companyLastName.value,
-        email: companyEmail.value,
-        user_type: "company",
-      },
-      contact_number: companyPhoneNumber.value,
-    };
+    formData.append("user.username", companyUserName.value.trim());
+    formData.append("user.password", infObj.password);
+    formData.append("user.first_name", companyFirstName.value.trim());
+    formData.append("user.last_name", companyLastName.value.trim());
+    formData.append("user.email", companyEmail.value.trim());
+    formData.append("user.user_type", "company");
+    formData.append("company_name", companyName.value.trim());
+    formData.append("phone_number", companyPhoneNumber.value.trim());
   } else {
     return false;
   }
-  return userObject;
+  return formData;
 }
 
 if (!sessionStorage.getItem("MedLinker Form")) {
@@ -875,13 +860,11 @@ function successMessage() {
     successTimer.textContent -= 1;
     if (successTimer.textContent == 0) {
       clearInterval(interval);
-      location.pathname = location.pathname.replace(
-        "signup/information.html",
-        "login/login.html"
-      );
+      location.href = "../login/login.html";
     }
   }, 1000);
 }
+successMessage()
 function removeDisabled(interval) {
   clearInterval(interval);
   if (userType === "job-seeker") {
@@ -902,20 +885,20 @@ async function fetchData(from) {
   });
   if (checkAllEmpty() === true) {
     if (checkAllInputsValidation() === true) {
-      let object = assignValues();
+      let formData = assignValues();
       loadingMessage();
+      console.log(userType);
       let request = await fetch(
         `https://api.${domain}/${apiVersion}/auth/register`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(object),
+          body: formData,
         }
       );
       if (request) {
         removeLoadingMessage();
+        console.log(request);
+        console.log(await request.json());
       }
       if (request.status === 201) {
         successMessage();

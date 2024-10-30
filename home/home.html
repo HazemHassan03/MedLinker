@@ -62,7 +62,7 @@
             </div>
           </div>
           <ul class="nav-list">
-            <li><a href="../profile/profile.html">الملف الشخصي</a></li>
+            <li><a href="">الملف الشخصي</a></li>
             <li><a href="">الإعدادات</a></li>
             <li><button id="logout">تسجيل خروج</button></li>
           </ul>
@@ -83,87 +83,10 @@
       <div class="main-content">
         <div class="container">
           <main class="jobs">
-            <div class="job">
-              <div class="details">
-                <a class="job-title" href="../job/job.html?id=1">Pharmacist</a>
-                <p class="company-name">
-                  <i class="fa-regular fa-building fa-fw"></i> Sehha Pharmacy
-                </p>
-                <p class="location">
-                  <i class="fa-solid fa-location-dot fa-fw"></i> New Cairo
-                </p>
-                <div class="job-inf">
-                  <span class="employment-type">Job</span>
-                  |
-                  <span class="job-type">Full Time</span>
-                  |
-                  <span class="workplace">On-site</span>
-                </div>
-              </div>
-              <!-- <div class="other">
-                <button class="copy-job-link">
-                  <i class="fa-regular fa-copy"></i> Copy Link
-                </button>
-                <p class="post-date">
-                  <span class="title">Posted on </span>
-                  <span class="value">Friday 25 March 2024</span>
-                </p>
-              </div> -->
-            </div>
-            <div class="job">
-              <div class="details">
-                <a class="job-title" href="../job/job.html?id=1">Pharmacist</a>
-                <p class="company-name">
-                  <i class="fa-regular fa-building fa-fw"></i> Sehha Pharmacy
-                </p>
-                <p class="location">
-                  <i class="fa-solid fa-location-dot fa-fw"></i> New Cairo
-                </p>
-                <div class="job-inf">
-                  <span class="employment-type">Job</span>
-                  |
-                  <span class="job-type">Full Time</span>
-                  |
-                  <span class="workplace">On-site</span>
-                </div>
-              </div>
-              <!-- <div class="other">
-                <button class="copy-job-link">
-                  <i class="fa-regular fa-copy"></i> Copy Link
-                </button>
-                <p class="post-date">
-                  <span class="title">Posted on </span>
-                  <span class="value">Friday 25 March 2024</span>
-                </p>
-              </div> -->
-            </div>
-            <div class="job">
-              <div class="details">
-                <a class="job-title" href="../job/job.html?id=1">Pharmacist</a>
-                <p class="company-name">
-                  <i class="fa-regular fa-building fa-fw"></i> Sehha Pharmacy
-                </p>
-                <p class="location">
-                  <i class="fa-solid fa-location-dot fa-fw"></i> New Cairo
-                </p>
-                <div class="job-inf">
-                  <span class="employment-type">Job</span>
-                  |
-                  <span class="job-type">Full Time</span>
-                  |
-                  <span class="workplace">On-site</span>
-                </div>
-              </div>
-              <!-- <div class="other">
-                <button class="copy-job-link">
-                  <i class="fa-regular fa-copy"></i> Copy Link
-                </button>
-                <p class="post-date">
-                  <span class="title">Posted on </span>
-                  <span class="value">Friday 25 March 2024</span>
-                </p>
-              </div> -->
-            </div>
+            <h2 class="jobs-message no-jobs">لا توجد وظائف</h2>
+            <h2 class="jobs-message failed">
+              فشل جلب الوظائف، يرجى إعادة تحميل الصفحة
+            </h2>
           </main>
           <aside class="side">
             <div class="personal-information">
@@ -227,7 +150,7 @@
         <i class="close fa-solid fa-xmark"></i>
         <h2>Post Job</h2>
         <form class="post-job-form">
-          <div class="row">
+          <div class="row job-title">
             <h3>Job Title</h3>
             <input
               type="text"
@@ -237,7 +160,7 @@
             />
             <i class="not-valid fa-solid fa-circle-exclamation"></i>
           </div>
-          <div class="row">
+          <div class="row employment-type">
             <h3>Employment Type</h3>
             <select name="employment-type" id="employment-type">
               <option value="0">Select</option>
@@ -246,7 +169,7 @@
             </select>
             <i class="not-valid fa-solid fa-circle-exclamation"></i>
           </div>
-          <div class="row">
+          <div class="row job-type">
             <h3>Job Type</h3>
             <select name="job-type" id="job-type">
               <option value="0">Select</option>
@@ -255,7 +178,7 @@
             </select>
             <i class="not-valid fa-solid fa-circle-exclamation"></i>
           </div>
-          <div class="row">
+          <div class="row workplace">
             <h3>Workplace</h3>
             <select name="workplace" id="workplace">
               <option value="0">Select</option>
@@ -265,132 +188,63 @@
             </select>
             <i class="not-valid fa-solid fa-circle-exclamation"></i>
           </div>
-          <div class="row">
+          <div class="row job-location">
             <h3>Job Location</h3>
-            <input
-              type="text"
-              name="job-location"
-              id="job-location"
-              placeholder="Country, City"
-            />
+            <div class="inputs">
+              <input
+                type="text"
+                name="job-location"
+                id="job-location-country"
+                placeholder="Country"
+              />
+              <input
+                type="text"
+                name="job-location"
+                id="job-location-city"
+                placeholder="City"
+              />
+            </div>
             <i class="not-valid fa-solid fa-circle-exclamation"></i>
           </div>
-          <div class="row">
+          <div class="row job-description">
             <h3>Job Description</h3>
             <textarea name="job-description" id="job-description"></textarea>
             <i class="not-valid fa-solid fa-circle-exclamation"></i>
           </div>
-          <div class="row">
+          <div class="row job-requirements">
             <h3>Job Requirements</h3>
             <textarea name="job-requirements" id="job-requirements"></textarea>
             <i class="not-valid fa-solid fa-circle-exclamation"></i>
           </div>
-          <div class="row">
-            <h3>Working Hours</h3>
-            <div class="time-row">
-              <h4>From</h4>
-              <div class="from">
+          <div class="row vacancies">
+            <h3>Number Of Vacancies</h3>
+            <input type="number" name="vacancies" id="vacancies" min="1" />
+            <i class="not-valid fa-solid fa-circle-exclamation"></i>
+          </div>
+          <div class="row interview-questions">
+            <h3>Interview Questions</h3>
+            <i class="not-valid fa-solid fa-circle-exclamation"></i>
+            <div class="question-row">
+              <div class="question">
                 <input
-                  type="number"
-                  min="0"
-                  max="23"
-                  placeholder="Hour"
-                  name="from-hour1"
-                  id="from-hour1"
+                  type="text"
+                  name="interview-questions"
+                  data-type="question"
+                  id="question1"
+                  placeholder="Add Question"
                 />
-                <p>:</p>
                 <input
-                  type="number"
-                  min="0"
-                  max="59"
-                  placeholder="Minute"
-                  name="from-minute1"
-                  id="from-minute1"
-                />
-              </div>
-              <h4>To</h4>
-              <div class="to">
-                <input
-                  type="number"
-                  min="0"
-                  max="23"
-                  placeholder="Hour"
-                  name="to-hour1"
-                  id="to-hour1"
-                />
-                <p>:</p>
-                <input
-                  type="number"
-                  min="0"
-                  max="59"
-                  placeholder="Minute"
-                  name="to-minute1"
-                  id="to-minute1"
+                  type="text"
+                  name="interview-questions"
+                  data-type="answer"
+                  id="answer1"
+                  placeholder="Add Answer"
                 />
               </div>
               <i class="add fa-solid fa-circle-plus"></i>
             </div>
-            <i class="not-valid fa-solid fa-circle-exclamation"></i>
           </div>
-          <div class="row">
-            <h3>Interview Available Time And Date</h3>
-            <div class="time-row interview">
-              <h4>Day</h4>
-              <select name="interview-day" id="interview-day">
-                <option value="0">Select</option>
-                <option value="Saturday">Saturday</option>
-                <option value="Sunday">Sunday</option>
-                <option value="Monday">Monday</option>
-                <option value="Tuesday">Tuesday</option>
-                <option value="Wednesday">Wednesday</option>
-                <option value="Thursday">Thursday</option>
-                <option value="Friday">Friday</option>
-              </select>
-              <h4>From</h4>
-              <div class="from">
-                <input
-                  type="number"
-                  min="0"
-                  max="23"
-                  placeholder="Hour"
-                  name="from-hour-interview1"
-                  id="from-hour-interview1"
-                />
-                <p>:</p>
-                <input
-                  type="number"
-                  min="0"
-                  max="59"
-                  placeholder="Minute"
-                  name="from-minute-interview1"
-                  id="from-minute-interview1"
-                />
-              </div>
-              <h4>To</h4>
-              <div class="to">
-                <input
-                  type="number"
-                  min="0"
-                  max="23"
-                  placeholder="Hour"
-                  name="to-hour-interview1"
-                  id="to-hour-interview1"
-                />
-                <p>:</p>
-                <input
-                  type="number"
-                  min="0"
-                  max="59"
-                  placeholder="Minute"
-                  name="to-minute-interview1"
-                  id="to-minute-interview1"
-                />
-              </div>
-              <i class="add fa-solid fa-circle-plus"></i>
-            </div>
-            <i class="not-valid fa-solid fa-circle-exclamation"></i>
-          </div>
-          <input type="submit" value="Post" />
+          <input class="submit" type="submit" value="Post" />
         </form>
       </div>
     </div>
