@@ -422,20 +422,6 @@ form .cv i {
 select::-webkit-scrollbar {
   width: 10px;
 }
-/* input[type="file"]::file-selector-button {
-  background-color: transparent;
-  border: none;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-} */
-/* form .phone input[type="number"]::-webkit-inner-spin-button,
-form .phone input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  margin: 0;
-} */
 form .row > div .note {
   margin-top: 8px;
   font-size: 16px;
@@ -580,6 +566,27 @@ form .check-false.active {
 }
 .success-message h3 {
   color: var(--green-color);
+}
+.success-message a {
+  display: block;
+  width: fit-content;
+  margin: auto;
+  border: 3px solid var(--main-color);
+  color: var(--main-color);
+  text-decoration: none;
+  padding: 3px 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+  transition: background-color var(--transition), color var(--transition);
+  -webkit-transition: background-color var(--transition),
+    color var(--transition);
+  -moz-transition: background-color var(--transition), color var(--transition);
+  -ms-transition: background-color var(--transition), color var(--transition);
+  -o-transition: background-color var(--transition), color var(--transition);
+}
+.success-message a:hover {
+  background-color: var(--main-color);
+  color: white;
 }
 .loading {
   position: absolute;

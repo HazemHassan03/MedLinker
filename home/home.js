@@ -1,19 +1,13 @@
-import {
-  checkAccess,
-  logoutFunction,
-  fetchUserData,
-} from "../constants.js";
+import { checkAccess, logoutFunction, fetchUserData } from "../constants.js";
 
 let userData;
 let access = await checkAccess();
 if (access === true) {
   let fetchData = await fetchUserData();
   userData = fetchData;
-  console.log(userData);
   let jobSeekerBody = document.querySelector(".job-seeker-body"),
     companyBody = document.querySelector(".company-body");
   let userType = userData.user.user_type;
-  console.log(userType);
   if (userType === "job_seeker") {
     companyBody.remove();
     let script = document.createElement("script");

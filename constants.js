@@ -63,31 +63,60 @@ async function fetchUserData() {
     {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${getAccessToken()}`,
+        Authorization: `Bearer ${await getAccessToken()}`,
       },
     }
   );
-  if (request.status == 200) {
-    let userData = await request.json();
-    return userData;
-  } else if (request.status == 401) {
-    let check = await checkAccess();
-    if (check === true) {
-      await fetchUserData();
+  if (request.status == 404) {
+    let request = await fetch(
+      `https://api.${domain}/${apiVersion}/users/company/me`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${await getAccessToken()}`,
+        },
+      }
+    );
+    if (request.status == 200) {
+      let userData = await request.json();
+      return userData;
+    } else if (request.status == 401) {
+      let check = await checkAccess();
+      if (check === true) {
+        await fetchUserData();
+      }
+    } else {
+      return false;
     }
   } else {
-    return false;
+    if (request.status == 200) {
+      let userData = await request.json();
+      return userData;
+    } else if (request.status == 401) {
+      let check = await checkAccess();
+      if (check === true) {
+        await fetchUserData();
+      }
+    } else {
+      return false;
+    }
   }
-  console.log(request);
 }
 
-function getAccessToken() {
+async function getAccessToken() {
   let cookies = document.cookie.split("; ");
   let neededCookie = cookies.filter((cookie) => {
     return cookie.startsWith("access");
   });
-  let accessToken = neededCookie[0].split("=")[1];
-  return accessToken;
+  if (neededCookie.length > 0) {
+    let accessToken = neededCookie[0].split("=")[1];
+    return accessToken;
+  } else {
+    let check = await checkAccess();
+    if (check === true) {
+      await getAccessToken();
+    }
+  }
 }
 
 function loading() {

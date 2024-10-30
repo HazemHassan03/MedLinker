@@ -5,16 +5,19 @@ let jobsObject,
   jobsContainer = document.querySelector(".jobs"),
   noJobsMessage = document.querySelector(".jobs .no-jobs"),
   failedJobsMessage = document.querySelector(".jobs .failed");
-let request = await fetch(`https://api.${domain}/${apiVersion}/jobs`, {
-  headers: {
-    Authorization: `Bearer ${getAccessToken()}`,
-  },
-});
-if (request.status == 200) {
-  jobsObject = await request.json();
+
+async function fetchJobs() {
+  let request = await fetch(`https://api.${domain}/${apiVersion}/jobs`, {
+    headers: {
+      Authorization: `Bearer ${await getAccessToken()}`,
+    },
+  });
+  return request;
+}
+let getJobsRequest = await fetchJobs();
+if (getJobsRequest.status == 200) {
+  jobsObject = await getJobsRequest.json();
   let jobs = jobsObject.results;
-  console.log(jobs);
-  console.log(jobs.length);
   if (jobs.length > 0) {
     noJobsMessage.remove();
     failedJobsMessage.remove();
@@ -61,19 +64,20 @@ if (request.status == 200) {
   } else {
     failedJobsMessage.remove();
   }
+} else if (getJobsRequest.status == 401) {
+  let check = await checkAccess();
+  if (check === true) {
+    await fetchJobs();
+  }
 } else {
   noJobsMessage.remove();
 }
-console.log(request);
-console.log(jobsObject);
 
 let landingName = document.querySelector(".welcome .name"),
   sideFullName = document.querySelector(".side .full-name"),
   sideUsername = document.querySelector(".side .username"),
   sideJobTitle = document.querySelector(".side .job-title"),
   expandJob = document.querySelectorAll(".job .explore-more");
-
-console.log(landingName);
 
 landingName.textContent += ` ${userData.user.first_name}`;
 sideFullName.textContent = `${userData.user.first_name} ${userData.user.last_name}`;

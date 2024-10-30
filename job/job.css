@@ -426,7 +426,8 @@ header .nav-list li button {
 .job .container > *:not(.apply, :last-child) {
   margin-bottom: 15px;
 }
-.job .apply {
+.job .apply,
+.application .submit {
   padding: 7px 10px;
   background-color: var(--alt-color);
   color: white;
@@ -483,4 +484,121 @@ header .nav-list li button {
 }
 .job .value {
   line-height: 1.8;
+}
+.application {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  background-color: white;
+  z-index: 99999;
+  width: 90dvw;
+  max-width: 800px;
+  padding: 15px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  max-height: 90dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  transform: translate(-50%, -50%) scale(0);
+  -webkit-transform: translate(-50%, -50%) scale(0);
+  -moz-transform: translate(-50%, -50%) scale(0);
+  -ms-transform: translate(-50%, -50%) scale(0);
+  -o-transform: translate(-50%, -50%) scale(0);
+  transition: transform var(--transition);
+  -webkit-transition: transform var(--transition);
+  -moz-transition: transform var(--transition);
+  -ms-transition: transform var(--transition);
+  -o-transition: transform var(--transition);
+}
+.application.active {
+  transform: translate(-50%, -50%) scale(1);
+  -webkit-transform: translate(-50%, -50%) scale(1);
+  -moz-transform: translate(-50%, -50%) scale(1);
+  -ms-transform: translate(-50%, -50%) scale(1);
+  -o-transform: translate(-50%, -50%) scale(1);
+}
+.application .close {
+  font-size: 30px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: #626262;
+  cursor: pointer;
+}
+.application .title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--alt-color);
+}
+.application .label {
+  color: var(--main-color);
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.application .resume .button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+.application .resume .details {
+  color: var(--main-color);
+  font-weight: 500;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  display: none;
+}
+.application .resume .note {
+  margin-top: 2px;
+  font-size: 16px;
+  font-weight: 500;
+  opacity: 0.5;
+}
+.application .resume p.not-valid {
+  margin-top: 5px;
+  font-size: 15px;
+  color: var(--red-color);
+  font-weight: 500;
+  display: none;
+}
+.application .resume p.not-valid.active {
+  display: block;
+}
+.application .resume .details.active {
+  display: flex;
+}
+.application .resume input {
+  display: none;
+}
+.application .resume .upload-resume {
+  background-color: transparent;
+  color: var(--main-color);
+  border: 2px solid var(--main-color);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color var(--transition), color var(--transition);
+  -webkit-transition: background-color var(--transition),
+    color var(--transition);
+  -moz-transition: background-color var(--transition), color var(--transition);
+  -ms-transition: background-color var(--transition), color var(--transition);
+  -o-transition: background-color var(--transition), color var(--transition);
+  min-width: fit-content;
+}
+.application .resume .upload-resume:hover {
+  background-color: var(--main-color);
+  color: white;
+}
+.application .submit {
+  cursor: pointer;
 }

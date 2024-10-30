@@ -48,24 +48,24 @@ closePostJob.addEventListener("click", () => {
   postJobBox.classList.remove("active");
 });
 
-if (localStorage.getItem("Post Job Form")) {
-  let object = JSON.parse(localStorage.getItem("Post Job Form"));
+if (sessionStorage.getItem("Post Job Form")) {
+  let object = JSON.parse(sessionStorage.getItem("Post Job Form"));
   let keys = Object.keys(object);
   for (let key of keys) {
     document.getElementById(`${key}`).value = object[key];
   }
 }
 function addInputToSessionStorage(input) {
-  let object = JSON.parse(localStorage.getItem("Post Job Form"));
+  let object = JSON.parse(sessionStorage.getItem("Post Job Form"));
   object[input.id] = input.value;
-  localStorage.setItem("Post Job Form", JSON.stringify(object));
+  sessionStorage.setItem("Post Job Form", JSON.stringify(object));
 }
 allPostJobInputs.forEach((input) => {
   input.addEventListener("input", () => {
-    if (localStorage.getItem("Post Job Form")) {
+    if (sessionStorage.getItem("Post Job Form")) {
       addInputToSessionStorage(input);
     } else {
-      localStorage.setItem("Post Job Form", JSON.stringify({}));
+      sessionStorage.setItem("Post Job Form", JSON.stringify({}));
       addInputToSessionStorage(input);
     }
   });
@@ -153,7 +153,6 @@ function assignValues() {
     let question = questionsRow
       .querySelector("[data-type=question]")
       .value.trim();
-    console.log(question);
     let answer = questionsRow.querySelector("[data-type=answer]").value.trim();
     interviewQuestionsArray.push({
       question: question,
@@ -236,28 +235,37 @@ function finalCheck() {
   });
 }
 
+async function postJobFetch() {
+  let request = await fetch(
+    `https://api.${domain}/${apiVersion}/company/me/jobs`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${await getAccessToken()}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(assignValues()),
+    }
+  );
+  return request;
+}
+
 postJobForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   if (checkAllRequired() === true) {
-    console.log(assignValues());
-    let request = await fetch(
-      `https://api.${domain}/${apiVersion}/company/me/jobs`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${getAccessToken()}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(assignValues()),
-      }
-    );
-    if (request.status == 201) {
+    let postJobRequest = await postJobFetch();
+    if (postJobRequest.status == 201) {
       createMessage(
         "success",
         postJobBox,
         "تم نشر الوظيفة بنجاح",
         "شكرا لاستخدامك لـMedLinker، سنعمل جاهدين لإيجاد أفضل الموظفين المناسبين لهذه الوظيفة"
       );
+    } else if (postJobRequest.status == 401) {
+      let check = await checkAccess();
+      if (check === true) {
+        await postJobFetch();
+      }
     } else {
       createMessage(
         "failed",
@@ -266,8 +274,6 @@ postJobForm.addEventListener("submit", async (e) => {
         "نأسف لحدوث ذلك، يرجى المحاولة مرة أخرى"
       );
     }
-    console.log(request);
-    console.log(await request.json());
   } else {
     createMessage(
       "failed",

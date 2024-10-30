@@ -6,6 +6,7 @@ import {
   fetchUserData,
   finish,
   logoutFunction,
+  createMessage,
 } from "../constants.js";
 
 let params = new URLSearchParams(location.search);
@@ -17,7 +18,6 @@ if (access === true) {
   let fetchData = await fetchUserData();
   if (fetchData) {
     userData = fetchData;
-    console.log(userData);
     if (userData.user.user_type === "job_seeker") {
       let applyElement = `<button class="apply">Apply</button>`;
       document
@@ -36,7 +36,7 @@ async function fetchJob() {
     `https://api.${domain}/${apiVersion}/jobs/${jobId}`,
     {
       headers: {
-        Authorization: `Bearer ${getAccessToken()}`,
+        Authorization: `Bearer ${await getAccessToken()}`,
       },
     }
   );
@@ -46,7 +46,6 @@ let fetchJobRequest = await fetchJob();
 if (fetchJobRequest.status == 200) {
   landing.remove();
   let jobDetails = await fetchJobRequest.json();
-  console.log(jobDetails);
   let jobTitle = document.querySelector(".job-title"),
     companyName = document.querySelector(".company-name"),
     jobLocation = document.querySelector(".location"),
@@ -60,25 +59,53 @@ if (fetchJobRequest.status == 200) {
   companyName.innerHTML += jobDetails.company;
   jobLocation.innerHTML += `${jobDetails.location_country}, ${jobDetails.location_city}`;
   vacancies.textContent = jobDetails.number_of_vacancies;
-  employmentType.textContent = jobDetails.position_type;
-  jobType.textContent = jobDetails.job_type;
-  workplace.textContent = jobDetails.work_place;
+  employmentType.textContent = `${jobDetails.position_type[0].toUpperCase()}${jobDetails.position_type.slice(
+    1
+  )}`;
+  jobType.textContent = `${jobDetails.job_type
+    .split(" ")[0][0]
+    .toUpperCase()}${jobDetails.job_type
+    .split(" ")[0]
+    .slice(1)} ${jobDetails.job_type
+    .split(" ")[1][0]
+    .toUpperCase()}${jobDetails.job_type.split(" ")[1].slice(1)}`;
+  workplace.textContent = `${jobDetails.work_place[0].toUpperCase()}${jobDetails.work_place.slice(
+    1
+  )}`;
   jobDescription.textContent = jobDetails.description;
   jobRequirements.textContent = jobDetails.requirements;
 } else if (fetchJobRequest.status == 404) {
   jobContainer.remove();
   jobFailed.remove();
+} else if (fetchJobRequest.status == 401) {
+  let check = await checkAccess();
+  if (check === true) {
+    await fetchJob();
+  }
 } else {
   jobContainer.remove();
   jobNotFound.remove();
 }
-console.log(fetchJobRequest);
 
 let account = document.querySelector(".account > div"),
   accountIcon = document.querySelector(".account button i"),
   navList = document.querySelector(".nav-list"),
   logout = document.getElementById("logout"),
-  apply = document.querySelector(".apply");
+  apply = document.querySelector(".apply"),
+  closeApplicationFormBox = document.querySelector(".application .close"),
+  applicationFormBox = document.querySelector(".application"),
+  applicationForm = document.querySelector(".application-form"),
+  resumeInput = document.getElementById("resume"),
+  resumeButton = document.querySelector(".application-form .upload-resume"),
+  fileDetails = document.querySelector(".application-form .resume .details"),
+  fileDetailsName = document.querySelector(
+    ".application-form .resume .details .file-name"
+  ),
+  fileDetailsSize = document.querySelector(
+    ".application-form .resume .details .file-size"
+  ),
+  fileNotValid = document.querySelector(".application-form .resume .not-valid"),
+  overlay = document.querySelector(".overlay");
 
 account.addEventListener("click", () => {
   navList.classList.toggle("active");
@@ -105,11 +132,6 @@ logout.addEventListener("click", () => {
 });
 
 async function jobApply() {
-  let fetchResume = await fetch(userData.resume);
-  let resume = await fetchResume.blob();
-  console.log(resume);
-  console.log(fetchResume);
-  console.log(userData);
   let applyData = new FormData();
   let userDataKeys = Object.keys(userData);
   for (let key of userDataKeys) {
@@ -120,37 +142,100 @@ async function jobApply() {
       }
     } else {
       if (key === "resume") {
-        applyData.append(`${key}`, resume);
+        applyData.append(`${key}`, resumeInput.files[0]);
       } else {
         applyData.append(`${key}`, userData[key]);
       }
     }
   }
-  console.log(applyData.get("resume"));
   let request = await fetch(
     `https://api.${domain}/${apiVersion}/jobs/${jobId}/application`,
     {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${getAccessToken()}`,
+        Authorization: `Bearer ${await getAccessToken()}`,
       },
       body: applyData,
     }
   );
   return request;
 }
+function checkResume(type, size) {
+  if (type === "application/pdf" && size <= 2000000) {
+    return true;
+  } else {
+    return false;
+  }
+}
+function fileSize(size) {
+  let returnedSize;
+  if (size < 1000) {
+    returnedSize = `${size} Byte`;
+  } else if (size >= 1000 && size < 1000000) {
+    returnedSize = `${(size / 1000).toFixed(2)} KB`;
+  } else {
+    returnedSize = `${(size / 1000000).toFixed(2)} MB`;
+  }
+  return returnedSize;
+}
+resumeInput.addEventListener("input", () => {
+  fileNotValid.classList.remove("active");
+  fileDetailsName.textContent = resumeInput.files[0].name;
+  fileDetailsSize.textContent = fileSize(resumeInput.files[0].size);
+  fileDetails.classList.add("active");
+});
+resumeButton.addEventListener("click", () => {
+  resumeInput.click();
+});
+applicationForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (e.submitter.tagName !== "BUTTON") {
+    if (checkResume(resumeInput.files[0].type, resumeInput.files[0].size)) {
+      let jobApplyRequest = await jobApply();
+      let json = await jobApplyRequest.json();
+      if (jobApplyRequest.status == 201) {
+        createMessage(
+          "success",
+          applicationFormBox,
+          "تم التقديم بنجاح",
+          "انتظر حتى يتم التواصل معك"
+        );
+      } else if (jobApplyRequest.status == 400) {
+        createMessage(
+          "failed",
+          applicationFormBox,
+          "لم يتم التقديم بنجاح",
+          undefined,
+          json
+        );
+      } else if (jobApplyRequest.status == 401) {
+        let check = await checkAccess();
+        if (check === true) {
+          await jobApply();
+        }
+      } else {
+        createMessage(
+          "failed",
+          applicationFormBox,
+          "لم يتم التقديم بنجاح",
+          "نأسف لحدوث ذلك، يرجى المحاولة مرة أخرى"
+        );
+      }
+    } else {
+      fileNotValid.classList.add("active");
+    }
+  }
+});
 if (apply) {
-  apply.addEventListener("click", async () => {
-    let jobApplyRequest = await jobApply();
-    console.log(jobApplyRequest);
-    console.log(await jobApplyRequest.json());
+  apply.addEventListener("click", () => {
+    applicationFormBox.classList.add("active");
+    overlay.classList.add("active");
+    closeApplicationFormBox.addEventListener("click", () => {
+      applicationFormBox.classList.remove("active");
+      overlay.classList.remove("active");
+    });
   });
 }
 
 document.body.style.overflow = "initial";
 finish();
-// let resume = document.querySelector(".resume .uploaded-resume");
-// let resumeName = document.querySelector(".resume .uploaded-resume .name");
-// resume.href = userData.resume;
-// resumeName.textContent = userData.resume.split("/")[userData.resume.split("/").length - 1];
-// console.log(resumeName);

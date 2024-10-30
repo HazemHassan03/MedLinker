@@ -65,6 +65,7 @@ let userType,
   genderSelect = document.querySelectorAll(".gender input[type=radio]"),
   checkedGender,
   numberInputs = document.querySelectorAll("input[type=number]"),
+  jobTitle = document.getElementById("job-title"),
   experienceYears = document.getElementById("years"),
   experienceMonths = document.getElementById("months"),
   jobType = document.getElementById("job-type"),
@@ -86,7 +87,6 @@ let userType,
     ".message:not(.success-message) i"
   ),
   success = document.querySelector(".success-message"),
-  successTimer = document.querySelector(".success-message span"),
   loading = document.querySelector(".loading"),
   overlay = document.querySelector(".overlay");
 
@@ -693,14 +693,6 @@ function checkAllInputsValidation() {
   }
 }
 
-function encodeFiles(file, object, store) {
-  let reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.addEventListener("load", () => {
-    object[store] = reader.result;
-  });
-}
-
 function assignValues() {
   let formData = new FormData();
   let currentLevelValue = {
@@ -725,6 +717,7 @@ function assignValues() {
     formData.append("resume", cv.files[0]);
     formData.append("birthdate", `${year.value}-${month.value}-${day.value}`);
     formData.append("location_city", address.value.trim());
+    formData.append("job_title", jobTitle.value.trim());
     formData.append("years_of_experience", experienceYears.value);
     formData.append("months_of_experience", experienceMonths.value);
     formData.append("gender", genderValue[checkedGender.value]);
@@ -855,16 +848,7 @@ function removeLoadingMessage() {
 function successMessage() {
   success.classList.add("active");
   overlay.classList.add("active");
-  successTimer.textContent = 3;
-  let interval = setInterval(() => {
-    successTimer.textContent -= 1;
-    if (successTimer.textContent == 0) {
-      clearInterval(interval);
-      location.href = "../login/login.html";
-    }
-  }, 1000);
 }
-successMessage()
 function removeDisabled(interval) {
   clearInterval(interval);
   if (userType === "job-seeker") {
@@ -887,7 +871,6 @@ async function fetchData(from) {
     if (checkAllInputsValidation() === true) {
       let formData = assignValues();
       loadingMessage();
-      console.log(userType);
       let request = await fetch(
         `https://api.${domain}/${apiVersion}/auth/register`,
         {
@@ -897,8 +880,6 @@ async function fetchData(from) {
       );
       if (request) {
         removeLoadingMessage();
-        console.log(request);
-        console.log(await request.json());
       }
       if (request.status === 201) {
         successMessage();
