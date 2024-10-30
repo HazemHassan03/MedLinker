@@ -4,6 +4,7 @@ import {
   getAccessToken,
   checkAccess,
   fetchUserData,
+  loading,
   finish,
   logoutFunction,
   createMessage,
@@ -148,6 +149,7 @@ async function jobApply() {
       }
     }
   }
+  loading();
   let request = await fetch(
     `https://api.${domain}/${apiVersion}/jobs/${jobId}/application`,
     {
@@ -158,6 +160,7 @@ async function jobApply() {
       body: applyData,
     }
   );
+  finish();
   return request;
 }
 function checkResume(type, size) {

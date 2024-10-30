@@ -151,6 +151,9 @@ function createMessage(type, from, title, mainMessage, anotherMessages) {
     messageMain.textContent = mainMessage;
   }
   if (anotherMessages) {
+    Array.from(messageAnother.children).forEach((message) => {
+      message.remove();
+    });
     for (let message of anotherMessages) {
       let p = document.createElement("p"),
         pText = document.createTextNode(message);

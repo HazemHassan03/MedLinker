@@ -272,8 +272,8 @@ header .bar {
   gap: 50px;
 }
 .welcome .container > img {
-  animation: image-top-bottom 3s linear infinite;
-  -webkit-animation: image-top-bottom 3s linear infinite;
+  animation: image-top-bottom 5s linear infinite;
+  -webkit-animation: image-top-bottom 5s linear infinite;
 }
 .welcome .header {
   display: flex;
@@ -298,6 +298,7 @@ header .bar {
   font-size: 20px;
   font-weight: 500;
   line-height: 2;
+  text-align: center;
   color: var(--main-color);
 }
 @keyframes image-top-bottom {

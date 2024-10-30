@@ -3,6 +3,7 @@ import {
   domain,
   apiVersion,
   getAccessToken,
+  loading,
   finish,
   createMessage,
 } from "../constants.js";
@@ -236,6 +237,7 @@ function finalCheck() {
 }
 
 async function postJobFetch() {
+  loading();
   let request = await fetch(
     `https://api.${domain}/${apiVersion}/company/me/jobs`,
     {
@@ -247,6 +249,7 @@ async function postJobFetch() {
       body: JSON.stringify(assignValues()),
     }
   );
+  finish();
   return request;
 }
 
