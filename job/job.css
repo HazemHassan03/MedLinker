@@ -259,9 +259,9 @@ header .nav-list li button {
   header #search {
     display: none;
   }
-  header .account button {
+  /* header .account button {
     display: none;
-  }
+  } */
   header .search .search-icon {
     position: static;
     transform: translateY(0);

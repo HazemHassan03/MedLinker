@@ -115,17 +115,17 @@ account.addEventListener("click", () => {
   } else {
     accountIcon.className = accountIcon.className.replace("up", "down");
   }
-  document.addEventListener("click", (e) => {
-    if (
-      e.target !== navList &&
-      e.target.parentElement.parentElement !== account &&
-      e.target.parentElement !== account &&
-      e.target !== account
-    ) {
-      navList.classList.remove("active");
-      accountIcon.className = accountIcon.className.replace("up", "down");
-    }
-  });
+  // document.addEventListener("click", (e) => {
+  //   if (
+  //     e.target !== navList &&
+  //     e.target.parentElement.parentElement !== account &&
+  //     e.target.parentElement !== account &&
+  //     e.target !== account
+  //   ) {
+  //     navList.classList.remove("active");
+  //     accountIcon.className = accountIcon.className.replace("up", "down");
+  //   }
+  // });
 });
 
 logout.addEventListener("click", () => {

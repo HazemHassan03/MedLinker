@@ -14,12 +14,20 @@ if (access === true) {
     script.src = "job-seeker.js";
     script.type = "module";
     document.body.append(script);
+    let link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "job-seeker.css";
+    document.head.append(link);
   } else if (userType === "company") {
     jobSeekerBody.remove();
     let script = document.createElement("script");
     script.src = "company.js";
     script.type = "module";
     document.body.append(script);
+    let link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "company.css";
+    document.head.append(link);
   }
 }
 
@@ -36,17 +44,17 @@ account.addEventListener("click", () => {
   } else {
     accountIcon.className = accountIcon.className.replace("up", "down");
   }
-  document.addEventListener("click", (e) => {
-    if (
-      e.target !== navList &&
-      e.target.parentElement.parentElement !== account &&
-      e.target.parentElement !== account &&
-      e.target !== account
-    ) {
-      navList.classList.remove("active");
-      accountIcon.className = accountIcon.className.replace("up", "down");
-    }
-  });
+  // document.addEventListener("click", (e) => {
+  //   if (
+  //     e.target !== navList &&
+  //     e.target.parentElement.parentElement !== account &&
+  //     e.target.parentElement !== account &&
+  //     e.target !== account
+  //   ) {
+  //     navList.classList.remove("active");
+  //     accountIcon.className = accountIcon.className.replace("up", "down");
+  //   }
+  // });
 });
 
 logout.addEventListener("click", () => {

@@ -1,8 +1,7 @@
 import { userData } from "./home.js";
 import { domain, apiVersion, finish, getAccessToken } from "../constants.js";
 
-let jobsObject,
-  jobsContainer = document.querySelector(".jobs"),
+let jobsContainer = document.querySelector(".jobs"),
   noJobsMessage = document.querySelector(".jobs .no-jobs"),
   failedJobsMessage = document.querySelector(".jobs .failed");
 
@@ -16,14 +15,13 @@ async function fetchJobs() {
 }
 let getJobsRequest = await fetchJobs();
 if (getJobsRequest.status == 200) {
-  jobsObject = await getJobsRequest.json();
+  let jobsObject = await getJobsRequest.json();
   let jobs = jobsObject.results;
   if (jobs.length > 0) {
     noJobsMessage.remove();
     failedJobsMessage.remove();
     for (let job of jobs) {
       let jobElement = `<div class="job">
-                <div class="details">
                   <a class="job-title" href="../job/job.html?id=${job.id}">${
         job.title
       }</a>
@@ -56,7 +54,6 @@ if (getJobsRequest.status == 200) {
                     <span class="workplace">${job.work_place[0].toUpperCase()}${job.work_place.slice(
         1
       )}</span>
-                  </div>
                 </div>
               </div>`;
       jobsContainer.insertAdjacentHTML("beforeend", jobElement);

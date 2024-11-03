@@ -396,7 +396,7 @@ uploadButtons.forEach((btn) => {
   });
 });
 maxCv.textContent = `${maxCvSize}MB`;
-maxPhoto.textContent = `${maxPhotoSize}MB`;
+// maxPhoto.textContent = `${maxPhotoSize}MB`;
 function convertSizeIntoMB(size) {
   return size / Math.pow(1024, 2);
 }
@@ -440,9 +440,9 @@ function process(input) {
 cv.addEventListener("input", (e) => {
   process(e.target);
 });
-photo.addEventListener("input", (e) => {
-  process(e.target);
-});
+// photo.addEventListener("input", (e) => {
+//   process(e.target);
+// });
 
 function checkEmpty(input) {
   let info = {
@@ -477,15 +477,16 @@ function checkEmpty(input) {
     if (input.files[0]) {
       info.check = true;
     } else {
-      if (input.name === "cv") {
-        if (currentLevel.value === "Graduated") {
-          info.check = false;
-        } else {
-          info.check = true;
-        }
-      } else {
-        info.check = false;
-      }
+      info.check = false;
+      // if (input.name === "cv") {
+      //   if (currentLevel.value === "Graduated") {
+      //     info.check = false;
+      //   } else {
+      //     info.check = true;
+      //   }
+      // } else {
+      //   info.check = false;
+      // }
     }
   }
   return info;
@@ -630,11 +631,12 @@ function checkInputValidation(input) {
           info.check = false;
         }
       } else {
-        if (currentLevel.value === "Graduated") {
-          info.check = false;
-        } else {
-          info.check = true;
-        }
+        info.check = false;
+        // if (currentLevel.value === "Graduated") {
+        //   info.check = false;
+        // } else {
+        //   info.check = true;
+        // }
       }
     } else if (input.name === "photo") {
       if (value) {
