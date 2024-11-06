@@ -48,6 +48,7 @@ if (fetchJobRequest.status == 200) {
   landing.remove();
   let jobDetails = await fetchJobRequest.json();
   let jobTitle = document.querySelector(".job-title"),
+    jobId = document.querySelector(".job-id"),
     companyName = document.querySelector(".company-name"),
     jobLocation = document.querySelector(".location"),
     vacancies = document.querySelector(".vacancies .value"),
@@ -56,23 +57,31 @@ if (fetchJobRequest.status == 200) {
     workplace = document.querySelector(".workplace .value"),
     jobDescription = document.querySelector(".job-description .value"),
     jobRequirements = document.querySelector(".job-requirements .value");
-  jobTitle.textContent = jobDetails.title;
-  companyName.innerHTML += jobDetails.company;
-  jobLocation.innerHTML += `${jobDetails.location_country}, ${jobDetails.location_city}`;
-  vacancies.textContent = jobDetails.number_of_vacancies;
-  employmentType.textContent = `${jobDetails.position_type[0].toUpperCase()}${jobDetails.position_type.slice(
+  let jobLocationValue = `${jobDetails.location_country}, ${jobDetails.location_city}`;
+  let employmentTypeValue = `${jobDetails.position_type[0].toUpperCase()}${jobDetails.position_type.slice(
     1
   )}`;
-  jobType.textContent = `${jobDetails.job_type
+  let jobTypeValue = `${jobDetails.job_type
     .split(" ")[0][0]
     .toUpperCase()}${jobDetails.job_type
     .split(" ")[0]
     .slice(1)} ${jobDetails.job_type
     .split(" ")[1][0]
     .toUpperCase()}${jobDetails.job_type.split(" ")[1].slice(1)}`;
-  workplace.textContent = `${jobDetails.work_place[0].toUpperCase()}${jobDetails.work_place.slice(
+  let workplaceValue = `${jobDetails.work_place[0].toUpperCase()}${jobDetails.work_place.slice(
     1
   )}`;
+  if (workplaceValue === "Onsite") {
+    workplaceValue = "On-site";
+  }
+  jobTitle.textContent = jobDetails.title;
+  jobId.textContent += jobDetails.id;
+  companyName.innerHTML += jobDetails.company;
+  jobLocation.innerHTML += jobLocationValue;
+  vacancies.textContent = jobDetails.number_of_vacancies;
+  employmentType.textContent = employmentTypeValue;
+  jobType.textContent = jobTypeValue;
+  workplace.textContent = workplaceValue;
   jobDescription.textContent = jobDetails.description;
   jobRequirements.textContent = jobDetails.requirements;
 } else if (fetchJobRequest.status == 404) {
@@ -163,9 +172,13 @@ async function jobApply() {
   finish();
   return request;
 }
-function checkResume(type, size) {
-  if (type === "application/pdf" && size <= 2000000) {
-    return true;
+function checkResume(file) {
+  if (file) {
+    if (file.type === "application/pdf" && file.size <= 2000000) {
+      return true;
+    } else {
+      return false;
+    }
   } else {
     return false;
   }
@@ -193,7 +206,7 @@ resumeButton.addEventListener("click", () => {
 applicationForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   if (e.submitter.tagName !== "BUTTON") {
-    if (checkResume(resumeInput.files[0].type, resumeInput.files[0].size)) {
+    if (checkResume(resumeInput.files[0])) {
       let jobApplyRequest = await jobApply();
       let json = await jobApplyRequest.json();
       if (jobApplyRequest.status == 201) {

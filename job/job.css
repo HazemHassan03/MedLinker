@@ -389,13 +389,13 @@ header .nav-list li button {
   -ms-transform: translate(-50%, -50%) scale(1);
   -o-transform: translate(-50%, -50%) scale(1);
 }
-.message i {
+.message .close {
+  font-size: 30px;
   position: absolute;
-  top: 7px;
-  right: 7px;
+  right: 10px;
+  top: 10px;
+  color: rgba(0, 0, 0, 0.5);
   cursor: pointer;
-  font-size: 25px;
-  color: var(--red-color);
 }
 .message.failed h3 {
   color: var(--red-color);
@@ -470,6 +470,9 @@ header .nav-list li button {
 .job .job-title {
   color: var(--main-color);
   font-size: 24px;
+}
+.job .job-id {
+  color: rgb(0 0 0 / 80%);
 }
 .job .company-name {
   color: rgb(0 0 0 / 80%);

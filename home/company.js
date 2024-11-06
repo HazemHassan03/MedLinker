@@ -8,7 +8,6 @@ import {
   createMessage,
 } from "../constants.js";
 
-console.log(userData);
 let companyName = document.querySelector(".company-name"),
   fullName = document.querySelector(".full-name"),
   username = document.querySelector(".username");
@@ -28,27 +27,34 @@ async function getCompanyJobs() {
       },
     }
   );
-  return request;
-}
-let getJobsRequest = await getCompanyJobs();
-if (getJobsRequest.status == 200) {
-  let jobsObject = await getJobsRequest.json();
-  let jobs = jobsObject.results;
-  if (jobs.length > 0) {
-    noJobsMessage.remove();
-    failedJobsMessage.remove();
-    for (let job of jobs) {
-      let jobElement = `<div class="job">
-                  <a class="job-title" href="../job/job.html?id=${job.id}">${
-        job.title
-      }</a>
-                  <p class="company-name">
-                    <i class="fa-regular fa-building fa-fw"></i> ${job.company}
-                  </p>
+  if (request.status == 200) {
+    let jobsObject = await request.json();
+    let jobs = jobsObject.results;
+    if (jobs.length > 0) {
+      noJobsMessage.remove();
+      failedJobsMessage.remove();
+      for (let job of jobs) {
+        let jobLocation = `${job.location_country}, ${job.location_city}`;
+        let employmentType = `${job.position_type[0].toUpperCase()}${job.position_type.slice(
+          1
+        )}`;
+        let jobType = `${job.job_type
+          .split(" ")[0][0]
+          .toUpperCase()}${job.job_type.split(" ")[0].slice(1)} ${job.job_type
+          .split(" ")[1][0]
+          .toUpperCase()}${job.job_type.split(" ")[1].slice(1)}`;
+        let workplace = `${job.work_place[0].toUpperCase()}${job.work_place.slice(
+          1
+        )}`;
+        if (workplace === "Onsite") {
+          workplace = "On-site";
+        }
+        let jobElement = `<div class="job" id="job-${job.id}">
+                <div class="details">
+                  <h3 class="job-title">${job.title}</h3>
+                  <p class="job-id">Job Id: ${job.id}</p>
                   <p class="location">
-                    <i class="fa-solid fa-location-dot fa-fw"></i> ${
-                      job.location_country
-                    }, ${job.location_city}
+                    <i class="fa-solid fa-location-dot fa-fw"></i> ${jobLocation}
                   </p>
                   <p class="vacancies">
                     <i class="fa-regular fa-user fa-fw"></i>
@@ -56,64 +62,52 @@ if (getJobsRequest.status == 200) {
                     <span class="value">${job.number_of_vacancies}</span>
                   </p>
                   <div class="job-inf">
-                    <span class="employment-type">${job.position_type[0].toUpperCase()}${job.position_type.slice(
-        1
-      )}</span>
+                    <span class="employment-type">${employmentType}</span>
                     |
-                    <span class="job-type">${job.job_type
-                      .split(" ")[0][0]
-                      .toUpperCase()}${job.job_type
-        .split(" ")[0]
-        .slice(1)} ${job.job_type.split(" ")[1][0].toUpperCase()}${job.job_type
-        .split(" ")[1]
-        .slice(1)}</span>
+                    <span class="job-type">${jobType}</span>
                     |
-                    <span class="workplace">${job.work_place[0].toUpperCase()}${job.work_place.slice(
-        1
-      )}</span>
+                    <span class="workplace">${workplace}</span>
+                  </div>
+                </div>
+                <div class="options">
+                  <button class="edit-job">تعديل</button>
+                  <button class="delete-job">حذف</button>
                 </div>
               </div>`;
-      jobsContainer.insertAdjacentHTML("beforeend", jobElement);
+        jobsContainer.insertAdjacentHTML("beforeend", jobElement);
+      }
+    } else {
+      failedJobsMessage.remove();
+    }
+  } else if (request.status == 401) {
+    let check = await checkAccess();
+    if (check === true) {
+      await getCompanyJobs();
     }
   } else {
-    failedJobsMessage.remove();
+    noJobsMessage.remove();
   }
-} else if (getJobsRequest.status == 401) {
-  let check = await checkAccess();
-  if (check === true) {
-    await fetchJobs();
-  }
-} else {
-  noJobsMessage.remove();
 }
+await getCompanyJobs();
 
 let landingName = document.querySelector(".welcome .name"),
   postJobBtn = document.querySelector(".post-job"),
   postJobBox = document.querySelector(".post-job-box"),
   closePostJob = document.querySelector(".post-job-box .close"),
   postJobForm = document.querySelector(".post-job-form"),
-  jobTitle = document.getElementById("job-title"),
-  employmentType = document.getElementById("employment-type"),
-  jobType = document.getElementById("job-type"),
-  workplace = document.getElementById("workplace"),
-  jobLocationCountry = document.getElementById("job-location-country"),
-  jobLocationCity = document.getElementById("job-location-city"),
-  jobDescription = document.getElementById("job-description"),
-  jobRequirements = document.getElementById("job-requirements"),
-  numberOfVacancies = document.getElementById("vacancies"),
-  addQuestionRow = document.querySelector(".question-row .add"),
+  addQuestionRow = document.querySelectorAll(".question-row .add"),
   removeQuestionRow = document.querySelectorAll(".question-row .remove"),
-  questionsInputs = document.querySelectorAll(".question-row input"),
-  // timeInputs = document.querySelectorAll(".time-row input[type=number]"),
-  // hoursRow = document.querySelector(".time-row"),
-  // addHoursRow = document.querySelector(".time-row .add"),
-  // interviewDateTimeRow = document.querySelector(".time-row.interview"),
-  // addInterviewDateTimeRow = document.querySelector(".time-row.interview .add"),
-  postJob = document.querySelector(".post-job-form .submit"),
   allPostJobInputs = [
     ...document.querySelectorAll(".post-job-form input:not([type=submit])"),
     ...document.querySelectorAll(".post-job-form select"),
     ...document.querySelectorAll(".post-job-form textarea"),
+  ],
+  editJobBox = document.querySelector(".edit-job-box"),
+  editJobForm = document.querySelector(".edit-job-form"),
+  allEditJobInputs = [
+    ...document.querySelectorAll(".edit-job-form input:not([type=submit])"),
+    ...document.querySelectorAll(".edit-job-form select"),
+    ...document.querySelectorAll(".edit-job-form textarea"),
   ];
 
 landingName.textContent += ` ${userData.user.first_name}`;
@@ -121,6 +115,10 @@ landingName.textContent += ` ${userData.user.first_name}`;
 postJobBtn.addEventListener("click", () => {
   overlay.classList.add("active");
   postJobBox.classList.add("active");
+  let allNotValidIcons = postJobBox.querySelectorAll(".not-valid");
+  allNotValidIcons.forEach((icon) => {
+    icon.classList.remove("active");
+  });
 });
 
 closePostJob.addEventListener("click", () => {
@@ -152,28 +150,43 @@ allPostJobInputs.forEach((input) => {
 });
 
 let questionsNumber = 1;
-addQuestionRow.addEventListener("click", () => {
-  questionsNumber++;
+let editQuestionsNumber = 1;
+function addQuestion(from, question, answer) {
+  if (from === editJobBox) {
+    editQuestionsNumber++;
+  } else {
+    questionsNumber++;
+  }
   let elements = `<div class="question-row">
               <div class="question">
                 <input
                   type="text"
                   name="interview-questions"
                   data-type="question"
-                  id="question${questionsNumber}"
+                  id="${
+                    from === editJobBox
+                      ? `edit-question${editQuestionsNumber}`
+                      : `question${questionsNumber}`
+                  }"
                   placeholder="Add Question"
-                />
-                <input
+                  value="${question ? question : ""}"
+                  />
+                  <input
                   type="text"
                   name="interview-questions"
                   data-type="answer"
-                  id="answer${questionsNumber}"
+                  id="${
+                    from === editJobBox
+                      ? `edit-answer${editQuestionsNumber}`
+                      : `answer${questionsNumber}`
+                  }"
                   placeholder="Add Answer"
+                  value="${answer ? answer : ""}"
                 />
               </div>
               <i class="remove fa-solid fa-circle-minus"></i>
             </div>`;
-  document
+  from
     .querySelector(`.interview-questions`)
     .insertAdjacentHTML("beforeend", elements);
   allPostJobInputs = [
@@ -181,7 +194,12 @@ addQuestionRow.addEventListener("click", () => {
     ...document.querySelectorAll(".post-job-form select"),
     ...document.querySelectorAll(".post-job-form textarea"),
   ];
-  removeQuestionRow = document.querySelectorAll(".question-row .remove");
+  allEditJobInputs = [
+    ...document.querySelectorAll(".edit-job-form input:not([type=submit])"),
+    ...document.querySelectorAll(".edit-job-form select"),
+    ...document.querySelectorAll(".edit-job-form textarea"),
+  ];
+  removeQuestionRow = from.querySelectorAll(".question-row .remove");
   removeQuestionRow.forEach((removeRow) => {
     removeRow.addEventListener("click", () => {
       removeRow.parentElement.remove();
@@ -190,7 +208,13 @@ addQuestionRow.addEventListener("click", () => {
         ...document.querySelectorAll(".post-job-form select"),
         ...document.querySelectorAll(".post-job-form textarea"),
       ];
+      allEditJobInputs = [
+        ...document.querySelectorAll(".edit-job-form input:not([type=submit])"),
+        ...document.querySelectorAll(".edit-job-form select"),
+        ...document.querySelectorAll(".edit-job-form textarea"),
+      ];
       let checkQuestionInputs = [];
+      let questionsInputs = from.querySelectorAll(".question-row input");
       questionsInputs.forEach((questionInput) => {
         let checkObject = {
           input: questionInput,
@@ -207,7 +231,7 @@ addQuestionRow.addEventListener("click", () => {
         return check === true;
       });
       if (finalCheck) {
-        document
+        from
           .querySelector(".interview-questions .not-valid")
           .classList.remove("active");
       }
@@ -218,16 +242,59 @@ addQuestionRow.addEventListener("click", () => {
     ...document.querySelectorAll(".post-job-form select"),
     ...document.querySelectorAll(".post-job-form textarea"),
   ];
+  allEditJobInputs = [
+    ...document.querySelectorAll(".edit-job-form input:not([type=submit])"),
+    ...document.querySelectorAll(".edit-job-form select"),
+    ...document.querySelectorAll(".edit-job-form textarea"),
+  ];
+}
+addQuestionRow.forEach((add) => {
+  add.addEventListener("click", (e) => {
+    let from = e.target.parentElement.parentElement.parentElement.parentElement;
+    addQuestion(from);
+  });
 });
 
-function assignValues() {
+function assignValues(from) {
+  let jobTitle,
+    employmentType,
+    jobType,
+    workplace,
+    jobLocationCountry,
+    jobLocationCity,
+    jobDescription,
+    jobRequirements,
+    numberOfVacancies,
+    questionsRows;
+  if (from === postJobForm) {
+    jobTitle = document.getElementById("job-title");
+    employmentType = document.getElementById("employment-type");
+    jobType = document.getElementById("job-type");
+    workplace = document.getElementById("workplace");
+    jobLocationCountry = document.getElementById("job-location-country");
+    jobLocationCity = document.getElementById("job-location-city");
+    jobDescription = document.getElementById("job-description");
+    jobRequirements = document.getElementById("job-requirements");
+    numberOfVacancies = document.getElementById("vacancies");
+    questionsRows = document.querySelectorAll(".post-job-form .question-row");
+  } else if (from === editJobForm) {
+    jobTitle = document.getElementById("edit-job-title");
+    employmentType = document.getElementById("edit-employment-type");
+    jobType = document.getElementById("edit-job-type");
+    workplace = document.getElementById("edit-workplace");
+    jobLocationCountry = document.getElementById("edit-job-location-country");
+    jobLocationCity = document.getElementById("edit-job-location-city");
+    jobDescription = document.getElementById("edit-job-description");
+    jobRequirements = document.getElementById("edit-job-requirements");
+    numberOfVacancies = document.getElementById("edit-vacancies");
+    questionsRows = document.querySelectorAll(".edit-job-form .question-row");
+  }
   let workplaceValue;
   if (workplace.value === "On-site") {
     workplaceValue = "onsite";
   } else {
     workplaceValue = workplace.value;
   }
-  let questionsRows = document.querySelectorAll(".question-row");
   let interviewQuestionsArray = [];
   questionsRows.forEach((questionsRow) => {
     let question = questionsRow
@@ -250,7 +317,6 @@ function assignValues() {
     requirements: jobRequirements.value.trim(),
     number_of_vacancies: numberOfVacancies.value,
     interview_questions: interviewQuestionsArray,
-    closing_date: "2024-10-30T10:43:39.591Z",
   };
   return object;
 }
@@ -282,9 +348,9 @@ function checkInputRequired(input) {
   return check;
 }
 
-function checkAllRequired() {
+function checkAllRequired(inputs) {
   let checkArray = [];
-  allPostJobInputs.forEach((input) => {
+  inputs.forEach((input) => {
     checkArray.push(checkInputRequired(input));
   });
   let checkFalse = checkArray.some((check) => {
@@ -297,8 +363,8 @@ function checkAllRequired() {
   }
 }
 
-function finalCheck() {
-  let checkArray = checkAllRequired();
+function finalCheck(inputs, from) {
+  let checkArray = checkAllRequired(inputs);
   let falseInputs = [];
   for (let checkInput of checkArray) {
     if (checkInput.result === false) {
@@ -306,11 +372,25 @@ function finalCheck() {
     }
   }
   falseInputs.forEach((input) => {
-    document.querySelector(`.${input.name} .not-valid`).classList.add("active");
-    input.addEventListener("input", () => {
+    if (from === postJobForm) {
       document
-        .querySelector(`.${input.name} .not-valid`)
-        .classList.remove("active");
+        .querySelector(`.post-job-form .${input.name} .not-valid`)
+        .classList.add("active");
+    } else if (from === editJobForm) {
+      document
+        .querySelector(`.edit-job-form .${input.name} .not-valid`)
+        .classList.add("active");
+    }
+    input.addEventListener("input", () => {
+      if (from === postJobForm) {
+        document
+          .querySelector(`.post-job-form .${input.name} .not-valid`)
+          .classList.remove("active");
+      } else if (from === editJobForm) {
+        document
+          .querySelector(`.edit-job-form .${input.name} .not-valid`)
+          .classList.remove("active");
+      }
     });
   });
 }
@@ -325,37 +405,37 @@ async function postJobFetch() {
         Authorization: `Bearer ${await getAccessToken()}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(assignValues()),
+      body: JSON.stringify(assignValues(postJobForm)),
     }
   );
   finish();
-  return request;
+  if (request.status == 201) {
+    createMessage(
+      "success",
+      postJobBox,
+      "تم نشر الوظيفة بنجاح",
+      "شكرا لاستخدامكم لـMedLinker، سنعمل جاهدين لإيجاد أفضل الموظفين المناسبين لهذه الوظيفة",
+      undefined,
+      true
+    );
+  } else if (request.status == 401) {
+    let check = await checkAccess();
+    if (check === true) {
+      await postJobFetch();
+    }
+  } else {
+    createMessage(
+      "failed",
+      postJobBox,
+      "حدث خطأ",
+      "نأسف لحدوث ذلك، يرجى المحاولة مرة أخرى"
+    );
+  }
 }
-
 postJobForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-  if (checkAllRequired() === true) {
-    let postJobRequest = await postJobFetch();
-    if (postJobRequest.status == 201) {
-      createMessage(
-        "success",
-        postJobBox,
-        "تم نشر الوظيفة بنجاح",
-        "شكرا لاستخدامك لـMedLinker، سنعمل جاهدين لإيجاد أفضل الموظفين المناسبين لهذه الوظيفة"
-      );
-    } else if (postJobRequest.status == 401) {
-      let check = await checkAccess();
-      if (check === true) {
-        await postJobFetch();
-      }
-    } else {
-      createMessage(
-        "failed",
-        postJobBox,
-        "حدث خطأ",
-        "نأسف لحدوث ذلك، يرجى المحاولة مرة أخرى"
-      );
-    }
+  if (checkAllRequired(allPostJobInputs) === true) {
+    await postJobFetch();
   } else {
     createMessage(
       "failed",
@@ -363,8 +443,334 @@ postJobForm.addEventListener("submit", async (e) => {
       "البيانات غير كاملة",
       "يرجى التأكد من أنك قد قمت بإدخل جميع البيانات المطلوبة"
     );
-    finalCheck();
+    finalCheck(allPostJobInputs, postJobForm);
   }
+});
+
+let jobId;
+async function fetchJobDetails(from) {
+  loading();
+  let request = await fetch(
+    `https://api.${domain}/${apiVersion}/company/me/jobs/${jobId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${await getAccessToken()}`,
+      },
+    }
+  );
+  finish();
+  if (from === "edit job") {
+    if (request.status == 200) {
+      let jobData = await request.json();
+      fillValues(jobData);
+    } else if (request.status == 401) {
+      let check = await checkAccess();
+      if (check === true) {
+        await fetchJobDetails(from);
+      }
+    } else {
+      createMessage(
+        "failed",
+        editJobBox,
+        "حدث خطأ",
+        "نأسف لحدوث ذلك، يرجى المحاولة مرة أخرى"
+      );
+    }
+  } else if (from === "show details") {
+    if (request.status == 200) {
+      let jobData = await request.json();
+      jobDetailsBox.id = `job-details-${jobData.id}`;
+      Array.from(jobDetails.children).forEach((child) => {
+        child.remove();
+      });
+      let jobLocation = `${jobData.location_country}, ${jobData.location_city}`;
+      let employmentType = `${jobData.position_type[0].toUpperCase()}${jobData.position_type.slice(
+        1
+      )}`;
+      let jobType = `${jobData.job_type
+        .split(" ")[0][0]
+        .toUpperCase()}${jobData.job_type
+        .split(" ")[0]
+        .slice(1)} ${jobData.job_type
+        .split(" ")[1][0]
+        .toUpperCase()}${jobData.job_type.split(" ")[1].slice(1)}`;
+      let workplace = `${jobData.work_place[0].toUpperCase()}${jobData.work_place.slice(
+        1
+      )}`;
+      if (workplace === "Onsite") {
+        workplace = "On-site";
+      }
+      let elements = `<p class="job-title">
+        <span class="title">Job Title: </span>
+        <span class="value">${jobData.title}</span>
+      </p>
+      <p class="job-id">
+        <span class="title">Job Id: </span>
+        <span class="value">${jobData.id}</span>
+      </p>
+      <p class="location">
+        <span class="title">Location: </span>
+        <span class="value">${jobLocation}</span>
+      </p>
+      <p class="vacancies">
+        <span class="title">Number Of Vacancies: </span>
+        <span class="value">${jobData.number_of_vacancies}</span>
+      </p>
+      <p class="employment-type">
+        <span class="title">Employment Type: </span>
+        <span class="value">${employmentType}</span>
+      </p>
+      <p class="job-type">
+        <span class="title">Job Type: </span>
+        <span class="value">${jobType}</span>
+      </p>
+      <p class="workplace">
+        <span class="title">Workplace: </span>
+        <span class="value">${workplace}</span>
+      </p>
+      <div class="job-description">
+        <span class="title">Job Description: </span>
+        <span class="value">${jobData.description}</span>
+      </div>
+      <div class="job-requirements">
+        <span class="title">Job Requirements: </span>
+        <span class="value">${jobData.requirements}</span>
+      </div>`;
+      jobDetails.insertAdjacentHTML("afterbegin", elements);
+    } else if (request.status == 401) {
+      let check = await checkAccess();
+      if (check === true) {
+        await fetchJobDetails(from);
+      }
+    } else {
+      createMessage(
+        "failed",
+        editJobBox,
+        "حدث خطأ",
+        "نأسف لحدوث ذلك، يرجى المحاولة مرة أخرى"
+      );
+    }
+  }
+}
+function fillValues(jobData) {
+  let jobTitle = editJobBox.querySelector("#edit-job-title"),
+    employmentType = editJobBox.querySelector("#edit-employment-type"),
+    jobType = editJobBox.querySelector("#edit-job-type"),
+    workplace = editJobBox.querySelector("#edit-workplace"),
+    jobLocationCountry = editJobBox.querySelector("#edit-job-location-country"),
+    jobLocationCity = editJobBox.querySelector("#edit-job-location-city"),
+    jobDescription = editJobBox.querySelector("#edit-job-description"),
+    jobRequirements = editJobBox.querySelector("#edit-job-requirements"),
+    vacancies = editJobBox.querySelector("#edit-vacancies"),
+    questionsRows = editJobBox.querySelectorAll(".question-row");
+  let employmentTypeValue = `${jobData.position_type[0].toUpperCase()}${jobData.position_type.slice(
+    1
+  )}`;
+  let jobTypeValue = `${jobData.job_type
+    .split(" ")[0][0]
+    .toUpperCase()}${jobData.job_type.split(" ")[0].slice(1)} ${jobData.job_type
+    .split(" ")[1][0]
+    .toUpperCase()}${jobData.job_type.split(" ")[1].slice(1)}`;
+  let workplaceValue = `${jobData.work_place[0].toUpperCase()}${jobData.work_place.slice(
+    1
+  )}`;
+  if (workplaceValue === "Onsite") {
+    workplaceValue = "On-site";
+  }
+  jobTitle.value = jobData.title;
+  employmentType.value = employmentTypeValue;
+  jobType.value = jobTypeValue;
+  workplace.value = workplaceValue;
+  jobLocationCountry.value = jobData.location_country;
+  jobLocationCity.value = jobData.location_city;
+  jobDescription.value = jobData.description;
+  jobRequirements.value = jobData.requirements;
+  vacancies.value = jobData.number_of_vacancies;
+  let questionsArray = jobData.interview_questions;
+  questionsRows.forEach((row) => {
+    if (!row.classList.contains("first")) {
+      row.remove();
+    }
+  });
+  for (let i = 0; i < questionsArray.length; i++) {
+    if (i === 0) {
+      let firstQuestion = document.getElementById("edit-question1");
+      let firstAnswer = document.getElementById("edit-answer1");
+      firstQuestion.value = questionsArray[i].question;
+      firstAnswer.value = questionsArray[i].answer;
+    } else {
+      addQuestion(
+        editJobBox,
+        questionsArray[i].question,
+        questionsArray[i].answer
+      );
+    }
+  }
+}
+let editJobs = document.querySelectorAll(".job .edit-job");
+async function editJobFunction() {
+  let allNotValidIcons = editJobBox.querySelectorAll(".not-valid");
+  allNotValidIcons.forEach((icon) => {
+    icon.classList.remove("active");
+  });
+  let jobDetailsBox = document.querySelector(".edit-job-box");
+  overlay.classList.add("active");
+  jobDetailsBox.classList.add("active");
+  let close = jobDetailsBox.querySelector(".close");
+  close.addEventListener("click", () => {
+    overlay.classList.remove("active");
+    jobDetailsBox.classList.remove("active");
+  });
+  await fetchJobDetails("edit job");
+}
+editJobs.forEach((editJob) => {
+  editJob.addEventListener("click", async () => {
+    jobId = editJob.parentElement.parentElement.id.split("-")[1];
+    await editJobFunction();
+  });
+});
+async function editJobFetch() {
+  loading();
+  let request = await fetch(
+    `https://api.${domain}/${apiVersion}/company/me/jobs/${jobId}`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${await getAccessToken()}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(assignValues(editJobForm)),
+    }
+  );
+  finish();
+  if (request.status == 200) {
+    createMessage(
+      "success",
+      editJobBox,
+      "تم تعديل الوظيفة بنجاح",
+      "شكرا لاستخدامكم لـMedLinker، نحن سعداء لخدمتكم",
+      undefined,
+      true
+    );
+  } else if (request.status == 401) {
+    let check = await checkAccess();
+    if (check === true) {
+      await editJobFetch();
+    }
+  } else {
+    createMessage(
+      "failed",
+      editJobBox,
+      "حدث خطأ",
+      "نأسف لحدوث ذلك، يرجى المحاولة مرة أخرى"
+    );
+  }
+}
+editJobForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (checkAllRequired(allEditJobInputs) === true) {
+    await editJobFetch();
+  } else {
+    createMessage(
+      "failed",
+      editJobBox,
+      "البيانات غير كاملة",
+      "يرجى التأكد من أنك قد قمت بإدخل جميع البيانات المطلوبة"
+    );
+    finalCheck(allEditJobInputs, editJobForm);
+  }
+});
+
+let deleteJobs = document.querySelectorAll(".job .delete-job"),
+  deleteJobsYes = document.querySelector(".delete-job-message .yes"),
+  deleteJobsNo = document.querySelector(".delete-job-message .no"),
+  deleteJobMessage = document.querySelector(".delete-job-message");
+async function deleteJobFetch() {
+  loading();
+  let request = await fetch(
+    `https://api.${domain}/${apiVersion}/company/me/jobs/${jobId}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${await getAccessToken()}`,
+      },
+    }
+  );
+  finish();
+  if (request.status == 204) {
+    deleteJobMessage.classList.remove("active");
+    createMessage(
+      "success",
+      undefined,
+      "تم حذف الوظيفة بنجاح",
+      "شكرا لاستخدامكم لـMedLinker، نحن سعداء لخدمتكم",
+      undefined,
+      true
+    );
+  } else if (request.status == 401) {
+    let check = await checkAccess();
+    if (check === true) {
+      await deleteJobFetch();
+    }
+  } else {
+    createMessage(
+      "failed",
+      deleteJobMessage,
+      "حدث خطأ",
+      "نأسف لحدوث ذلك، يرجى المحاولة مرة أخرى"
+    );
+  }
+}
+async function deleteJobFunction() {
+  deleteJobMessage.classList.add("active");
+  overlay.classList.add("active");
+  deleteJobMessage.querySelector(".close").addEventListener("click", () => {
+    deleteJobMessage.classList.remove("active");
+    overlay.classList.remove("active");
+  });
+  deleteJobsNo.addEventListener("click", () => {
+    deleteJobMessage.classList.remove("active");
+    overlay.classList.remove("active");
+  });
+  deleteJobsYes.addEventListener("click", async () => {
+    await deleteJobFetch();
+  });
+}
+deleteJobs.forEach((deleteJob) => {
+  deleteJob.addEventListener("click", async () => {
+    jobId = deleteJob.parentElement.parentElement.id.split("-")[1];
+    await deleteJobFunction();
+  });
+});
+
+let showJobsDetails = document.querySelectorAll(".job .job-title"),
+  jobDetailsBox = document.querySelector(".job-details-box"),
+  jobDetails = document.querySelector(".job-details-box .details");
+showJobsDetails.forEach((showJobDetails) => {
+  showJobDetails.addEventListener("click", async () => {
+    jobId = showJobDetails.parentElement.parentElement.id.split("-")[1];
+    overlay.classList.add("active");
+    jobDetailsBox.classList.add("active");
+    let close = jobDetailsBox.querySelector(".close");
+    close.addEventListener("click", () => {
+      jobDetailsBox.classList.remove("active");
+      overlay.classList.remove("active");
+    });
+    await fetchJobDetails("show details");
+  });
+});
+let jobDetailsEdit = document.querySelector(".job-details-box .edit-job");
+jobDetailsEdit.addEventListener("click", async () => {
+  jobDetailsBox.classList.remove("active");
+  jobId = jobDetailsEdit.parentElement.parentElement.id.split("-")[2];
+  await editJobFunction();
+});
+
+let jobDetailsDelete = document.querySelector(".job-details-box .delete-job");
+jobDetailsDelete.addEventListener("click", async () => {
+  jobDetailsBox.classList.remove("active");
+  jobId = jobDetailsEdit.parentElement.parentElement.id.split("-")[2];
+  await deleteJobFunction();
 });
 
 document.body.style.overflow = "initial";

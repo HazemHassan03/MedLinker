@@ -42,8 +42,8 @@ function showMessage(message) {
 
 function generateDateExpire() {
   let now = Date.now();
-  let accessExpire = now + 10 * 60 * 1000;
-  let refreshExpire = now + 30 * 24 * 60 * 60 * 1000;
+  let accessExpire = now + 2 * 60 * 60 * 1000;
+  let refreshExpire = now + 7 * 24 * 60 * 60 * 1000;
   let accessDate = new Date(accessExpire);
   let refreshDate = new Date(refreshExpire);
   let accessExpiryDate = accessDate.toUTCString();
@@ -76,11 +76,7 @@ loginForm.addEventListener("submit", async (e) => {
     document.cookie = `refresh=${json.refresh}; expires=${
       generateDateExpire()[1]
     }; path=/`;
-    if (sessionStorage.getItem("post job") === "true") {
-      // post job page
-    } else {
-      location.href = "../home/home.html";
-    }
+    location.href = "../home/home.html";
   } else if (request.status == 401) {
     showMessage(wrong);
   } else {

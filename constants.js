@@ -28,12 +28,12 @@ async function storeNewAccess() {
   if (request.status == 200) {
     let json = await request.json();
     let now = Date.now();
-    let accessExpire = now + 10 * 60 * 1000;
+    let accessExpire = now + 2 * 60 * 60 * 1000;
     let accessDate = new Date(accessExpire);
     let accessExpiryDate = accessDate.toUTCString();
     document.cookie = `access=${json.access}; expires=${accessExpiryDate}; path=/`;
   }
-  return request.status;
+  return request;
 }
 
 async function checkAccess() {
@@ -41,8 +41,8 @@ async function checkAccess() {
     !document.cookie.includes("access") &&
     document.cookie.includes("refresh")
   ) {
-    let status = await storeNewAccess();
-    if (status == 200) {
+    let request = await storeNewAccess();
+    if (request.status == 200) {
       return true;
     } else {
       location.href = "../login/login.html";
@@ -126,12 +126,19 @@ function finish() {
   document.querySelector(".loading").classList.remove("active");
 }
 
-function createMessage(type, from, title, mainMessage, anotherMessages) {
-  let message = document.querySelector(".message"),
-    messageClose = document.querySelector(".message i"),
-    messageTitle = document.querySelector(".message .title"),
-    messageMain = document.querySelector(".message .main-message"),
-    messageAnother = document.querySelector(".message .another-messages");
+let message = document.querySelector(".page-message"),
+  messageClose = document.querySelector(".page-message i"),
+  messageTitle = document.querySelector(".page-message .title"),
+  messageMain = document.querySelector(".page-message .main-message"),
+  messageAnother = document.querySelector(".page-message .another-messages");
+function createMessage(
+  type,
+  from,
+  title,
+  mainMessage,
+  anotherMessages,
+  closeReload
+) {
   if (type) {
     switch (type) {
       case "success":
@@ -147,6 +154,7 @@ function createMessage(type, from, title, mainMessage, anotherMessages) {
   if (title) {
     messageTitle.textContent = title;
   }
+  messageMain.textContent = "";
   if (mainMessage) {
     messageMain.textContent = mainMessage;
   }
@@ -165,12 +173,19 @@ function createMessage(type, from, title, mainMessage, anotherMessages) {
     from.classList.remove("active");
   }
   message.classList.add("active");
-  messageClose.addEventListener("click", () => {
-    message.classList.remove("active");
-    if (from) {
-      from.classList.add("active");
+  function closeMessage() {
+    if (closeReload === true) {
+      location.reload();
+    } else {
+      message.classList.remove("active");
+      if (from) {
+        console.log(from);
+        from.classList.add("active");
+      }
+      messageClose.removeEventListener("click", closeMessage);
     }
-  });
+  }
+  messageClose.addEventListener("click", closeMessage);
 }
 
 export {

@@ -21,17 +21,29 @@ if (getJobsRequest.status == 200) {
     noJobsMessage.remove();
     failedJobsMessage.remove();
     for (let job of jobs) {
+      let jobLocation = `${job.location_country}, ${job.location_city}`;
+      let employmentType = `${job.position_type[0].toUpperCase()}${job.position_type.slice(
+        1
+      )}`;
+      let jobType = `${job.job_type
+        .split(" ")[0][0]
+        .toUpperCase()}${job.job_type.split(" ")[0].slice(1)} ${job.job_type
+        .split(" ")[1][0]
+        .toUpperCase()}${job.job_type.split(" ")[1].slice(1)}`;
+      let workplace = `${job.work_place[0].toUpperCase()}${job.work_place.slice(
+        1
+      )}`;
+      if (workplace === "Onsite") {
+        workplace = "On-site";
+      }
       let jobElement = `<div class="job">
-                  <a class="job-title" href="../job/job.html?id=${job.id}">${
-        job.title
-      }</a>
+                  <a class="job-title" href="../job/job.html?id=${job.id}">${job.title}</a>
+                  <p class="job-id">Job Id: ${job.id}</p>
                   <p class="company-name">
                     <i class="fa-regular fa-building fa-fw"></i> ${job.company}
                   </p>
                   <p class="location">
-                    <i class="fa-solid fa-location-dot fa-fw"></i> ${
-                      job.location_country
-                    }, ${job.location_city}
+                    <i class="fa-solid fa-location-dot fa-fw"></i> ${jobLocation}
                   </p>
                   <p class="vacancies">
                     <i class="fa-regular fa-user fa-fw"></i>
@@ -39,21 +51,11 @@ if (getJobsRequest.status == 200) {
                     <span class="value">${job.number_of_vacancies}</span>
                   </p>
                   <div class="job-inf">
-                    <span class="employment-type">${job.position_type[0].toUpperCase()}${job.position_type.slice(
-        1
-      )}</span>
+                    <span class="employment-type">${employmentType}</span>
                     |
-                    <span class="job-type">${job.job_type
-                      .split(" ")[0][0]
-                      .toUpperCase()}${job.job_type
-        .split(" ")[0]
-        .slice(1)} ${job.job_type.split(" ")[1][0].toUpperCase()}${job.job_type
-        .split(" ")[1]
-        .slice(1)}</span>
+                    <span class="job-type">${jobType}</span>
                     |
-                    <span class="workplace">${job.work_place[0].toUpperCase()}${job.work_place.slice(
-        1
-      )}</span>
+                    <span class="workplace">${workplace}</span>
                 </div>
               </div>`;
       jobsContainer.insertAdjacentHTML("beforeend", jobElement);
