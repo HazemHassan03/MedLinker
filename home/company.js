@@ -3,6 +3,7 @@ import {
   domain,
   apiVersion,
   getAccessToken,
+  storeNewAccess,
   loading,
   finish,
   createMessage,
@@ -49,9 +50,9 @@ async function getCompanyJobs() {
         if (workplace === "Onsite") {
           workplace = "On-site";
         }
-        let jobElement = `<div class="job" id="job-${job.id}">
+        let jobElement = `<div class="job" data-job-id="${job.id}">
                 <div class="details">
-                  <h3 class="job-title">${job.title}</h3>
+                  <h3 class="job-title" data-job-id="${job.id}">${job.title}</h3>
                   <p class="job-id">Job Id: ${job.id}</p>
                   <p class="location">
                     <i class="fa-solid fa-location-dot fa-fw"></i> ${jobLocation}
@@ -70,8 +71,8 @@ async function getCompanyJobs() {
                   </div>
                 </div>
                 <div class="options">
-                  <button class="edit-job">تعديل</button>
-                  <button class="delete-job">حذف</button>
+                  <button class="edit-job" data-job-id="${job.id}">تعديل</button>
+                  <button class="delete-job" data-job-id="${job.id}">حذف</button>
                 </div>
               </div>`;
         jobsContainer.insertAdjacentHTML("beforeend", jobElement);
@@ -80,7 +81,7 @@ async function getCompanyJobs() {
       failedJobsMessage.remove();
     }
   } else if (request.status == 401) {
-    let check = await checkAccess();
+    let check = await storeNewAccess();
     if (check === true) {
       await getCompanyJobs();
     }
@@ -110,7 +111,7 @@ let landingName = document.querySelector(".welcome .name"),
     ...document.querySelectorAll(".edit-job-form textarea"),
   ];
 
-landingName.textContent += ` ${userData.user.first_name}`;
+landingName.textContent += userData.user.first_name;
 
 postJobBtn.addEventListener("click", () => {
   overlay.classList.add("active");
@@ -126,16 +127,43 @@ closePostJob.addEventListener("click", () => {
   postJobBox.classList.remove("active");
 });
 
+let questionsNumber = 1;
+let editQuestionsNumber = 1;
+
 if (sessionStorage.getItem("Post Job Form")) {
   let object = JSON.parse(sessionStorage.getItem("Post Job Form"));
   let keys = Object.keys(object);
   for (let key of keys) {
-    document.getElementById(`${key}`).value = object[key];
+    if (key === "interviewQuestions") {
+      for (let question of object[key]) {
+        if (object[key].indexOf(question) === 0) {
+          document.getElementById("question1").value = question.question;
+          document.getElementById("answer1").value = question.answer;
+        } else {
+          addQuestion(postJobBox, question.question, question.answer);
+        }
+      }
+    } else {
+      document.getElementById(`${key}`).value = object[key];
+    }
   }
 }
 function addInputToSessionStorage(input) {
   let object = JSON.parse(sessionStorage.getItem("Post Job Form"));
-  object[input.id] = input.value;
+  if (input.name === "interview-questions") {
+    let questionsObject = [];
+    let questionRows = document.querySelectorAll(".post-job-box .question-row");
+    for (let i = 0; i < questionRows.length; i++) {
+      questionsObject.push({
+        question: questionRows[i].querySelector("input[data-type=question]")
+          .value,
+        answer: questionRows[i].querySelector("input[data-type=answer]").value,
+      });
+    }
+    object.interviewQuestions = questionsObject;
+  } else {
+    object[input.id] = input.value;
+  }
   sessionStorage.setItem("Post Job Form", JSON.stringify(object));
 }
 allPostJobInputs.forEach((input) => {
@@ -149,8 +177,6 @@ allPostJobInputs.forEach((input) => {
   });
 });
 
-let questionsNumber = 1;
-let editQuestionsNumber = 1;
 function addQuestion(from, question, answer) {
   if (from === editJobBox) {
     editQuestionsNumber++;
@@ -162,6 +188,11 @@ function addQuestion(from, question, answer) {
                 <input
                   type="text"
                   name="interview-questions"
+                  name="${
+                    from === editJobBox
+                      ? `edit-interview-questions`
+                      : `interview-questions`
+                  }"
                   data-type="question"
                   id="${
                     from === editJobBox
@@ -173,7 +204,11 @@ function addQuestion(from, question, answer) {
                   />
                   <input
                   type="text"
-                  name="interview-questions"
+                  name="${
+                    from === editJobBox
+                      ? `edit-interview-questions`
+                      : `interview-questions`
+                  }"
                   data-type="answer"
                   id="${
                     from === editJobBox
@@ -194,6 +229,16 @@ function addQuestion(from, question, answer) {
     ...document.querySelectorAll(".post-job-form select"),
     ...document.querySelectorAll(".post-job-form textarea"),
   ];
+  allPostJobInputs.forEach((input) => {
+    input.addEventListener("input", () => {
+      if (sessionStorage.getItem("Post Job Form")) {
+        addInputToSessionStorage(input);
+      } else {
+        sessionStorage.setItem("Post Job Form", JSON.stringify({}));
+        addInputToSessionStorage(input);
+      }
+    });
+  });
   allEditJobInputs = [
     ...document.querySelectorAll(".edit-job-form input:not([type=submit])"),
     ...document.querySelectorAll(".edit-job-form select"),
@@ -208,6 +253,14 @@ function addQuestion(from, question, answer) {
         ...document.querySelectorAll(".post-job-form select"),
         ...document.querySelectorAll(".post-job-form textarea"),
       ];
+      allPostJobInputs.forEach((input) => {
+        if (sessionStorage.getItem("Post Job Form")) {
+          addInputToSessionStorage(input);
+        } else {
+          sessionStorage.setItem("Post Job Form", JSON.stringify({}));
+          addInputToSessionStorage(input);
+        }
+      });
       allEditJobInputs = [
         ...document.querySelectorAll(".edit-job-form input:not([type=submit])"),
         ...document.querySelectorAll(".edit-job-form select"),
@@ -419,7 +472,7 @@ async function postJobFetch() {
       true
     );
   } else if (request.status == 401) {
-    let check = await checkAccess();
+    let check = await storeNewAccess();
     if (check === true) {
       await postJobFetch();
     }
@@ -447,8 +500,7 @@ postJobForm.addEventListener("submit", async (e) => {
   }
 });
 
-let jobId;
-async function fetchJobDetails(from) {
+async function fetchJobDetails(jobId, from) {
   loading();
   let request = await fetch(
     `https://api.${domain}/${apiVersion}/company/me/jobs/${jobId}`,
@@ -464,9 +516,9 @@ async function fetchJobDetails(from) {
       let jobData = await request.json();
       fillValues(jobData);
     } else if (request.status == 401) {
-      let check = await checkAccess();
+      let check = await storeNewAccess();
       if (check === true) {
-        await fetchJobDetails(from);
+        await fetchJobDetails(jobId, from);
       }
     } else {
       createMessage(
@@ -479,7 +531,6 @@ async function fetchJobDetails(from) {
   } else if (from === "show details") {
     if (request.status == 200) {
       let jobData = await request.json();
-      jobDetailsBox.id = `job-details-${jobData.id}`;
       Array.from(jobDetails.children).forEach((child) => {
         child.remove();
       });
@@ -499,6 +550,19 @@ async function fetchJobDetails(from) {
       )}`;
       if (workplace === "Onsite") {
         workplace = "On-site";
+      }
+      let interviewQuestions = jobData.interview_questions;
+      function getQuestions() {
+        let questionNumber = 0;
+        let elements = "";
+        for (let interviewQuestion of interviewQuestions) {
+          elements += `<div class="interview-question">
+          <p class="title">Question ${++questionNumber}</p>
+          <p class="question">Question: ${interviewQuestion.question}</p>
+          <p class="answer">Answer: ${interviewQuestion.answer}</p>
+        </div>`;
+        }
+        return elements;
       }
       let elements = `<p class="job-title">
         <span class="title">Job Title: </span>
@@ -535,12 +599,22 @@ async function fetchJobDetails(from) {
       <div class="job-requirements">
         <span class="title">Job Requirements: </span>
         <span class="value">${jobData.requirements}</span>
+      </div>
+      <div class="interview-questions">
+        <p class="title">Interview Questions:</p>
+        ${getQuestions()}
       </div>`;
       jobDetails.insertAdjacentHTML("afterbegin", elements);
+      document
+        .querySelector(".job-details-box .edit-job")
+        .setAttribute("data-job-id", jobData.id);
+      document
+        .querySelector(".job-details-box .delete-job")
+        .setAttribute("data-job-id", jobData.id);
     } else if (request.status == 401) {
-      let check = await checkAccess();
+      let check = await storeNewAccess();
       if (check === true) {
-        await fetchJobDetails(from);
+        await fetchJobDetails(jobId, from);
       }
     } else {
       createMessage(
@@ -607,8 +681,8 @@ function fillValues(jobData) {
     }
   }
 }
-let editJobs = document.querySelectorAll(".job .edit-job");
-async function editJobFunction() {
+let editJobs = document.querySelectorAll(".edit-job");
+async function editJobFunction(jobId) {
   let allNotValidIcons = editJobBox.querySelectorAll(".not-valid");
   allNotValidIcons.forEach((icon) => {
     icon.classList.remove("active");
@@ -621,15 +695,16 @@ async function editJobFunction() {
     overlay.classList.remove("active");
     jobDetailsBox.classList.remove("active");
   });
-  await fetchJobDetails("edit job");
+  await fetchJobDetails(jobId, "edit job");
 }
 editJobs.forEach((editJob) => {
   editJob.addEventListener("click", async () => {
-    jobId = editJob.parentElement.parentElement.id.split("-")[1];
-    await editJobFunction();
+    let jobId = editJob.getAttribute("data-job-id");
+    document.querySelector(".edit-job-form").setAttribute("data-job-id", jobId);
+    await editJobFunction(jobId);
   });
 });
-async function editJobFetch() {
+async function editJobFetch(jobId) {
   loading();
   let request = await fetch(
     `https://api.${domain}/${apiVersion}/company/me/jobs/${jobId}`,
@@ -653,9 +728,9 @@ async function editJobFetch() {
       true
     );
   } else if (request.status == 401) {
-    let check = await checkAccess();
+    let check = await storeNewAccess();
     if (check === true) {
-      await editJobFetch();
+      await editJobFetch(jobId);
     }
   } else {
     createMessage(
@@ -669,7 +744,8 @@ async function editJobFetch() {
 editJobForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   if (checkAllRequired(allEditJobInputs) === true) {
-    await editJobFetch();
+    let jobId = editJobForm.getAttribute("data-job-id");
+    await editJobFetch(jobId);
   } else {
     createMessage(
       "failed",
@@ -685,7 +761,7 @@ let deleteJobs = document.querySelectorAll(".job .delete-job"),
   deleteJobsYes = document.querySelector(".delete-job-message .yes"),
   deleteJobsNo = document.querySelector(".delete-job-message .no"),
   deleteJobMessage = document.querySelector(".delete-job-message");
-async function deleteJobFetch() {
+async function deleteJobFetch(jobId) {
   loading();
   let request = await fetch(
     `https://api.${domain}/${apiVersion}/company/me/jobs/${jobId}`,
@@ -708,10 +784,17 @@ async function deleteJobFetch() {
       true
     );
   } else if (request.status == 401) {
-    let check = await checkAccess();
+    let check = await storeNewAccess();
     if (check === true) {
-      await deleteJobFetch();
+      await deleteJobFetch(jobId);
     }
+  } else if (request.status == 404) {
+    createMessage(
+      "failed",
+      deleteJobMessage,
+      "هذه الوظيفة غير موجودة",
+      "يرجى إعادة تحميل الصفحة"
+    );
   } else {
     createMessage(
       "failed",
@@ -721,7 +804,7 @@ async function deleteJobFetch() {
     );
   }
 }
-async function deleteJobFunction() {
+async function deleteJobFunction(jobId) {
   deleteJobMessage.classList.add("active");
   overlay.classList.add("active");
   deleteJobMessage.querySelector(".close").addEventListener("click", () => {
@@ -733,13 +816,14 @@ async function deleteJobFunction() {
     overlay.classList.remove("active");
   });
   deleteJobsYes.addEventListener("click", async () => {
-    await deleteJobFetch();
+    deleteJobMessage.classList.remove("active");
+    await deleteJobFetch(jobId);
   });
 }
 deleteJobs.forEach((deleteJob) => {
   deleteJob.addEventListener("click", async () => {
-    jobId = deleteJob.parentElement.parentElement.id.split("-")[1];
-    await deleteJobFunction();
+    let jobId = deleteJob.getAttribute("data-job-id");
+    await deleteJobFunction(jobId);
   });
 });
 
@@ -748,7 +832,7 @@ let showJobsDetails = document.querySelectorAll(".job .job-title"),
   jobDetails = document.querySelector(".job-details-box .details");
 showJobsDetails.forEach((showJobDetails) => {
   showJobDetails.addEventListener("click", async () => {
-    jobId = showJobDetails.parentElement.parentElement.id.split("-")[1];
+    let jobId = showJobDetails.getAttribute("data-job-id");
     overlay.classList.add("active");
     jobDetailsBox.classList.add("active");
     let close = jobDetailsBox.querySelector(".close");
@@ -756,22 +840,21 @@ showJobsDetails.forEach((showJobDetails) => {
       jobDetailsBox.classList.remove("active");
       overlay.classList.remove("active");
     });
-    await fetchJobDetails("show details");
+    await fetchJobDetails(jobId, "show details");
   });
 });
 let jobDetailsEdit = document.querySelector(".job-details-box .edit-job");
 jobDetailsEdit.addEventListener("click", async () => {
   jobDetailsBox.classList.remove("active");
-  jobId = jobDetailsEdit.parentElement.parentElement.id.split("-")[2];
-  await editJobFunction();
+  let jobId = jobDetailsEdit.getAttribute("data-job-id");
+  await editJobFunction(jobId);
 });
 
 let jobDetailsDelete = document.querySelector(".job-details-box .delete-job");
 jobDetailsDelete.addEventListener("click", async () => {
   jobDetailsBox.classList.remove("active");
-  jobId = jobDetailsEdit.parentElement.parentElement.id.split("-")[2];
-  await deleteJobFunction();
+  let jobId = jobDetailsDelete.getAttribute("data-job-id");
+  await deleteJobFunction(jobId);
 });
 
-document.body.style.overflow = "initial";
 finish();

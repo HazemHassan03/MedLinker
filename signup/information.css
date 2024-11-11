@@ -498,7 +498,7 @@ form .check-false.active {
   left: 50%;
   line-height: 1.8;
   background-color: white;
-  padding: 40px 20px;
+  padding: 20px 10px;
   transform: translate(-50%, -50%) scale(0);
   -webkit-transform: translate(-50%, -50%) scale(0);
   -moz-transform: translate(-50%, -50%) scale(0);

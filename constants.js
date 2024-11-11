@@ -7,12 +7,49 @@ function logoutFunction() {
   location.reload();
 }
 
-async function storeNewAccess() {
+function loading() {
+  document.documentElement.style.overflow = "hidden";
+  document.querySelector(".loading").classList.add("active");
+}
+function finish() {
+  document.querySelector(".loading").classList.remove("active");
+  document.documentElement.style.overflow = "initial";
+}
+
+async function getAccessToken() {
+  let cookies = document.cookie.split("; ");
+  let neededCookie = cookies.filter((cookie) => {
+    return cookie.startsWith("access");
+  });
+  if (neededCookie.length > 0) {
+    let accessToken = neededCookie[0].split("=")[1];
+    return accessToken;
+  } else {
+    let check = await checkAccess();
+    if (check === true) {
+      await getAccessToken();
+    }
+  }
+}
+
+async function getRefreshToken() {
   let cookies = document.cookie.split("; ");
   let neededCookie = cookies.filter((cookie) => {
     return cookie.startsWith("refresh");
   });
-  let refreshToken = neededCookie[0].split("=")[1];
+  if (neededCookie.length > 0) {
+    let refreshToken = neededCookie[0].split("=")[1];
+    return refreshToken;
+  } else {
+    let check = await checkAccess();
+    if (check === true) {
+      await getRefreshToken();
+    }
+  }
+}
+
+async function storeNewAccess() {
+  let refreshToken = await getRefreshToken();
   let request = await fetch(
     `https://api.${domain}/${apiVersion}/auth/token/refresh`,
     {
@@ -32,8 +69,10 @@ async function storeNewAccess() {
     let accessDate = new Date(accessExpire);
     let accessExpiryDate = accessDate.toUTCString();
     document.cookie = `access=${json.access}; expires=${accessExpiryDate}; path=/`;
+    return true;
+  } else {
+    location.href = "../login/login.html";
   }
-  return request;
 }
 
 async function checkAccess() {
@@ -41,8 +80,8 @@ async function checkAccess() {
     !document.cookie.includes("access") &&
     document.cookie.includes("refresh")
   ) {
-    let request = await storeNewAccess();
-    if (request.status == 200) {
+    let check = await storeNewAccess();
+    if (check === true) {
       return true;
     } else {
       location.href = "../login/login.html";
@@ -61,7 +100,6 @@ async function fetchUserData() {
   let request = await fetch(
     `https://api.${domain}/${apiVersion}/users/jobseeker/me`,
     {
-      method: "GET",
       headers: {
         Authorization: `Bearer ${await getAccessToken()}`,
       },
@@ -71,7 +109,6 @@ async function fetchUserData() {
     let request = await fetch(
       `https://api.${domain}/${apiVersion}/users/company/me`,
       {
-        method: "GET",
         headers: {
           Authorization: `Bearer ${await getAccessToken()}`,
         },
@@ -81,7 +118,7 @@ async function fetchUserData() {
       let userData = await request.json();
       return userData;
     } else if (request.status == 401) {
-      let check = await checkAccess();
+      let check = await storeNewAccess();
       if (check === true) {
         await fetchUserData();
       }
@@ -93,7 +130,7 @@ async function fetchUserData() {
       let userData = await request.json();
       return userData;
     } else if (request.status == 401) {
-      let check = await checkAccess();
+      let check = await storeNewAccess();
       if (check === true) {
         await fetchUserData();
       }
@@ -101,29 +138,6 @@ async function fetchUserData() {
       return false;
     }
   }
-}
-
-async function getAccessToken() {
-  let cookies = document.cookie.split("; ");
-  let neededCookie = cookies.filter((cookie) => {
-    return cookie.startsWith("access");
-  });
-  if (neededCookie.length > 0) {
-    let accessToken = neededCookie[0].split("=")[1];
-    return accessToken;
-  } else {
-    let check = await checkAccess();
-    if (check === true) {
-      await getAccessToken();
-    }
-  }
-}
-
-function loading() {
-  document.querySelector(".loading").classList.add("active");
-}
-function finish() {
-  document.querySelector(".loading").classList.remove("active");
 }
 
 let message = document.querySelector(".page-message"),

@@ -20,6 +20,7 @@
 }
 html {
   scroll-behavior: smooth;
+  overflow: hidden;
 }
 ::-webkit-scrollbar {
   width: 15px;
@@ -43,7 +44,6 @@ img {
 }
 body {
   font-family: var(--arabic-font);
-  overflow: hidden;
   background-color: #eee;
 }
 .nav-list {
@@ -410,11 +410,11 @@ header .nav-list li button {
   top: 0;
   left: 0;
   z-index: -1;
-  transition: var(--transition);
-  -webkit-transition: var(--transition);
-  -moz-transition: var(--transition);
-  -ms-transition: var(--transition);
-  -o-transition: var(--transition);
+  transition: background-color var(--transition), z-index var(--transition);
+  -webkit-transition: background-color var(--transition), z-index var(--transition);
+  -moz-transition: background-color var(--transition), z-index var(--transition);
+  -ms-transition: background-color var(--transition), z-index var(--transition);
+  -o-transition: background-color var(--transition), z-index var(--transition);
 }
 .overlay.active {
   z-index: 9999;
@@ -431,20 +431,29 @@ header .nav-list li button {
   left: 50%;
   line-height: 1.8;
   background-color: white;
-  padding: 40px 20px;
-  transform: translate(-50%, -50%) scale(0);
-  -webkit-transform: translate(-50%, -50%) scale(0);
-  -moz-transform: translate(-50%, -50%) scale(0);
-  -ms-transform: translate(-50%, -50%) scale(0);
-  -o-transform: translate(-50%, -50%) scale(0);
-  transition: transform var(--transition);
-  -webkit-transition: transform var(--transition);
-  -moz-transition: transform var(--transition);
-  -ms-transition: transform var(--transition);
-  -o-transition: transform var(--transition);
-  z-index: 99999;
-  border-radius: 20px;
+  padding: 20px 10px;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
   direction: rtl;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  opacity: 0;
+  z-index: -999;
+  transition: opacity var(--transition), z-index var(--transition);
+  -webkit-transition: opacity var(--transition), z-index var(--transition);
+  -moz-transition: opacity var(--transition), z-index var(--transition);
+  -ms-transition: opacity var(--transition), z-index var(--transition);
+  -o-transition: opacity var(--transition), z-index var(--transition);
+}
+.message.active {
+  opacity: 1;
+  z-index: 99999;
 }
 .message h3 {
   font-size: 30px;
@@ -452,7 +461,7 @@ header .nav-list li button {
 }
 .message .main-message {
   font-size: 16px;
-  margin-top: 10px;
+  margin: 10px 0;
   color: var(--main-color);
   line-height: 2;
 }
@@ -460,19 +469,11 @@ header .nav-list li button {
   direction: ltr;
   color: black;
   text-align: left;
-  margin-top: 20px;
 }
 .message .another-messages p {
   border-top: 1px solid #ddd;
   margin-top: 10px;
   padding-top: 10px;
-}
-.message.active {
-  transform: translate(-50%, -50%) scale(1);
-  -webkit-transform: translate(-50%, -50%) scale(1);
-  -moz-transform: translate(-50%, -50%) scale(1);
-  -ms-transform: translate(-50%, -50%) scale(1);
-  -o-transform: translate(-50%, -50%) scale(1);
 }
 .message .close {
   font-size: 30px;
@@ -487,7 +488,4 @@ header .nav-list li button {
 }
 .message.success h3 {
   color: var(--green-color);
-}
-.message.no-close .close {
-  display: none;
 }

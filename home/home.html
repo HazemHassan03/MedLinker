@@ -134,7 +134,7 @@
       <section class="welcome">
         <div class="container">
           <h1 class="header">
-            أهلا بك <span class="name">يا</span>
+            أهلا بك <span class="name">يا </span>
             <i class="fa-regular fa-handshake"></i>
           </h1>
           <p class="details">
@@ -177,215 +177,229 @@
       <div class="post-job-box box">
         <i class="close fa-solid fa-xmark"></i>
         <h2 class="title">Post Job</h2>
-        <form class="post-job-form job-form">
-          <div class="row job-title">
-            <h3>Job Title</h3>
-            <input
-              type="text"
-              name="job-title"
-              id="job-title"
-              placeholder="Ex: Pharmacist"
-            />
-            <i class="not-valid fa-solid fa-circle-exclamation"></i>
-          </div>
-          <div class="row employment-type">
-            <h3>Employment Type</h3>
-            <select name="employment-type" id="employment-type">
-              <option value="0">Select</option>
-              <option value="Job">Job</option>
-              <option value="Internship">Internship</option>
-            </select>
-            <i class="not-valid fa-solid fa-circle-exclamation"></i>
-          </div>
-          <div class="row job-type">
-            <h3>Job Type</h3>
-            <select name="job-type" id="job-type">
-              <option value="0">Select</option>
-              <option value="Full Time">Full Time</option>
-              <option value="Part Time">Part Time</option>
-            </select>
-            <i class="not-valid fa-solid fa-circle-exclamation"></i>
-          </div>
-          <div class="row workplace">
-            <h3>Workplace</h3>
-            <select name="workplace" id="workplace">
-              <option value="0">Select</option>
-              <option value="On-site">On-site</option>
-              <option value="Remote">Remote</option>
-              <option value="Hybrid">Hybrid</option>
-            </select>
-            <i class="not-valid fa-solid fa-circle-exclamation"></i>
-          </div>
-          <div class="row job-location">
-            <h3>Job Location</h3>
-            <div class="inputs">
+        <div class="body">
+          <form class="post-job-form job-form">
+            <div class="row job-title">
+              <h3>Job Title</h3>
               <input
                 type="text"
-                name="job-location"
-                id="job-location-country"
-                placeholder="Country"
+                name="job-title"
+                id="job-title"
+                placeholder="Ex: Pharmacist"
               />
-              <input
-                type="text"
-                name="job-location"
-                id="job-location-city"
-                placeholder="City"
-              />
+              <i class="not-valid fa-solid fa-circle-exclamation"></i>
             </div>
-            <i class="not-valid fa-solid fa-circle-exclamation"></i>
-          </div>
-          <div class="row job-description">
-            <h3>Job Description</h3>
-            <textarea name="job-description" id="job-description"></textarea>
-            <i class="not-valid fa-solid fa-circle-exclamation"></i>
-          </div>
-          <div class="row job-requirements">
-            <h3>Job Requirements</h3>
-            <textarea name="job-requirements" id="job-requirements"></textarea>
-            <i class="not-valid fa-solid fa-circle-exclamation"></i>
-          </div>
-          <div class="row vacancies">
-            <h3>Number Of Vacancies</h3>
-            <input type="number" name="vacancies" id="vacancies" min="1" />
-            <i class="not-valid fa-solid fa-circle-exclamation"></i>
-          </div>
-          <div class="row interview-questions">
-            <h3>Interview Questions</h3>
-            <i class="not-valid fa-solid fa-circle-exclamation"></i>
-            <div class="question-row">
-              <div class="question">
+            <div class="row employment-type">
+              <h3>Employment Type</h3>
+              <select name="employment-type" id="employment-type">
+                <option value="0">Select</option>
+                <option value="Job">Job</option>
+                <option value="Internship">Internship</option>
+              </select>
+              <i class="not-valid fa-solid fa-circle-exclamation"></i>
+            </div>
+            <div class="row job-type">
+              <h3>Job Type</h3>
+              <select name="job-type" id="job-type">
+                <option value="0">Select</option>
+                <option value="Full Time">Full Time</option>
+                <option value="Part Time">Part Time</option>
+              </select>
+              <i class="not-valid fa-solid fa-circle-exclamation"></i>
+            </div>
+            <div class="row workplace">
+              <h3>Workplace</h3>
+              <select name="workplace" id="workplace">
+                <option value="0">Select</option>
+                <option value="On-site">On-site</option>
+                <option value="Remote">Remote</option>
+                <option value="Hybrid">Hybrid</option>
+              </select>
+              <i class="not-valid fa-solid fa-circle-exclamation"></i>
+            </div>
+            <div class="row job-location">
+              <h3>Job Location</h3>
+              <div class="inputs">
                 <input
                   type="text"
-                  name="interview-questions"
-                  data-type="question"
-                  id="question1"
-                  placeholder="Add Question"
+                  name="job-location"
+                  id="job-location-country"
+                  placeholder="Country"
                 />
                 <input
                   type="text"
-                  name="interview-questions"
-                  data-type="answer"
-                  id="answer1"
-                  placeholder="Add Answer"
+                  name="job-location"
+                  id="job-location-city"
+                  placeholder="City"
                 />
               </div>
-              <i class="add fa-solid fa-circle-plus"></i>
+              <i class="not-valid fa-solid fa-circle-exclamation"></i>
             </div>
-          </div>
-          <input class="submit" type="submit" value="Post" />
-        </form>
+            <div class="row job-description">
+              <h3>Job Description</h3>
+              <textarea name="job-description" id="job-description"></textarea>
+              <i class="not-valid fa-solid fa-circle-exclamation"></i>
+            </div>
+            <div class="row job-requirements">
+              <h3>Job Requirements</h3>
+              <textarea
+                name="job-requirements"
+                id="job-requirements"
+              ></textarea>
+              <i class="not-valid fa-solid fa-circle-exclamation"></i>
+            </div>
+            <div class="row vacancies">
+              <h3>Number Of Vacancies</h3>
+              <input type="number" name="vacancies" id="vacancies" min="1" />
+              <i class="not-valid fa-solid fa-circle-exclamation"></i>
+            </div>
+            <div class="row interview-questions">
+              <h3>Interview Questions</h3>
+              <i class="not-valid fa-solid fa-circle-exclamation"></i>
+              <div class="question-row first">
+                <div class="question">
+                  <input
+                    type="text"
+                    name="interview-questions"
+                    data-type="question"
+                    id="question1"
+                    placeholder="Add Question"
+                  />
+                  <input
+                    type="text"
+                    name="interview-questions"
+                    data-type="answer"
+                    id="answer1"
+                    placeholder="Add Answer"
+                  />
+                </div>
+                <i class="add fa-solid fa-circle-plus"></i>
+              </div>
+            </div>
+            <input class="submit" type="submit" value="Post" />
+          </form>
+        </div>
       </div>
       <div class="edit-job-box box">
         <i class="close fa-solid fa-xmark"></i>
         <h2 class="title">Edit Job</h2>
-        <form class="edit-job-form job-form">
-          <div class="row job-title">
-            <h3>Job Title</h3>
-            <input
-              type="text"
-              name="job-title"
-              id="edit-job-title"
-              placeholder="Ex: Pharmacist"
-            />
-            <i class="not-valid fa-solid fa-circle-exclamation"></i>
-          </div>
-          <div class="row employment-type">
-            <h3>Employment Type</h3>
-            <select name="employment-type" id="edit-employment-type">
-              <option value="0">Select</option>
-              <option value="Job">Job</option>
-              <option value="Internship">Internship</option>
-            </select>
-            <i class="not-valid fa-solid fa-circle-exclamation"></i>
-          </div>
-          <div class="row job-type">
-            <h3>Job Type</h3>
-            <select name="job-type" id="edit-job-type">
-              <option value="0">Select</option>
-              <option value="Full Time">Full Time</option>
-              <option value="Part Time">Part Time</option>
-            </select>
-            <i class="not-valid fa-solid fa-circle-exclamation"></i>
-          </div>
-          <div class="row workplace">
-            <h3>Workplace</h3>
-            <select name="workplace" id="edit-workplace">
-              <option value="0">Select</option>
-              <option value="On-site">On-site</option>
-              <option value="Remote">Remote</option>
-              <option value="Hybrid">Hybrid</option>
-            </select>
-            <i class="not-valid fa-solid fa-circle-exclamation"></i>
-          </div>
-          <div class="row job-location">
-            <h3>Job Location</h3>
-            <div class="inputs">
+        <div class="body">
+          <form class="edit-job-form job-form">
+            <div class="row job-title">
+              <h3>Job Title</h3>
               <input
                 type="text"
-                name="job-location"
-                id="edit-job-location-country"
-                placeholder="Country"
+                name="job-title"
+                id="edit-job-title"
+                placeholder="Ex: Pharmacist"
               />
-              <input
-                type="text"
-                name="job-location"
-                id="edit-job-location-city"
-                placeholder="City"
-              />
+              <i class="not-valid fa-solid fa-circle-exclamation"></i>
             </div>
-            <i class="not-valid fa-solid fa-circle-exclamation"></i>
-          </div>
-          <div class="row job-description">
-            <h3>Job Description</h3>
-            <textarea
-              name="job-description"
-              id="edit-job-description"
-            ></textarea>
-            <i class="not-valid fa-solid fa-circle-exclamation"></i>
-          </div>
-          <div class="row job-requirements">
-            <h3>Job Requirements</h3>
-            <textarea
-              name="job-requirements"
-              id="edit-job-requirements"
-            ></textarea>
-            <i class="not-valid fa-solid fa-circle-exclamation"></i>
-          </div>
-          <div class="row vacancies">
-            <h3>Number Of Vacancies</h3>
-            <input type="number" name="vacancies" id="edit-vacancies" min="1" />
-            <i class="not-valid fa-solid fa-circle-exclamation"></i>
-          </div>
-          <div class="row interview-questions">
-            <h3>Interview Questions</h3>
-            <i class="not-valid fa-solid fa-circle-exclamation"></i>
-            <div class="question-row first">
-              <div class="question">
+            <div class="row employment-type">
+              <h3>Employment Type</h3>
+              <select name="employment-type" id="edit-employment-type">
+                <option value="0">Select</option>
+                <option value="Job">Job</option>
+                <option value="Internship">Internship</option>
+              </select>
+              <i class="not-valid fa-solid fa-circle-exclamation"></i>
+            </div>
+            <div class="row job-type">
+              <h3>Job Type</h3>
+              <select name="job-type" id="edit-job-type">
+                <option value="0">Select</option>
+                <option value="Full Time">Full Time</option>
+                <option value="Part Time">Part Time</option>
+              </select>
+              <i class="not-valid fa-solid fa-circle-exclamation"></i>
+            </div>
+            <div class="row workplace">
+              <h3>Workplace</h3>
+              <select name="workplace" id="edit-workplace">
+                <option value="0">Select</option>
+                <option value="On-site">On-site</option>
+                <option value="Remote">Remote</option>
+                <option value="Hybrid">Hybrid</option>
+              </select>
+              <i class="not-valid fa-solid fa-circle-exclamation"></i>
+            </div>
+            <div class="row job-location">
+              <h3>Job Location</h3>
+              <div class="inputs">
                 <input
                   type="text"
-                  name="interview-questions"
-                  data-type="question"
-                  id="edit-question1"
-                  placeholder="Add Question"
+                  name="job-location"
+                  id="edit-job-location-country"
+                  placeholder="Country"
                 />
                 <input
                   type="text"
-                  name="interview-questions"
-                  data-type="answer"
-                  id="edit-answer1"
-                  placeholder="Add Answer"
+                  name="job-location"
+                  id="edit-job-location-city"
+                  placeholder="City"
                 />
               </div>
-              <i class="add fa-solid fa-circle-plus"></i>
+              <i class="not-valid fa-solid fa-circle-exclamation"></i>
             </div>
-          </div>
-          <input class="submit" type="submit" value="Save" />
-        </form>
+            <div class="row job-description">
+              <h3>Job Description</h3>
+              <textarea
+                name="job-description"
+                id="edit-job-description"
+              ></textarea>
+              <i class="not-valid fa-solid fa-circle-exclamation"></i>
+            </div>
+            <div class="row job-requirements">
+              <h3>Job Requirements</h3>
+              <textarea
+                name="job-requirements"
+                id="edit-job-requirements"
+              ></textarea>
+              <i class="not-valid fa-solid fa-circle-exclamation"></i>
+            </div>
+            <div class="row vacancies">
+              <h3>Number Of Vacancies</h3>
+              <input
+                type="number"
+                name="vacancies"
+                id="edit-vacancies"
+                min="1"
+              />
+              <i class="not-valid fa-solid fa-circle-exclamation"></i>
+            </div>
+            <div class="row interview-questions">
+              <h3>Interview Questions</h3>
+              <i class="not-valid fa-solid fa-circle-exclamation"></i>
+              <div class="question-row first">
+                <div class="question">
+                  <input
+                    type="text"
+                    name="edit-interview-questions"
+                    data-type="question"
+                    id="edit-question1"
+                    placeholder="Add Question"
+                  />
+                  <input
+                    type="text"
+                    name="edit-interview-questions"
+                    data-type="answer"
+                    id="edit-answer1"
+                    placeholder="Add Answer"
+                  />
+                </div>
+                <i class="add fa-solid fa-circle-plus"></i>
+              </div>
+            </div>
+            <input class="submit" type="submit" value="Save" />
+          </form>
+        </div>
       </div>
       <div class="job-details-box box">
         <i class="close fa-solid fa-xmark"></i>
         <h2 class="title">Job Details</h2>
-        <div class="details"></div>
+        <div class="body">
+          <div class="details"></div>
+        </div>
         <div class="options">
           <button class="edit-job">تعديل</button>
           <button class="delete-job">حذف</button>

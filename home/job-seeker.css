@@ -174,8 +174,8 @@
   position: absolute;
   bottom: 10px;
   right: 10px;
-  font-size: 50px;
-  color: var(--white-color);
+  font-size: 40px;
+  opacity: 0.05;
 }
 .main-content .side .full-name {
   font-size: 20px;

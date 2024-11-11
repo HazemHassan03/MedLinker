@@ -30,7 +30,6 @@ if (access === true) {
     document.head.append(link);
   }
 }
-
 let account = document.querySelector(".account > div"),
   accountIcon = document.querySelector(".account button i"),
   navList = document.querySelector(".nav-list"),

@@ -2,6 +2,7 @@ import {
   domain,
   apiVersion,
   getAccessToken,
+  storeNewAccess,
   checkAccess,
   fetchUserData,
   loading,
@@ -74,6 +75,7 @@ if (fetchJobRequest.status == 200) {
   if (workplaceValue === "Onsite") {
     workplaceValue = "On-site";
   }
+  document.title = jobDetails.title;
   jobTitle.textContent = jobDetails.title;
   jobId.textContent += jobDetails.id;
   companyName.innerHTML += jobDetails.company;
@@ -88,7 +90,7 @@ if (fetchJobRequest.status == 200) {
   jobContainer.remove();
   jobFailed.remove();
 } else if (fetchJobRequest.status == 401) {
-  let check = await checkAccess();
+  let check = await storeNewAccess();
   if (check === true) {
     await fetchJob();
   }
@@ -225,7 +227,7 @@ applicationForm.addEventListener("submit", async (e) => {
           json
         );
       } else if (jobApplyRequest.status == 401) {
-        let check = await checkAccess();
+        let check = await storeNewAccess();
         if (check === true) {
           await jobApply();
         }
@@ -253,5 +255,4 @@ if (apply) {
   });
 }
 
-document.body.style.overflow = "initial";
 finish();

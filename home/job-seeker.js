@@ -1,5 +1,5 @@
 import { userData } from "./home.js";
-import { domain, apiVersion, finish, getAccessToken } from "../constants.js";
+import { domain, apiVersion, finish, getAccessToken, storeNewAccess } from "../constants.js";
 
 let jobsContainer = document.querySelector(".jobs"),
   noJobsMessage = document.querySelector(".jobs .no-jobs"),
@@ -64,7 +64,7 @@ if (getJobsRequest.status == 200) {
     failedJobsMessage.remove();
   }
 } else if (getJobsRequest.status == 401) {
-  let check = await checkAccess();
+  let check = await storeNewAccess();
   if (check === true) {
     await fetchJobs();
   }
@@ -94,5 +94,4 @@ expandJob.forEach((expand) => {
   });
 });
 
-document.body.style.overflow = "initial";
 finish();
