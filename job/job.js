@@ -216,7 +216,9 @@ applicationForm.addEventListener("submit", async (e) => {
           "success",
           applicationFormBox,
           "تم التقديم بنجاح",
-          "انتظر حتى يتم التواصل معك"
+          "انتظر حتى يتم التواصل معك",
+          undefined,
+          true
         );
       } else if (jobApplyRequest.status == 400) {
         createMessage(

@@ -326,7 +326,8 @@ header .nav-list li button {
   left: 0;
   z-index: -1;
   transition: background-color var(--transition), z-index var(--transition);
-  -webkit-transition: background-color var(--transition), z-index var(--transition);
+  -webkit-transition: background-color var(--transition),
+    z-index var(--transition);
   -moz-transition: background-color var(--transition), z-index var(--transition);
   -ms-transition: background-color var(--transition), z-index var(--transition);
   -o-transition: background-color var(--transition), z-index var(--transition);
@@ -346,7 +347,7 @@ header .nav-list li button {
   left: 50%;
   line-height: 1.8;
   background-color: white;
-  padding: 20px 10px;
+  padding: 30px 10px;
   transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
@@ -370,9 +371,14 @@ header .nav-list li button {
   opacity: 1;
   z-index: 99999;
 }
-.message h3 {
+.message .title {
   font-size: 30px;
   margin-bottom: 10px;
+}
+@media (max-width: 500px) {
+  .message .title {
+    font-size: 24px;
+  }
 }
 .message .main-message {
   font-size: 16px;
@@ -494,7 +500,8 @@ header .nav-list li button {
   top: 50%;
   left: 50%;
   background-color: white;
-  z-index: 99999;
+  opacity: 0;
+  z-index: -999;
   width: 90dvw;
   max-width: 800px;
   padding: 15px;
@@ -503,26 +510,23 @@ header .nav-list li button {
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
-  max-height: 90dvh;
-  overflow-x: hidden;
-  overflow-y: auto;
-  transform: translate(-50%, -50%) scale(0);
-  -webkit-transform: translate(-50%, -50%) scale(0);
-  -moz-transform: translate(-50%, -50%) scale(0);
-  -ms-transform: translate(-50%, -50%) scale(0);
-  -o-transform: translate(-50%, -50%) scale(0);
-  transition: transform var(--transition);
-  -webkit-transition: transform var(--transition);
-  -moz-transition: transform var(--transition);
-  -ms-transition: transform var(--transition);
-  -o-transition: transform var(--transition);
+  height: 90dvh;
+  max-height: fit-content;
+  overflow: hidden;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transition: opacity var(--transition), z-index var(--transition);
+  -webkit-transition: opacity var(--transition), z-index var(--transition);
+  -moz-transition: opacity var(--transition), z-index var(--transition);
+  -ms-transition: opacity var(--transition), z-index var(--transition);
+  -o-transition: opacity var(--transition), z-index var(--transition);
 }
 .application.active {
-  transform: translate(-50%, -50%) scale(1);
-  -webkit-transform: translate(-50%, -50%) scale(1);
-  -moz-transform: translate(-50%, -50%) scale(1);
-  -ms-transform: translate(-50%, -50%) scale(1);
-  -o-transform: translate(-50%, -50%) scale(1);
+  z-index: 99999;
+  opacity: 1;
 }
 .application .close {
   font-size: 30px;

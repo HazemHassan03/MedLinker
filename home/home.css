@@ -431,7 +431,7 @@ header .nav-list li button {
   left: 50%;
   line-height: 1.8;
   background-color: white;
-  padding: 20px 10px;
+  padding: 30px 10px;
   transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
@@ -455,9 +455,14 @@ header .nav-list li button {
   opacity: 1;
   z-index: 99999;
 }
-.message h3 {
+.message .title {
   font-size: 30px;
   margin-bottom: 10px;
+}
+@media (max-width: 500px) {
+  .message .title {
+    font-size: 24px;
+  }
 }
 .message .main-message {
   font-size: 16px;
