@@ -172,6 +172,33 @@
       <form class="employee-second-form">
         <h2>Position Information</h2>
         <div class="row">
+          <div class="education">
+            <h3>Your Education</h3>
+            <select name="education" id="education">
+              <option value="0">Education</option>
+              <option value="Faculty Of Medicine">Faculty Of Medicine</option>
+              <option value="Faculty Of Dentistry">Faculty Of Dentistry</option>
+              <option value="Faculty Of Pharmacy">Faculty Of Pharmacy</option>
+              <option value="Faculty Of Physical Therapy">
+                Faculty Of Physical Therapy
+              </option>
+              <option value="Faculty Of Nursing">Faculty Of Nursing</option>
+              <option value="Faculty Of Science">Faculty Of Science</option>
+              <option value="Faculty Of Veterinary Medicine">
+                Faculty Of Veterinary Medicine
+              </option>
+              <option value="Other">Other</option>
+            </select>
+            <input
+              type="text"
+              name="education-other"
+              id="education-other"
+              placeholder="Type Your Education"
+            />
+            <i class="check-false fa-solid fa-circle-exclamation"></i>
+          </div>
+        </div>
+        <div class="row">
           <div class="job-title">
             <h3>
               What is the job title that describe what you are looking for?
@@ -235,7 +262,7 @@
             <p class="note">- Max size is <span class="max-cv-size"></span>.</p>
             <!-- <p class="note">- Required only if you are graduated.</p> -->
           </div>
-          <!-- <div class="photo">
+          <div class="photo">
             <h3>Upload Your Id Photo</h3>
             <input type="file" name="photo" id="photo" />
             <div class="button">
@@ -257,7 +284,7 @@
             <p class="note">
               - Max size is <span class="max-photo-size"></span>.
             </p>
-          </div> -->
+          </div>
         </div>
         <div class="nav">
           <button class="back">Back</button>

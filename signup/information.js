@@ -20,6 +20,7 @@ let userType,
   exitChoices = document.querySelector(".choices .exit"),
   companyChoice = document.querySelector(".company"),
   employeeChoice = document.querySelector(".employee"),
+  container = document.querySelector(".container"),
   employeeForm = document.querySelector(".employee-form"),
   employeeSecondForm = document.querySelector(".employee-second-form"),
   companyForm = document.querySelector(".company-form"),
@@ -66,6 +67,8 @@ let userType,
   checkedGender,
   numberInputs = document.querySelectorAll("input[type=number]"),
   jobTitle = document.getElementById("job-title"),
+  education = document.getElementById("education"),
+  educationOther = document.getElementById("education-other"),
   experienceYears = document.getElementById("years"),
   experienceMonths = document.getElementById("months"),
   jobType = document.getElementById("job-type"),
@@ -297,6 +300,7 @@ birthDaySelection.forEach((input) => {
 
 function checkGraduationMessage() {
   let check = checkInputValidation(graduation).check;
+  console.log(check);
   if (check) {
     graduation.parentElement
       .querySelector(".not-valid")
@@ -359,12 +363,17 @@ employeeForm.addEventListener("submit", (e) => {
   e.preventDefault();
   employeeForm.classList.add("finish");
   employeeSecondForm.classList.add("active");
+  container.scrollTo({
+    top: 0,
+  });
 });
 
-back.addEventListener("click", (e) => {
-  e.preventDefault();
+back.addEventListener("click", () => {
   employeeSecondForm.classList.remove("active");
   employeeForm.classList.remove("finish");
+  container.scrollTo({
+    top: 0,
+  });
 });
 
 setInterval(() => {
@@ -372,6 +381,14 @@ setInterval(() => {
     input.setAttribute("min", "0");
   });
   experienceMonths.setAttribute("max", "12");
+});
+
+education.addEventListener("input", () => {
+  if (education.value === "Other") {
+    educationOther.classList.add("active");
+  } else {
+    educationOther.classList.remove("active");
+  }
 });
 
 function checkJobTypeMessage() {
@@ -396,13 +413,13 @@ uploadButtons.forEach((btn) => {
   });
 });
 maxCv.textContent = `${maxCvSize}MB`;
-// maxPhoto.textContent = `${maxPhotoSize}MB`;
-function convertSizeIntoMB(size) {
-  return size / Math.pow(1024, 2);
-}
-function convertSizeIntoKB(size) {
-  return size / 1024;
-}
+maxPhoto.textContent = `${maxPhotoSize}MB`;
+// function convertSizeIntoMB(size) {
+//   return size / Math.pow(1024, 2);
+// }
+// function convertSizeIntoKB(size) {
+//   return size / 1024;
+// }
 function process(input) {
   if (input.files[0]) {
     input.parentElement.querySelector(".not-found").classList.remove("active");
@@ -414,19 +431,14 @@ function process(input) {
       input.parentElement.querySelector(".details").classList.add("active");
       input.parentElement.querySelector(".details .file-name").textContent =
         input.files[0].name;
-      if (convertSizeIntoMB(input.files[0].size) < 1) {
-        input.parentElement.querySelector(
-          ".details .file-size"
-        ).textContent = `${Math.trunc(
-          convertSizeIntoKB(input.files[0].size)
-        )}KB`;
-      } else {
-        input.parentElement.querySelector(
-          ".details .file-size"
-        ).textContent = `${convertSizeIntoMB(input.files[0].size).toFixed(
-          2
-        )}MB`;
-      }
+      input.parentElement.querySelector(".details .file-size").textContent =
+        input.files[0].size < 1000
+          ? `${input.files[0].size.toFixed(2)}Byte`
+          : input.files[0].size >= 1000 && input.files[0].size < 1e6
+          ? `${(input.files[0].size / 1000).toFixed(2)}KB`
+          : input.files[0].size >= 1e6 && input.files[0].size < 1e9
+          ? `${(input.files[0].size / 1e6).toFixed(2)}MB`
+          : "";
     } else {
       input.parentElement.querySelector(".details").classList.remove("active");
       input.parentElement.querySelector(".not-valid").classList.add("active");
@@ -440,9 +452,9 @@ function process(input) {
 cv.addEventListener("input", (e) => {
   process(e.target);
 });
-// photo.addEventListener("input", (e) => {
-//   process(e.target);
-// });
+photo.addEventListener("input", (e) => {
+  process(e.target);
+});
 
 function checkEmpty(input) {
   let info = {
@@ -450,16 +462,28 @@ function checkEmpty(input) {
     name: input.name,
   };
   if (input.type === "text") {
-    if (input.value.length > 0) {
+    if (input.name === "education-other") {
       info.check = true;
     } else {
-      info.check = false;
+      if (input.value.length > 0) {
+        info.check = true;
+      } else {
+        info.check = false;
+      }
     }
   } else if (input.tagName === "SELECT") {
-    if (input.value == "0") {
+    if (input.value == 0) {
       info.check = false;
     } else {
-      info.check = true;
+      if (input.name === "education" && input.value === "Other") {
+        if (educationOther.value.length > 0) {
+          info.check = true;
+        } else {
+          info.check = false;
+        }
+      } else {
+        info.check = true;
+      }
     }
   } else if (input.type === "radio") {
     if (document.querySelector(`input[name="${input.name}"]:checked`)) {
@@ -525,6 +549,13 @@ function checkAllEmpty() {
             .querySelector(".check-false")
             .classList.remove("active");
         });
+        if (element.name === "education") {
+          educationOther.addEventListener("input", () => {
+            educationOther.parentElement.parentElement
+              .querySelector(".check-false")
+              .classList.remove("active");
+          });
+        }
       } else {
         element.parentElement.parentElement
           .querySelector(".check-false")
@@ -536,6 +567,8 @@ function checkAllEmpty() {
         });
       }
     });
+    console.log(checks);
+    console.log(falseElements);
     return falseElements;
   } else {
     return true;
@@ -581,18 +614,7 @@ function checkInputValidation(input) {
       }
     }
   } else if (input.tagName === "SELECT") {
-    if (
-      input.name === "graduation" ||
-      input.name === "level" ||
-      input.name === "military" ||
-      input.name === "job-type"
-    ) {
-      if (input.value == 0) {
-        info.check = false;
-      } else {
-        info.check = true;
-      }
-    } else if (input.parentElement.id === "birth") {
+    if (input.parentElement.id === "birth") {
       if (day.value > 0 && month.value > 0 && year.value > 0) {
         if (
           month.value == "04" ||
@@ -617,15 +639,14 @@ function checkInputValidation(input) {
       } else {
         info.check = false;
       }
+    } else {
+      info.check = true;
     }
   } else if (input.type === "file") {
     let value = input.files[0];
     if (input.name === "cv") {
       if (value) {
-        if (
-          value.type === "application/pdf" &&
-          convertSizeIntoMB(value.size) <= maxCvSize
-        ) {
+        if (value.type === "application/pdf" && value.size / 1e6 <= maxCvSize) {
           info.check = true;
         } else {
           info.check = false;
@@ -642,7 +663,7 @@ function checkInputValidation(input) {
       if (value) {
         if (
           value.type.startsWith("image") &&
-          convertSizeIntoMB(value.size) <= maxPhotoSize
+          value.size / 1e6 <= maxPhotoSize
         ) {
           info.check = true;
         } else {
@@ -689,6 +710,7 @@ function checkAllInputsValidation() {
           .classList.remove("active");
       });
     });
+    console.log(falseElements);
     return falseElements;
   } else {
     return true;
@@ -709,6 +731,8 @@ function assignValues() {
     Male: "1",
     Female: "2",
   };
+  let educationValue =
+    education.value === "Other" ? educationOther.value : education.value;
   if (userType === "job-seeker") {
     formData.append("user.username", employeeUserName.value.trim());
     formData.append("user.password", infObj.password);
@@ -717,6 +741,8 @@ function assignValues() {
     formData.append("user.email", employeeEmail.value.trim());
     formData.append("user.user_type", "job_seeker");
     formData.append("resume", cv.files[0]);
+    formData.append("id_card", photo.files[0]);
+    formData.append("education", educationValue);
     formData.append("birthdate", `${year.value}-${month.value}-${day.value}`);
     formData.append("location_city", address.value.trim());
     formData.append("job_title", jobTitle.value.trim());
@@ -772,6 +798,11 @@ function fillValues() {
               `select[name=${input.id}] option[value="${object[input.id]}"]`
             )
             .setAttributeNode(document.createAttribute("selected"));
+          if (input.id === "education") {
+            if (object[input.id] === "Other") {
+              educationOther.classList.add("active");
+            }
+          }
         } else {
           input.value = object[input.id];
         }

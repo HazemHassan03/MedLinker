@@ -88,7 +88,7 @@ header {
 }
 header .container {
   display: grid;
-  grid-template-columns: 150px 1fr 150px;
+  grid-template-columns: 150px 1fr;
   align-items: center;
   height: 60px;
   gap: 20px;
@@ -97,58 +97,6 @@ header .container {
 header .logo {
   display: flex;
   align-items: center;
-}
-header .search {
-  margin: auto;
-  width: 100%;
-  max-width: 500px;
-  position: relative;
-}
-header .search .search-icon {
-  position: absolute;
-  top: 50%;
-  left: 13px;
-  transform: translateY(-50%);
-  opacity: 0.3;
-}
-header #search {
-  display: block;
-  border: 2px solid #eee;
-  background-color: #eee;
-  font-size: 16px;
-  padding: 5px 10px 5px 35px;
-  font-family: var(--english-font);
-  border-radius: 20px;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  -ms-border-radius: 20px;
-  -o-border-radius: 20px;
-  outline: none;
-  transition: border-color var(--transition);
-  -webkit-transition: border-color var(--transition);
-  -moz-transition: border-color var(--transition);
-  -ms-transition: border-color var(--transition);
-  -o-transition: border-color var(--transition);
-  width: 100%;
-  font-family: var(--english-second-font);
-}
-header #search::-webkit-search-cancel-button,
-header #search::-webkit-search-decoration {
-  -webkit-appearance: none;
-  appearance: none;
-}
-header #search:focus {
-  border-color: #ddd;
-}
-header #search::placeholder {
-  transition: opacity var(--transition);
-  -webkit-transition: opacity var(--transition);
-  -moz-transition: opacity var(--transition);
-  -ms-transition: opacity var(--transition);
-  -o-transition: opacity var(--transition);
-}
-header #search:focus::placeholder {
-  opacity: 0;
 }
 header .account {
   display: flex;
@@ -429,6 +377,7 @@ header .nav-list li button {
 
 .job {
   padding-top: 15px;
+  margin-bottom: 20px;
 }
 .job .container > *:not(.apply, :last-child) {
   margin-bottom: 15px;
@@ -447,32 +396,6 @@ header .nav-list li button {
   -o-border-radius: 5px;
   display: block;
   margin-left: auto;
-}
-.job .explore-more {
-  direction: rtl;
-  text-align: center;
-  cursor: pointer;
-  margin-top: 5px;
-  padding: 10px 0;
-  transition: background-color var(--transition);
-  -webkit-transition: background-color var(--transition);
-  -moz-transition: background-color var(--transition);
-  -ms-transition: background-color var(--transition);
-  -o-transition: background-color var(--transition);
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-  font-size: 14px;
-}
-.job .explore-more:active {
-  background-color: #eee;
-}
-@media (hover: hover) {
-  .job .explore-more:hover {
-    background-color: #eee;
-  }
 }
 .job .job-title {
   color: var(--main-color);
@@ -494,6 +417,10 @@ header .nav-list li button {
 }
 .job .value {
   line-height: 1.8;
+}
+.job .job-description .value,
+.job .job-requirements .value {
+  white-space: pre-wrap;
 }
 .application {
   position: fixed;

@@ -1,22 +1,121 @@
 import { userData } from "./home.js";
-import { domain, apiVersion, finish, getAccessToken, storeNewAccess } from "../constants.js";
+import {
+  domain,
+  apiVersion,
+  finish,
+  getAccessToken,
+  storeNewAccess,
+} from "../constants.js";
 
-let jobsContainer = document.querySelector(".jobs"),
+let landingName = document.querySelector(".welcome .name"),
+  sideFullName = document.querySelector(".side .full-name"),
+  sideUsername = document.querySelector(".side .username"),
+  sideJobTitle = document.querySelector(".side .job-title");
+
+landingName.textContent += ` ${userData.user.first_name}`;
+sideFullName.textContent = `${userData.user.first_name} ${
+  userData.user.last_name.split(" ")[0]
+}`;
+sideUsername.textContent = `@${userData.user.username}`;
+sideJobTitle.innerHTML += ` ${userData.job_title}`;
+
+let jobsContainer = document.querySelector(".jobs .jobs-container"),
   noJobsMessage = document.querySelector(".jobs .no-jobs"),
   failedJobsMessage = document.querySelector(".jobs .failed");
 
-async function fetchJobs() {
-  let request = await fetch(`https://api.${domain}/${apiVersion}/jobs`, {
+async function fetchJobs(url = `https://api.${domain}/${apiVersion}/jobs`) {
+  let request = await fetch(url, {
     headers: {
       Authorization: `Bearer ${await getAccessToken()}`,
     },
   });
   return request;
 }
-let getJobsRequest = await fetchJobs();
+let params = new URLSearchParams(location.search);
+let jobsPage = params.get("page");
+console.log(jobsPage);
+let getJobsRequest;
+if (jobsPage) {
+  getJobsRequest = await fetchJobs(
+    `https://api.${domain}/${apiVersion}/jobs?page=${jobsPage}`
+  );
+} else {
+  getJobsRequest = await fetchJobs();
+}
 if (getJobsRequest.status == 200) {
   let jobsObject = await getJobsRequest.json();
+  console.log(jobsObject);
   let jobs = jobsObject.results;
+  let options = document.querySelector(".jobs .options");
+  if (jobsObject.count <= 20) {
+    options.style.display = "none";
+  } else {
+    let maxLength = 20,
+      to = maxLength,
+      from = to - maxLength + 1;
+    if (jobsPage) {
+      to *= jobsPage;
+      from = to - maxLength + 1;
+    }
+    if (to > jobsObject.count) {
+      to = jobsObject.count;
+    }
+    let showing = document.querySelector(".showing-details .showing"),
+      count = document.querySelector(".showing-details .count"),
+      next = options.querySelector(".next"),
+      back = options.querySelector(".back"),
+      pages = options.querySelector(".pages");
+    showing.textContent = `${from} - ${to}`;
+    count.textContent = jobsObject.count;
+    if (jobsObject.previous === null) {
+      back.classList.add("disabled");
+    }
+    if (jobsObject.next === null) {
+      next.classList.add("disabled");
+    }
+    console.log(from);
+    console.log(to);
+    let currentPage = jobsPage ? +jobsPage : 1;
+    let pagesCount = Math.ceil(jobsObject.count / maxLength);
+    for (let i = currentPage - 2; i <= currentPage + 2; i++) {
+      if (i < 1) continue;
+      let button = document.createElement("button");
+      button.append(document.createTextNode(i));
+      button.id = `page-${i}`;
+      pages.append(button);
+      if (i === pagesCount) break;
+    }
+    document.getElementById(`page-${currentPage}`).classList.add("active");
+    console.log(currentPage);
+    console.log(pagesCount);
+    next.addEventListener("click", () => {
+      let nextPage = new URLSearchParams(new URL(jobsObject.next).search).get(
+        "page"
+      );
+      params.set("page", nextPage);
+      console.log(params.toString());
+      console.log(location.search);
+      location.search = params.toString();
+    });
+    back.addEventListener("click", () => {
+      let previousPage = new URLSearchParams(
+        new URL(jobsObject.previous).search
+      ).get("page");
+      if (previousPage === null) {
+        previousPage = 1;
+      }
+      params.set("page", previousPage);
+      location.search = params.toString();
+    });
+    let pagesButtons = pages.querySelectorAll("button");
+    pagesButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        params.set("page", button.textContent);
+        location.search = params.toString();
+      });
+    });
+    console.log(pagesButtons);
+  }
   if (jobs.length > 0) {
     noJobsMessage.remove();
     failedJobsMessage.remove();
@@ -71,27 +170,5 @@ if (getJobsRequest.status == 200) {
 } else {
   noJobsMessage.remove();
 }
-
-let landingName = document.querySelector(".welcome .name"),
-  sideFullName = document.querySelector(".side .full-name"),
-  sideUsername = document.querySelector(".side .username"),
-  sideJobTitle = document.querySelector(".side .job-title"),
-  expandJob = document.querySelectorAll(".job .explore-more");
-
-landingName.textContent += ` ${userData.user.first_name}`;
-sideFullName.textContent = `${userData.user.first_name} ${userData.user.last_name}`;
-sideUsername.textContent += userData.user.username;
-sideJobTitle.innerHTML += ` ${userData.job_title}`;
-
-expandJob.forEach((expand) => {
-  expand.addEventListener("click", () => {
-    expand.parentElement.classList.toggle("expanded");
-    if (expand.parentElement.classList.contains("expanded")) {
-      expand.innerHTML = `عرض أقل <i class="fa-solid fa-angle-up"></i>`;
-    } else {
-      expand.innerHTML = `عرض المزيد <i class="fa-solid fa-angle-down"></i>`;
-    }
-  });
-});
 
 finish();

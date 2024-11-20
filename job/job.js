@@ -75,6 +75,8 @@ if (fetchJobRequest.status == 200) {
   if (workplaceValue === "Onsite") {
     workplaceValue = "On-site";
   }
+  console.log(jobDetails.description);
+  console.log(jobDetails.requirements);
   document.title = jobDetails.title;
   jobTitle.textContent = jobDetails.title;
   jobId.textContent += jobDetails.id;

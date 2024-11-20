@@ -30,6 +30,7 @@ async function getCompanyJobs() {
   );
   if (request.status == 200) {
     let jobsObject = await request.json();
+    console.log(jobsObject);
     let jobs = jobsObject.results;
     if (jobs.length > 0) {
       noJobsMessage.remove();
@@ -113,6 +114,14 @@ let landingName = document.querySelector(".welcome .name"),
 
 landingName.textContent += userData.user.first_name;
 
+let textarea = document.querySelectorAll("textarea");
+textarea.forEach((area) => {
+  area.addEventListener("input", () => {
+    area.style.height = "auto";
+    area.style.height = `${area.scrollHeight + 10}px`;
+  });
+});
+
 postJobBtn.addEventListener("click", () => {
   overlay.classList.add("active");
   postJobBox.classList.add("active");
@@ -147,6 +156,9 @@ if (sessionStorage.getItem("Post Job Form")) {
       document.getElementById(`${key}`).value = object[key];
     }
   }
+  textarea.forEach((area) => {
+    area.style.height = `${area.scrollHeight + 10}px`;
+  });
 }
 function addInputToSessionStorage(input) {
   let object = JSON.parse(sessionStorage.getItem("Post Job Form"));
@@ -564,6 +576,8 @@ async function fetchJobDetails(jobId, from) {
         }
         return elements;
       }
+      console.log(jobData.description);
+      console.log(jobData.requirements);
       let elements = `<p class="job-title">
         <span class="title">Job Title: </span>
         <span class="value">${jobData.title}</span>
@@ -594,11 +608,11 @@ async function fetchJobDetails(jobId, from) {
       </p>
       <div class="job-description">
         <span class="title">Job Description: </span>
-        <span class="value">${jobData.description}</span>
+        <p class="value">${jobData.description}</p>
       </div>
       <div class="job-requirements">
         <span class="title">Job Requirements: </span>
-        <span class="value">${jobData.requirements}</span>
+        <p class="value">${jobData.requirements}</p>
       </div>
       <div class="interview-questions">
         <p class="title">Interview Questions:</p>
@@ -619,7 +633,7 @@ async function fetchJobDetails(jobId, from) {
     } else {
       createMessage(
         "failed",
-        editJobBox,
+        jobDetailsBox,
         "حدث خطأ",
         "نأسف لحدوث ذلك، يرجى المحاولة مرة أخرى"
       );
@@ -658,7 +672,9 @@ function fillValues(jobData) {
   jobLocationCountry.value = jobData.location_country;
   jobLocationCity.value = jobData.location_city;
   jobDescription.value = jobData.description;
+  jobDescription.style.height = `${jobDescription.scrollHeight + 10}px`;
   jobRequirements.value = jobData.requirements;
+  jobRequirements.style.height = `${jobRequirements.scrollHeight + 10}px`;
   vacancies.value = jobData.number_of_vacancies;
   let questionsArray = jobData.interview_questions;
   questionsRows.forEach((row) => {
