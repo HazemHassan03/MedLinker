@@ -79,8 +79,6 @@ header .container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-family: var(--english-font);
-  font-size: 20px;
   position: relative;
 }
 header img {
@@ -99,6 +97,7 @@ header nav ul a {
 }
 header nav ul .login,
 header nav ul .signup {
+  font-size: 18px;
   padding: 10px 13px;
   transition: var(--transition);
   -webkit-transition: var(--transition);
@@ -210,9 +209,8 @@ header .bar {
   line-height: 1.6;
 }
 .description p.sub {
-  font-size: 26px;
+  font-size: 24px;
   margin-bottom: 40px;
-  font-family: var(--english-font);
 }
 .description .input {
   display: flex;
@@ -392,10 +390,10 @@ header .bar {
 }
 .signup-section h2 {
   color: white;
+  font-weight: 600;
   text-align: center;
   line-height: 1.6;
   font-size: 32px;
-  font-family: var(--english-second-font);
 }
 .signup-section a {
   width: fit-content;
@@ -411,7 +409,6 @@ header .bar {
   -ms-transition: background-color var(--transition);
   -o-transition: background-color var(--transition);
   font-weight: 600;
-  font-family: var(--english-font);
 }
 .signup-section a:hover {
   background-color: var(--blue-alt-color);

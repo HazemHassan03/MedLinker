@@ -20,7 +20,6 @@
 }
 html {
   scroll-behavior: smooth;
-  overflow: hidden;
 }
 ::-webkit-scrollbar {
   width: 13px;
@@ -393,7 +392,7 @@ header .nav-list li button {
 }
 .job .widget {
   background-color: white;
-  padding: 10px 15px;
+  padding: 10px 12px;
   border-radius: 10px;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
