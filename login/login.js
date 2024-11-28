@@ -70,6 +70,7 @@ loginForm.addEventListener("submit", async (e) => {
   if (request.status == 200) {
     showMessage(success);
     let json = await request.json();
+    console.log(json);
     document.cookie = `access=${json.access}; expires=${
       generateDateExpire()[0]
     }; path=/`;
@@ -78,6 +79,8 @@ loginForm.addEventListener("submit", async (e) => {
     }; path=/`;
     location.href = "../home/home.html";
   } else if (request.status == 401) {
+    let json = await request.json();
+    console.log(json);
     showMessage(wrong);
   } else {
     showMessage(error);

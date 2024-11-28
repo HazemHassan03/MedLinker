@@ -1,5 +1,5 @@
 :root {
-  --main-color: #133a5e;
+  --main-color: #112d4d;
   --alt-color: #137c8c;
   --blue-color: #004b84;
   --blue-alt-color: #003b68;
@@ -23,7 +23,7 @@ html {
   overflow: hidden;
 }
 ::-webkit-scrollbar {
-  width: 15px;
+  width: 13px;
 }
 ::-webkit-scrollbar-track {
   background-color: var(--white-color);
@@ -45,6 +45,12 @@ img {
 body {
   font-family: var(--arabic-font);
   background-color: #eee;
+}
+body.scrolling {
+  touch-action: none;
+}
+body.scrolling::-webkit-scrollbar {
+  width: 0;
 }
 .nav-list {
   list-style: none;
@@ -88,7 +94,7 @@ header {
 }
 header .container {
   display: grid;
-  grid-template-columns: 150px 1fr;
+  grid-template-columns: 200px 1fr;
   align-items: center;
   height: 60px;
   gap: 20px;
@@ -108,7 +114,7 @@ header .account > div {
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  padding: 7px 5px;
+  padding: 7px;
   border-radius: 10px;
   transition: background-color var(--transition);
   -webkit-transition: background-color var(--transition);
@@ -127,6 +133,7 @@ header .account > div:active {
 header .account button {
   display: flex;
   gap: 5px;
+  font-size: 18px;
 }
 header .account .img {
   font-size: 25px;
@@ -144,7 +151,6 @@ header .account .img i {
   color: var(--main-color);
 }
 header .nav-list {
-  direction: rtl;
   position: absolute;
   top: 100%;
   right: 0;
@@ -176,8 +182,7 @@ header .nav-list li:not(:last-child) {
 }
 header .nav-list li a,
 header .nav-list li button {
-  padding: 15px 20px 15px 50px;
-  font-size: 14px;
+  padding: 15px 50px 15px 20px;
   transition: background-color var(--transition);
   -webkit-transition: background-color var(--transition);
   -moz-transition: background-color var(--transition);
@@ -198,7 +203,7 @@ header .nav-list li button {
 }
 @media (max-width: 600px) {
   header .container {
-    grid-template-columns: 1fr auto auto;
+    grid-template-columns: 1fr auto;
     gap: 15px;
   }
   header .logo img {
@@ -217,6 +222,9 @@ header .nav-list li button {
     color: var(--main-color);
     opacity: 1;
     cursor: pointer;
+  }
+  header .account button {
+    font-size: 16px;
   }
 }
 .loading {
@@ -379,8 +387,18 @@ header .nav-list li button {
   padding-top: 15px;
   margin-bottom: 20px;
 }
-.job .container > *:not(.apply, :last-child) {
+.job .container > *:not(.apply, :last-child),
+.job .container .main-details > *:not(:last-child) {
   margin-bottom: 15px;
+}
+.job .widget {
+  background-color: white;
+  padding: 10px 15px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
 }
 .job .apply,
 .application .submit {
@@ -397,23 +415,20 @@ header .nav-list li button {
   display: block;
   margin-left: auto;
 }
-.job .job-title {
+.job i {
+  color: rgb(0 0 0 / 80%);
+  margin-right: 5px;
+}
+.job .main-details .title {
+  color: rgb(0 0 0 / 90%);
+}
+.job .widget .widget-title {
   color: var(--main-color);
+  margin-bottom: 5px;
+  font-size: 22px;
+}
+.job .main-details .job-title {
   font-size: 24px;
-}
-.job .job-id {
-  color: rgb(0 0 0 / 80%);
-}
-.job .company-name {
-  color: rgb(0 0 0 / 80%);
-}
-.job .location {
-  color: rgb(0 0 0 / 80%);
-}
-.job .title {
-  color: var(--main-color);
-  font-weight: bold;
-  font-size: 18px;
 }
 .job .value {
   line-height: 1.8;

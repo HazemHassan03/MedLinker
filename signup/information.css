@@ -1,5 +1,5 @@
 :root {
-  --main-color: #133a5e;
+  --main-color: #112d4d;
   --alt-color: #137c8c;
   --blue-color: #004b84;
   --blue-alt-color: #003b68;
@@ -19,7 +19,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 ::-webkit-scrollbar {
-  width: 15px;
+  width: 13px;
 }
 ::-webkit-scrollbar-track {
   background-color: var(--white-color);

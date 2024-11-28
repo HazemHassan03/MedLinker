@@ -1,5 +1,5 @@
 :root {
-  --main-color: #133a5e;
+  --main-color: #112d4d;
   --alt-color: #137c8c;
   --blue-color: #004b84;
   --blue-alt-color: #003b68;
@@ -16,7 +16,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 ::-webkit-scrollbar {
-  width: 15px;
+  width: 13px;
 }
 ::-webkit-scrollbar-track {
   background-color: var(--white-color);
@@ -27,6 +27,12 @@
 ::-webkit-scrollbar-thumb:hover {
   background-color: var(--blue-alt-color);
 }
+body {
+  font-family: var(--arabic-font);
+}
+body > section:not(:first-of-type) {
+  padding: 70px 0;
+}
 a {
   display: block;
   color: initial;
@@ -35,11 +41,8 @@ a {
 img {
   max-width: 100%;
 }
-body {
-  font-family: var(--arabic-font);
-}
-body > section:not(:first-of-type) {
-  padding: 70px 0;
+.rtl {
+  direction: rtl;
 }
 .container {
   padding-left: 15px;
@@ -197,7 +200,6 @@ header .bar {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
-  direction: rtl;
 }
 .description p {
   text-align: center;
@@ -208,8 +210,9 @@ header .bar {
   line-height: 1.6;
 }
 .description p.sub {
-  font-size: 19.2px;
+  font-size: 26px;
   margin-bottom: 40px;
+  font-family: var(--english-font);
 }
 .description .input {
   display: flex;
@@ -277,7 +280,6 @@ header .bar {
 }
 .welcome .header {
   display: flex;
-  direction: rtl;
   align-items: center;
   margin-left: auto;
   column-gap: 20px;
@@ -294,7 +296,6 @@ header .bar {
   width: 300px;
 }
 .welcome p {
-  direction: rtl;
   font-size: 20px;
   font-weight: 500;
   line-height: 2;
@@ -337,9 +338,6 @@ header .bar {
   }
 }
 
-.presentation .container {
-  direction: rtl;
-}
 .presentation h2 {
   text-align: center;
   font-size: 40px;
@@ -390,7 +388,6 @@ header .bar {
   align-items: center;
 }
 .signup-section .container {
-  direction: rtl;
   max-width: 700px;
 }
 .signup-section h2 {
@@ -398,6 +395,7 @@ header .bar {
   text-align: center;
   line-height: 1.6;
   font-size: 32px;
+  font-family: var(--english-second-font);
 }
 .signup-section a {
   width: fit-content;
@@ -412,6 +410,8 @@ header .bar {
   -moz-transition: background-color var(--transition);
   -ms-transition: background-color var(--transition);
   -o-transition: background-color var(--transition);
+  font-weight: 600;
+  font-family: var(--english-font);
 }
 .signup-section a:hover {
   background-color: var(--blue-alt-color);

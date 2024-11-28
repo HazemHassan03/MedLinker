@@ -8,12 +8,12 @@ function logoutFunction() {
 }
 
 function loading() {
-  document.documentElement.style.overflow = "hidden";
+  document.body.classList.add("scrolling");
   document.querySelector(".loading").classList.add("active");
 }
 function finish() {
+  document.body.classList.remove("scrolling");
   document.querySelector(".loading").classList.remove("active");
-  document.documentElement.style.overflow = "initial";
 }
 
 async function getAccessToken() {

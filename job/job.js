@@ -49,9 +49,8 @@ if (fetchJobRequest.status == 200) {
   landing.remove();
   let jobDetails = await fetchJobRequest.json();
   let jobTitle = document.querySelector(".job-title"),
-    jobId = document.querySelector(".job-id"),
-    companyName = document.querySelector(".company-name"),
-    jobLocation = document.querySelector(".location"),
+    companyName = document.querySelector(".company-name .value"),
+    jobLocation = document.querySelector(".location .value"),
     vacancies = document.querySelector(".vacancies .value"),
     employmentType = document.querySelector(".employment-type .value"),
     jobType = document.querySelector(".job-type .value"),
@@ -75,13 +74,10 @@ if (fetchJobRequest.status == 200) {
   if (workplaceValue === "Onsite") {
     workplaceValue = "On-site";
   }
-  console.log(jobDetails.description);
-  console.log(jobDetails.requirements);
   document.title = jobDetails.title;
   jobTitle.textContent = jobDetails.title;
-  jobId.textContent += jobDetails.id;
-  companyName.innerHTML += jobDetails.company;
-  jobLocation.innerHTML += jobLocationValue;
+  companyName.textContent = jobDetails.company;
+  jobLocation.textContent = jobLocationValue;
   vacancies.textContent = jobDetails.number_of_vacancies;
   employmentType.textContent = employmentTypeValue;
   jobType.textContent = jobTypeValue;

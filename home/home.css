@@ -1,5 +1,5 @@
 :root {
-  --main-color: #133a5e;
+  --main-color: #112d4d;
   --alt-color: #137c8c;
   --blue-color: #004b84;
   --blue-alt-color: #003b68;
@@ -20,10 +20,9 @@
 }
 html {
   scroll-behavior: smooth;
-  overflow: hidden;
 }
 ::-webkit-scrollbar {
-  width: 15px;
+  width: 13px;
 }
 ::-webkit-scrollbar-track {
   background-color: var(--white-color);
@@ -45,6 +44,12 @@ img {
 body {
   font-family: var(--arabic-font);
   background-color: #eee;
+}
+body.scrolling {
+  touch-action: none;
+}
+body.scrolling::-webkit-scrollbar {
+  width: 0;
 }
 .nav-list {
   list-style: none;
@@ -91,7 +96,7 @@ header {
 }
 header .container {
   display: grid;
-  grid-template-columns: 150px 1fr 150px;
+  grid-template-columns: 200px 1fr 200px;
   align-items: center;
   height: 60px;
   gap: 20px;
@@ -163,7 +168,7 @@ header .account > div {
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  padding: 7px 5px;
+  padding: 7px;
   border-radius: 10px;
   transition: background-color var(--transition);
   -webkit-transition: background-color var(--transition);
@@ -182,6 +187,7 @@ header .account > div:active {
 header .account button {
   display: flex;
   gap: 5px;
+  font-size: 18px;
 }
 header .account .img {
   font-size: 25px;
@@ -199,7 +205,6 @@ header .account .img i {
   color: var(--main-color);
 }
 header .nav-list {
-  direction: rtl;
   position: absolute;
   top: 100%;
   right: 0;
@@ -231,8 +236,7 @@ header .nav-list li:not(:last-child) {
 }
 header .nav-list li a,
 header .nav-list li button {
-  padding: 15px 20px 15px 50px;
-  font-size: 14px;
+  padding: 15px 50px 15px 20px;
   transition: background-color var(--transition);
   -webkit-transition: background-color var(--transition);
   -moz-transition: background-color var(--transition);
@@ -273,87 +277,22 @@ header .nav-list li button {
     opacity: 1;
     cursor: pointer;
   }
+  header .account button {
+    font-size: 16px;
+  }
 }
 
-.landing .container {
-  height: calc(100dvh - 60px);
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 30px;
-  align-content: center;
+.welcome {
+  margin: 20px 0;
 }
-.landing .image {
-  align-self: center;
-  animation: up-and-down 8s linear infinite;
-  -webkit-animation: up-and-down 8s linear infinite;
-}
-@keyframes up-and-down {
-  25% {
-    transform: translateY(-20px);
-    -webkit-transform: translateY(-20px);
-    -moz-transform: translateY(-20px);
-    -ms-transform: translateY(-20px);
-    -o-transform: translateY(-20px);
-  }
-  50%,
-  100% {
-    transform: translateY(0);
-    -webkit-transform: translateY(0);
-    -moz-transform: translateY(0);
-    -ms-transform: translateY(0);
-    -o-transform: translateY(0);
-  }
-  75% {
-    transform: translateY(20px);
-    -webkit-transform: translateY(20px);
-    -moz-transform: translateY(20px);
-    -ms-transform: translateY(20px);
-    -o-transform: translateY(20px);
-  }
-}
-.landing .image img {
-  width: 100%;
-}
-.landing .welcome {
-  direction: rtl;
-  text-align: center;
-  align-self: center;
-}
-.landing .welcome .header {
-  line-height: 1.8;
+.welcome .header {
+  font-size: 24px;
+  margin-bottom: 10px;
   color: var(--main-color);
-  margin-bottom: 30px;
-  font-size: 40px;
 }
-.landing .welcome .header .name {
-  font-size: 40px;
-}
-.landing .welcome .header img {
-  width: 300px;
-  vertical-align: middle;
-}
-.landing .welcome .details {
-  font-size: 22px;
-  line-height: 2;
-  font-weight: 500;
-}
-@media (max-width: 992px) {
-  .landing .image {
-    display: none;
-  }
-  .landing .welcome {
-    padding: 0 20px;
-  }
-  .landing .welcome .header,
-  .landing .welcome .header .name {
-    font-size: 30px;
-  }
-  .landing .welcome img {
-    width: 200px;
-  }
-  .landing .welcome .details {
-    font-size: 20px;
-  }
+.welcome .details {
+  font-size: 17px;
+  line-height: 1.8;
 }
 
 .loading {
