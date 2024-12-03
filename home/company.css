@@ -18,7 +18,7 @@ section .section-heading-separation {
   display: block;
   margin: 0 -15px;
   height: 2px;
-  background-color: white;
+  background-color: var(--alt-alt-color);
   transition: background-color var(--transition);
   -webkit-transition: background-color var(--transition);
   -moz-transition: background-color var(--transition);
@@ -26,6 +26,9 @@ section .section-heading-separation {
   -o-transition: background-color var(--transition);
 }
 @media (hover: hover) {
+  section .section-heading-separation {
+    background-color: white;
+  }
   section:hover > .section-heading-separation {
     background-color: var(--alt-alt-color);
   }
