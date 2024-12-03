@@ -1,7 +1,7 @@
 let headerBar = document.getElementById("header-bar"),
   nav = document.getElementById("nav"),
   toTop = document.getElementById("to-top"),
-  presentation = document.querySelectorAll(".presentation .body div"),
+  presentation = document.querySelectorAll(".presentation .body > div"),
   copyrightDate = document.getElementById("copyright-date"),
   date = new Date();
 
@@ -34,6 +34,7 @@ toTop.addEventListener("click", () => {
 for (let i = 0; i < presentation.length; i++) {
   let span = document.createElement("span");
   let spanText = document.createTextNode(i + 1);
+  span.classList.add("number");
   span.append(spanText);
   presentation[i].prepend(span);
 }

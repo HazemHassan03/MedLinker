@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,6 +10,7 @@
       type="image/x-icon"
     />
     <link rel="stylesheet" href="../fontawesome/all.min.css" />
+    <link rel="stylesheet" href="../constants.css" />
     <link rel="stylesheet" href="information.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -46,7 +47,7 @@
       <i class="exit fa-solid fa-chevron-left"></i>
     </div>
     <img src="../images/logo-blue-expand.png" alt="The Logo" class="logo" />
-    <div class="container">
+    <div class="body-container">
       <form class="employee-form">
         <h2>Personal Information</h2>
         <div class="row flex">
@@ -68,8 +69,8 @@
             <h3>Username</h3>
             <input type="text" name="username" id="employee-username" />
             <p class="not-valid" id="username-not-valid">
-              The username must be at least 8 characters and have at least one
-              english letter and the numbers are optional and not have spaces
+              The username must be at least 8 characters, have at least one
+              english letter, the numbers are optional and have no spaces
             </p>
             <i class="check-false fa-solid fa-circle-exclamation"></i>
           </div>
@@ -322,8 +323,8 @@
             <h3>Username</h3>
             <input type="text" name="username" id="company-username" />
             <p class="not-valid" id="company-username-not-valid">
-              The username must be at least 8 characters and have at least one
-              english letter and the numbers are optional and not have spaces
+              The username must be at least 8 characters, have at least one
+              english letter, the numbers are optional and have no spaces
             </p>
             <i class="check-false fa-solid fa-circle-exclamation"></i>
           </div>
@@ -348,37 +349,43 @@
       </form>
     </div>
     <div class="empty-message message">
-      <h3>بيانات غير كاملة</h3>
+      <h3>Incomplete data</h3>
       <p class="main-message">
-        يرجى التأكد من أنك قد قمت بإدخل جميع البيانات المطلوبة
+        Please make sure you have entered all the required information.
       </p>
       <i class="fa-solid fa-circle-xmark"></i>
     </div>
     <p class="loading">Loading...</p>
     <div class="not-valid-message message">
-      <h3>بيانات خاطئة</h3>
-      <p class="main-message">يرجى مراجعة صحة البيانات واتباع التعليمات</p>
+      <h3>Incorrect information</h3>
+      <p class="main-message">
+        Please review the accuracy of the information and follow the
+        instructions.
+      </p>
       <i class="fa-solid fa-circle-xmark"></i>
     </div>
     <div class="failed-message message">
-      <h3>حدث خطأ</h3>
-      <p class="main-message">لم يتم التسجيل بنجاح، يرجى المحاولة مرة أخرى</p>
+      <h3>Something went wrong</h3>
+      <p class="main-message">
+        Registration was not successful. Please try again.
+      </p>
       <div class="another-messages"></div>
       <i class="fa-solid fa-circle-xmark"></i>
     </div>
     <div class="failed-cause-message message">
-      <h3>حدث خطأ</h3>
+      <h3>Something went wrong</h3>
       <p class="main-message">
-        لم يتم التسجيل بنجاح، يرجى قراءة الأسباب والمحاولة مرة أخرى
+        Registration was not successful. Please read the reasons and try again.
       </p>
       <div class="another-messages"></div>
       <i class="fa-solid fa-circle-xmark"></i>
     </div>
     <div class="success-message message">
-      <h3>تم التسجيل بنجاح</h3>
+      <h3>Registration completed successfully</h3>
       <p class="main-message">
-        انتظر حتى يتم تفعيل حسابك لتتمكن من تسجيل الدخول
-        <a href="../login/login.html">تسجيل دخول</a>
+        We will let you know when we activate your account before you can log
+        in.
+        <a href="../login/login.html">Login</a>
       </p>
     </div>
     <div class="overlay"></div>

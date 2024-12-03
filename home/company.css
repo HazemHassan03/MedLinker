@@ -7,14 +7,28 @@
   gap: 10px;
 }
 section .section-title {
-  direction: rtl;
   color: var(--main-color);
   font-size: 22px;
 }
 section .section-description {
-  direction: rtl;
   line-height: 1.8;
   font-size: 15px;
+}
+section .section-heading-separation {
+  display: block;
+  margin: 0 -15px;
+  height: 2px;
+  background-color: white;
+  transition: background-color var(--transition);
+  -webkit-transition: background-color var(--transition);
+  -moz-transition: background-color var(--transition);
+  -ms-transition: background-color var(--transition);
+  -o-transition: background-color var(--transition);
+}
+@media (hover: hover) {
+  section:hover > .section-heading-separation {
+    background-color: var(--alt-alt-color);
+  }
 }
 .head {
   display: grid;
@@ -28,7 +42,7 @@ section .section-description {
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
-  background-color: white;
+  background-color: #eee;
 }
 .icon-inside {
   position: relative;
@@ -59,7 +73,6 @@ section .section-description {
   color: rgb(0 0 0 / 80%);
 }
 .post-job-section {
-  direction: rtl;
   display: grid;
   grid-template-columns: 1fr auto;
   column-gap: 10px;
@@ -286,7 +299,6 @@ option[value="0"] {
   row-gap: 10px;
 }
 .main-content .company-jobs .jobs-message {
-  direction: rtl;
   text-align: center;
   color: var(--main-color);
   line-height: 2;
@@ -433,8 +445,7 @@ option[value="0"] {
 .job-details-box .options {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  direction: rtl;
+  justify-content: flex-end;
   column-gap: 10px;
   margin-top: 10px;
   margin-right: 10px;

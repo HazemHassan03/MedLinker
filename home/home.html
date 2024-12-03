@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,6 +10,7 @@
       type="image/x-icon"
     />
     <link rel="stylesheet" href="../fontawesome/all.min.css" />
+    <link rel="stylesheet" href="../constants.css" />
     <link rel="stylesheet" href="home.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -84,9 +85,9 @@
       <section class="main-content">
         <div class="container">
           <main class="jobs">
-            <h2 class="jobs-message no-jobs">لا توجد وظائف</h2>
+            <h2 class="jobs-message no-jobs">No Jobs Found</h2>
             <h2 class="jobs-message failed">
-              فشل جلب الوظائف، يرجى إعادة تحميل الصفحة
+              Failed to get the jobs. Please reload the page.
             </h2>
             <div class="jobs-container"></div>
             <div class="options">
@@ -170,29 +171,30 @@
             </div>
             <div class="post-job-section background-section">
               <div>
-                <h2 class="section-title">نشر وظيفة</h2>
+                <h2 class="section-title">Post a job</h2>
                 <p class="section-description">
-                  قم بنشر وظيفة الآن للحصول على أفضل المتقدمين.
+                  Post a job now to get the best candidates.
                 </p>
               </div>
-              <button class="post-job">Post Job</button>
+              <button class="post-job">Post a job</button>
             </div>
           </section>
           <section class="company-jobs background-section">
-            <h2 class="section-title">الوظائف التي نشرتها مسبقًا</h2>
+            <h2 class="section-title">The jobs you previously posted</h2>
             <p class="section-description">
-              يمكنك تصفحها والتعديل عليها وحذفها إذا شئت.
+              You can browse, edit, or delete them if you wish.
             </p>
-            <h2 class="jobs-message no-jobs">لا توجد وظائف</h2>
+            <span class="section-heading-separation"></span>
+            <h2 class="jobs-message no-jobs">No Jobs Found</h2>
             <h2 class="jobs-message failed">
-              فشل جلب الوظائف، يرجى إعادة تحميل الصفحة
+              Failed to get the jobs. Please reload the page.
             </h2>
           </section>
         </div>
       </section>
       <div class="post-job-box box">
         <i class="close fa-solid fa-xmark"></i>
-        <h2 class="title">Post Job</h2>
+        <h2 class="title">Post a job</h2>
         <div class="body">
           <form class="post-job-form job-form">
             <div class="row job-title">
@@ -417,15 +419,15 @@
           <div class="details"></div>
         </div>
         <div class="options">
-          <button class="edit-job">تعديل</button>
-          <button class="delete-job">حذف</button>
+          <button class="edit-job">Edit</button>
+          <button class="delete-job">Delete</button>
         </div>
       </div>
       <div class="delete-job-message message">
-        <h3 class="title">هل تريد حقا حذف هذه الوظيفة؟</h3>
+        <h3 class="title">Are you sure you want to delete this job?</h3>
         <div class="options">
-          <button class="yes">نعم</button>
-          <button class="no">لا</button>
+          <button class="yes">Yes</button>
+          <button class="no">No</button>
         </div>
         <i class="close fa-solid fa-xmark"></i>
       </div>

@@ -47,8 +47,10 @@ if (getJobsRequest.status == 200) {
   console.log(jobsObject);
   let jobs = jobsObject.results;
   let options = document.querySelector(".jobs .options");
+  let showingDetails = document.querySelector(".jobs .showing-details")
   if (jobsObject.count <= 20) {
     options.style.display = "none";
+    showingDetails.style.display = "none";
   } else {
     let maxLength = 20,
       to = maxLength,

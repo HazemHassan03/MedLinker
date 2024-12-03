@@ -72,8 +72,8 @@ async function getCompanyJobs() {
                   </div>
                 </div>
                 <div class="options">
-                  <button class="edit-job" data-job-id="${job.id}">تعديل</button>
-                  <button class="delete-job" data-job-id="${job.id}">حذف</button>
+                  <button class="edit-job" data-job-id="${job.id}">Edit</button>
+                  <button class="delete-job" data-job-id="${job.id}">Delete</button>
                 </div>
               </div>`;
         jobsContainer.insertAdjacentHTML("beforeend", jobElement);
@@ -478,8 +478,8 @@ async function postJobFetch() {
     createMessage(
       "success",
       postJobBox,
-      "تم نشر الوظيفة بنجاح",
-      "شكرا لاستخدامكم لـMedLinker، سنعمل جاهدين لإيجاد أفضل الموظفين المناسبين لهذه الوظيفة",
+      "The job has been successfully posted",
+      "Thank you for using MedLinker. We will work hard to find the best candidates suitable for this job.",
       undefined,
       true
     );
@@ -492,8 +492,8 @@ async function postJobFetch() {
     createMessage(
       "failed",
       postJobBox,
-      "حدث خطأ",
-      "نأسف لحدوث ذلك، يرجى المحاولة مرة أخرى"
+      "Something went wrong",
+      "We're sorry about that. Please try again."
     );
   }
 }
@@ -505,8 +505,8 @@ postJobForm.addEventListener("submit", async (e) => {
     createMessage(
       "failed",
       postJobBox,
-      "البيانات غير كاملة",
-      "يرجى التأكد من أنك قد قمت بإدخل جميع البيانات المطلوبة"
+      "Incomplete data",
+      "Please ensure that you have entered all the required information."
     );
     finalCheck(allPostJobInputs, postJobForm);
   }
@@ -536,8 +536,8 @@ async function fetchJobDetails(jobId, from) {
       createMessage(
         "failed",
         editJobBox,
-        "حدث خطأ",
-        "نأسف لحدوث ذلك، يرجى المحاولة مرة أخرى"
+        "Something went wrong",
+        "We're sorry about that. Please try again."
       );
     }
   } else if (from === "show details") {
@@ -634,8 +634,8 @@ async function fetchJobDetails(jobId, from) {
       createMessage(
         "failed",
         jobDetailsBox,
-        "حدث خطأ",
-        "نأسف لحدوث ذلك، يرجى المحاولة مرة أخرى"
+        "Something went wrong",
+        "We're sorry about that. Please try again."
       );
     }
   }
@@ -738,8 +738,8 @@ async function editJobFetch(jobId) {
     createMessage(
       "success",
       editJobBox,
-      "تم تعديل الوظيفة بنجاح",
-      "شكرا لاستخدامكم لـMedLinker، نحن سعداء لخدمتكم",
+      "The job has been successfully updated",
+      "Thank you for using MedLinker. We are happy to serve you.",
       undefined,
       true
     );
@@ -752,8 +752,8 @@ async function editJobFetch(jobId) {
     createMessage(
       "failed",
       editJobBox,
-      "حدث خطأ",
-      "نأسف لحدوث ذلك، يرجى المحاولة مرة أخرى"
+      "Something went wrong",
+      "We're sorry about that. Please try again."
     );
   }
 }
@@ -766,8 +766,8 @@ editJobForm.addEventListener("submit", async (e) => {
     createMessage(
       "failed",
       editJobBox,
-      "البيانات غير كاملة",
-      "يرجى التأكد من أنك قد قمت بإدخل جميع البيانات المطلوبة"
+      "Something went wrong",
+      "We're sorry about that. Please try again."
     );
     finalCheck(allEditJobInputs, editJobForm);
   }
@@ -794,8 +794,8 @@ async function deleteJobFetch(jobId) {
     createMessage(
       "success",
       undefined,
-      "تم حذف الوظيفة بنجاح",
-      "شكرا لاستخدامكم لـMedLinker، نحن سعداء لخدمتكم",
+      "The job has been successfully deleted",
+      "Thank you for using MedLinker. We are happy to serve you.",
       undefined,
       true
     );
@@ -808,15 +808,15 @@ async function deleteJobFetch(jobId) {
     createMessage(
       "failed",
       deleteJobMessage,
-      "هذه الوظيفة غير موجودة",
-      "يرجى إعادة تحميل الصفحة"
+      "This job does not exist",
+      "Please reload the page."
     );
   } else {
     createMessage(
       "failed",
       deleteJobMessage,
-      "حدث خطأ",
-      "نأسف لحدوث ذلك، يرجى المحاولة مرة أخرى"
+      "Something went wrong",
+      "We're sorry about that. Please try again."
     );
   }
 }

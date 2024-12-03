@@ -121,7 +121,7 @@ signupForm.addEventListener("submit", (e) => {
     sessionStorage.setItem("Data", JSON.stringify(infObj));
     location.href = "../signup/information.html";
   } else {
-    warning.textContent = "تأكد من صحة البيانات المدخلة";
+    warning.textContent = "Make sure the entered data is correct";
     warning.classList.add("active");
     setTimeout(() => {
       warning.classList.remove("active");

@@ -6,7 +6,7 @@
   align-items: flex-start;
 }
 .main-content .jobs {
-  background-color: white;
+  background-color: #eee;
   border-radius: 10px;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
@@ -16,7 +16,6 @@
   margin-bottom: 20px;
 }
 .main-content .jobs .jobs-message {
-  direction: rtl;
   text-align: center;
   color: var(--main-color);
   line-height: 2;
@@ -143,7 +142,7 @@
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
-  background-color: white;
+  background-color: #eee;
 }
 .main-content .side .personal-information {
   position: relative;

@@ -1,0 +1,63 @@
+:root {
+  --main-color: #112d4d;
+  --alt-color: #137c8c;
+  --alt-alt-color: #106774;
+  --blue-color: #004b84;
+  --blue-alt-color: #003b68;
+  --white-color: #dbe2ef;
+  --red-color: #f44336;
+  --green-color: #22c55e;
+  --english-font: "League Spartan", system-ui;
+  --english-second-font: "Open Sans", sans-serif;
+  --arabic-font: "Alexandria", sans-serif;
+  --arabic-second-font: "Cairo", sans-serif;
+  --transition: 0.3s;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background-color: var(--white-color);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--blue-color);
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--blue-alt-color);
+}
+html {
+  scroll-behavior: smooth;
+}
+.container {
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (max-width: 767px) {
+  .container {
+    width: 95%;
+  }
+}
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+img {
+  max-width: 100%;
+}

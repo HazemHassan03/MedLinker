@@ -836,7 +836,7 @@ function showFailedMessage(status) {
   });
   if (status) {
     let p = document.createElement("p");
-    let pText = document.createTextNode(`كود الخطأ: ${status}`);
+    let pText = document.createTextNode(`Error Code: ${status}`);
     p.append(pText);
     p.classList.add("error-code");
     anotherMessages.append(p);
@@ -851,7 +851,7 @@ function showFailedCauseMessage(status, messages) {
   });
   if (status) {
     let p = document.createElement("p");
-    let pText = document.createTextNode(`كود الخطأ: ${status}`);
+    let pText = document.createTextNode(`Error Code: ${status}`);
     p.append(pText);
     p.classList.add("error-code");
     anotherMessages.append(p);

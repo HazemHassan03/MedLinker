@@ -1,42 +1,12 @@
-:root {
-  --main-color: #112d4d;
-  --alt-color: #137c8c;
-  --alt-alt-color: #106774;
-  --blue-color: #004b84;
-  --blue-alt-color: #003b68;
-  --white-color: #dbe2ef;
-  --green-color: #22c55e;
-  --red-color: #f44336;
-  --english-font: "League Spartan", system-ui;
-  --transition: 0.3s;
-}
 html {
   font-size: 18px;
-}
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
-::-webkit-scrollbar {
-  width: 13px;
-}
-::-webkit-scrollbar-track {
-  background-color: var(--white-color);
-}
-::-webkit-scrollbar-thumb {
-  background-color: var(--blue-color);
-}
-::-webkit-scrollbar-thumb:hover {
-  background-color: var(--blue-alt-color);
 }
 body {
   font-family: var(--english-font);
   background-color: var(--white-color);
 }
 
-.container {
+.body-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   height: 100dvh;
@@ -229,7 +199,7 @@ input[type="submit"]:hover {
 }
 
 @media (max-width: 665px) {
-  .container {
+  .body-container {
     grid-template-columns: 1fr;
   }
   .logo {

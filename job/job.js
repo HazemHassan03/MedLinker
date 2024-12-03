@@ -213,8 +213,8 @@ applicationForm.addEventListener("submit", async (e) => {
         createMessage(
           "success",
           applicationFormBox,
-          "تم التقديم بنجاح",
-          "انتظر حتى يتم التواصل معك",
+          "You have successfully applied for the job.",
+          "Please wait until you are contacted.",
           undefined,
           true
         );
@@ -222,7 +222,7 @@ applicationForm.addEventListener("submit", async (e) => {
         createMessage(
           "failed",
           applicationFormBox,
-          "لم يتم التقديم بنجاح",
+          "The job application was not submitted successfully",
           undefined,
           json
         );
@@ -235,8 +235,8 @@ applicationForm.addEventListener("submit", async (e) => {
         createMessage(
           "failed",
           applicationFormBox,
-          "لم يتم التقديم بنجاح",
-          "نأسف لحدوث ذلك، يرجى المحاولة مرة أخرى"
+          "The job application was not submitted successfully",
+          "We're sorry about that. Please try again."
         );
       }
     } else {
