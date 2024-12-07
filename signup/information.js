@@ -1,4 +1,4 @@
-import { domain, apiVersion } from "../constants.js";
+import { domain, apiVersion } from "../js/constants.js";
 
 let infObj;
 if (sessionStorage.getItem("Data")) {
@@ -879,6 +879,11 @@ function removeLoadingMessage() {
   overlay.classList.remove("active");
 }
 function successMessage() {
+  if (userType === "job-seeker") {
+    let loginLink = success.querySelector("a");
+    loginLink.href = "../home/home.html";
+    loginLink.textContent = "Explore Jobs";
+  }
   success.classList.add("active");
   overlay.classList.add("active");
 }

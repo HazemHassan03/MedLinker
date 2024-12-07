@@ -1,34 +1,37 @@
-import { userData } from "./home.js";
-import {
-  domain,
-  apiVersion,
-  finish,
-  getAccessToken,
-  storeNewAccess,
-} from "../js/constants.js";
-
-let landingName = document.querySelector(".welcome .name"),
-  sideFullName = document.querySelector(".side .full-name"),
-  sideUsername = document.querySelector(".side .username"),
-  sideJobTitle = document.querySelector(".side .job-title");
-
-landingName.textContent += ` ${userData.user.first_name}`;
-sideFullName.textContent = `${userData.user.first_name} ${
-  userData.user.last_name.split(" ")[0]
-}`;
-sideUsername.textContent = `@${userData.user.username}`;
-sideJobTitle.innerHTML += ` ${userData.job_title}`;
+import { domain, apiVersion, finish } from "../js/constants.js";
 
 let jobsContainer = document.querySelector(".jobs .jobs-container"),
   noJobsMessage = document.querySelector(".jobs .no-jobs"),
-  failedJobsMessage = document.querySelector(".jobs .failed");
+  failedJobsMessage = document.querySelector(".jobs .failed"),
+  header = document.querySelector("header .container"),
+  headerAccount = document.querySelector("header .account"),
+  headerNav = document.querySelector("header .nav-list"),
+  mainContent = document.querySelector(".main-content"),
+  mainContainer = document.querySelector(".main-content .container"),
+  welcomeSection = document.querySelector("section.welcome"),
+  mainSide = document.querySelector(".main-content aside.side"),
+  options = document.querySelector(".jobs .options"),
+  showingDetails = document.querySelector(".jobs .showing-details");
+
+headerAccount.remove();
+headerNav.remove();
+let loginDiv = document.createElement("div");
+loginDiv.classList.add("login");
+header.append(loginDiv);
+let loginLink = document.createElement("a");
+loginLink.href = "../login/login.html";
+loginLink.classList.add("login-link");
+loginLink.append(document.createTextNode("Login"));
+loginDiv.append(loginLink);
+welcomeSection.remove();
+mainSide.remove();
+mainContent.style.marginTop = "20px";
+mainContainer.style.cssText = `
+    display: grid;
+    grid-template-columns: 1fr;`;
 
 async function fetchJobs(url = `https://api.${domain}/${apiVersion}/jobs`) {
-  let request = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${await getAccessToken()}`,
-    },
-  });
+  let request = await fetch(url);
   return request;
 }
 let params = new URLSearchParams(location.search);
@@ -42,12 +45,12 @@ if (jobsPage) {
 } else {
   getJobsRequest = await fetchJobs();
 }
-let options = document.querySelector(".jobs .options");
-let showingDetails = document.querySelector(".jobs .showing-details");
 if (getJobsRequest.status == 200) {
   let jobsObject = await getJobsRequest.json();
   console.log(jobsObject);
   let jobs = jobsObject.results;
+  let options = document.querySelector(".jobs .options");
+  let showingDetails = document.querySelector(".jobs .showing-details");
   if (jobsObject.count <= 20) {
     options.style.display = "none";
     showingDetails.style.display = "none";
@@ -163,14 +166,6 @@ if (getJobsRequest.status == 200) {
     }
   } else {
     failedJobsMessage.remove();
-  }
-} else if (getJobsRequest.status == 401) {
-  let check = await storeNewAccess();
-  if (check === true) {
-    await fetchJobs();
-  } else {
-    options.style.display = "none";
-    showingDetails.style.display = "none";
   }
 } else {
   options.style.display = "none";

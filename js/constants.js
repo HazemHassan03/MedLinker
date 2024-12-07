@@ -4,7 +4,7 @@ let apiVersion = "v1";
 function logoutFunction() {
   document.cookie = "access=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   document.cookie = "refresh=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-  location.reload();
+  location.href = "/login/login.html";
 }
 
 function loading() {
@@ -48,6 +48,8 @@ async function getRefreshToken() {
   }
 }
 
+let triesLimit = 3,
+  tries = 0;
 async function storeNewAccess() {
   let refreshToken = await getRefreshToken();
   let request = await fetch(
@@ -62,6 +64,7 @@ async function storeNewAccess() {
       }),
     }
   );
+  tries++;
   if (request.status == 200) {
     let json = await request.json();
     let now = Date.now();
@@ -71,7 +74,10 @@ async function storeNewAccess() {
     document.cookie = `access=${json.access}; expires=${accessExpiryDate}; path=/`;
     return true;
   } else {
-    location.href = "../login/login.html";
+    location.href = "/login/login.html";
+  }
+  if (tries === triesLimit) {
+    return false;
   }
 }
 
@@ -84,13 +90,13 @@ async function checkAccess() {
     if (check === true) {
       return true;
     } else {
-      location.href = "../login/login.html";
+      location.href = "/login/login.html";
     }
   } else if (
     !document.cookie.includes("access") &&
     !document.cookie.includes("refresh")
   ) {
-    location.href = "../login/login.html";
+    location.href = "/login/login.html";
   } else {
     return true;
   }
@@ -140,11 +146,6 @@ async function fetchUserData() {
   }
 }
 
-let message = document.querySelector(".page-message"),
-  messageClose = document.querySelector(".page-message i"),
-  messageTitle = document.querySelector(".page-message .title"),
-  messageMain = document.querySelector(".page-message .main-message"),
-  messageAnother = document.querySelector(".page-message .another-messages");
 function createMessage(
   type,
   from,
@@ -153,6 +154,13 @@ function createMessage(
   anotherMessages,
   closeReload
 ) {
+  let message = document.querySelector(".page-message"),
+    messageClose = document.querySelector(".page-message i"),
+    messageTitle = document.querySelector(".page-message .title"),
+    messageMain = document.querySelector(".page-message .main-message"),
+    messageAnother = document.querySelector(".page-message .another-messages"),
+    overlay = document.querySelector(".overlay");
+  overlay.classList.add("active");
   if (type) {
     switch (type) {
       case "success":
@@ -191,9 +199,9 @@ function createMessage(
     if (closeReload === true) {
       location.reload();
     } else {
+      overlay.classList.remove("active");
       message.classList.remove("active");
       if (from) {
-        console.log(from);
         from.classList.add("active");
       }
       messageClose.removeEventListener("click", closeMessage);

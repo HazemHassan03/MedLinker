@@ -183,119 +183,6 @@ section .section-heading-separation {
   color: rgba(0, 0, 0, 0.5);
   cursor: pointer;
 }
-.job-form .row {
-  margin-bottom: 20px;
-  position: relative;
-}
-.job-form .row input[type="number"] {
-  width: fit-content;
-}
-.job-form .row .question-row {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  column-gap: 20px;
-}
-.job-form .row .question-row:not(:first-of-type) {
-  border-top: 2px solid #ddd;
-  padding-top: 10px;
-}
-.job-form .row .question-row:not(:last-of-type) {
-  margin-bottom: 10px;
-}
-.job-form .row .question-row .question input:first-of-type {
-  margin-bottom: 10px;
-}
-.job-form .row .add,
-.job-form .row .remove {
-  color: var(--alt-color);
-  font-size: 20px;
-  cursor: pointer;
-}
-.job-form .row .not-valid {
-  font-size: 18px;
-  color: var(--red-color);
-  position: absolute;
-  top: 3px;
-  right: 0;
-  display: none;
-}
-.job-form .row .not-valid.active {
-  display: block;
-}
-.job-form .job-location .inputs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 10px;
-}
-.job-form input:not([type="submit"]),
-.job-form select,
-.job-form textarea {
-  width: 100%;
-  outline: none;
-  border: 2px solid #ddd;
-  padding: 7px 10px;
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-  transition: border-color 0.5s;
-  -webkit-transition: border-color 0.5s;
-  -moz-transition: border-color 0.5s;
-  -ms-transition: border-color 0.5s;
-  -o-transition: border-color 0.5s;
-  font-size: 16px;
-}
-.job-form input[type="submit"] {
-  padding: 7px 12px;
-  margin-bottom: 5px;
-  background-color: var(--alt-color);
-  color: white;
-  font-size: 18px;
-  border: none;
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-  cursor: pointer;
-  display: block;
-  margin-left: auto;
-}
-.job-form select {
-  cursor: pointer;
-  max-width: 100%;
-  width: 200px;
-}
-.job-form select option {
-  font-size: 15px;
-}
-select::-webkit-scrollbar {
-  width: 10px;
-}
-option[value="0"] {
-  display: none;
-}
-.job-form textarea {
-  font-family: var(--arabic-font);
-  font-size: 16px;
-  line-height: 1.6;
-  resize: none;
-  min-height: 150px;
-}
-.job-form h3 {
-  margin-bottom: 10px;
-  font-weight: 500;
-  max-width: 93%;
-  color: var(--main-color);
-}
-.job-form input:focus,
-.job-form select:focus,
-.job-form textarea:focus {
-  border-color: var(--main-color);
-}
 .main-content .company-jobs {
   display: grid;
   grid-template-columns: 1fr;
@@ -324,7 +211,7 @@ option[value="0"] {
   gap: 15px;
 }
 .main-content .company-jobs .job .options .edit-job,
-.job-details-box .edit-job {
+.main-content .company-jobs .job .options .delete-job {
   border: 2px solid var(--green-color);
   padding: 5px 7px;
   color: var(--green-color);
@@ -335,29 +222,19 @@ option[value="0"] {
   -moz-transition: background-color var(--transition), color var(--transition);
   -ms-transition: background-color var(--transition), color var(--transition);
   -o-transition: background-color var(--transition), color var(--transition);
+  text-align: center;
+}
+.main-content .company-jobs .job .options .delete-job {
+  border-color: var(--red-color);
+  color: var(--red-color);
 }
 .main-content .company-jobs .job .options .edit-job:hover,
-.job-details-box .edit-job:hover {
+.main-content .company-jobs .job .options .delete-job:hover {
   background-color: var(--green-color);
   color: white;
 }
-.main-content .company-jobs .job .options .delete-job,
-.job-details-box .delete-job {
-  border: 2px solid var(--red-color);
-  padding: 5px 7px;
-  color: var(--red-color);
-  border-radius: 10px;
-  transition: background-color var(--transition), color var(--transition);
-  -webkit-transition: background-color var(--transition),
-    color var(--transition);
-  -moz-transition: background-color var(--transition), color var(--transition);
-  -ms-transition: background-color var(--transition), color var(--transition);
-  -o-transition: background-color var(--transition), color var(--transition);
-}
-.main-content .company-jobs .job .options .delete-job:hover,
-.job-details-box .delete-job:hover {
+.main-content .company-jobs .job .options .delete-job:hover {
   background-color: var(--red-color);
-  color: white;
 }
 .main-content .company-jobs .job:not(:first-of-type) {
   border-top: 1px solid #ddd;
@@ -379,15 +256,9 @@ option[value="0"] {
   text-decoration: underline;
   cursor: pointer;
 }
-.main-content .company-jobs .job .company-name {
-  color: rgb(0 0 0 / 80%);
-}
-.main-content .company-jobs .job .job-id {
-  color: rgb(0 0 0 / 80%);
-}
-.main-content .company-jobs .job .location {
-  color: rgb(0 0 0 / 80%);
-}
+.main-content .company-jobs .job .company-name,
+.main-content .company-jobs .job .job-id,
+.main-content .company-jobs .job .location,
 .main-content .company-jobs .job .vacancies {
   color: rgb(0 0 0 / 80%);
 }
@@ -401,7 +272,8 @@ option[value="0"] {
   align-items: center;
   gap: 10px;
 }
-.delete-job-message .yes {
+.delete-job-message .yes,
+.delete-job-message .no {
   border: 2px solid var(--red-color);
   color: var(--red-color);
   width: 55px;
@@ -414,69 +286,15 @@ option[value="0"] {
   -ms-transition: background-color var(--transition), color var(--transition);
   -o-transition: background-color var(--transition), color var(--transition);
 }
-.delete-job-message .yes:hover {
+.delete-job-message .no {
+  border-color: var(--green-color);
+  color: var(--green-color);
+}
+.delete-job-message .yes:hover,
+.delete-job-message .no:hover {
   background-color: var(--red-color);
   color: white;
 }
-.delete-job-message .no {
-  border: 2px solid var(--green-color);
-  color: var(--green-color);
-  width: 55px;
-  padding: 5px 0;
-  border-radius: 10px;
-  transition: background-color var(--transition), color var(--transition);
-  -webkit-transition: background-color var(--transition),
-    color var(--transition);
-  -moz-transition: background-color var(--transition), color var(--transition);
-  -ms-transition: background-color var(--transition), color var(--transition);
-  -o-transition: background-color var(--transition), color var(--transition);
-}
 .delete-job-message .no:hover {
   background-color: var(--green-color);
-  color: white;
-}
-.job-details-box .details {
-  display: grid;
-  grid-template-columns: 1fr;
-  row-gap: 10px;
-}
-.job-details-box > .body {
-  max-height: calc(100% - 92px);
-  overflow-y: auto;
-  padding: 0 10px;
-}
-.job-details-box .options {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  column-gap: 10px;
-  margin-top: 10px;
-  margin-right: 10px;
-  margin-bottom: 5px;
-}
-.job-details-box .details .title {
-  color: var(--main-color);
-  font-weight: bold;
-  font-size: 18px;
-}
-.job-details-box .details .value {
-  font-size: 18px;
-}
-.job-details-box .details .job-description .value,
-.job-details-box .details .job-requirements .value {
-  font-size: 16px;
-  white-space: pre-wrap;
-  line-height: 1.5;
-}
-.job-details-box .interview-questions > .title,
-.job-details-box .interview-question .answer {
-  margin-bottom: 10px;
-}
-.job-details-box .interview-question .title,
-.job-details-box .interview-question .question {
-  margin-bottom: 5px;
-}
-.job-details-box .interview-question:not(:first-of-type) {
-  border-top: 1px solid #ddd;
-  padding-top: 10px;
 }

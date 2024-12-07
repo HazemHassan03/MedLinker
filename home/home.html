@@ -10,7 +10,10 @@
       type="image/x-icon"
     />
     <link rel="stylesheet" href="../fontawesome/all.min.css" />
-    <link rel="stylesheet" href="../constants.css" />
+    <link rel="stylesheet" href="../css/constants.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/loading.css" />
+    <link rel="stylesheet" href="../css/messages.css" />
     <link rel="stylesheet" href="home.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -31,44 +34,40 @@
       rel="stylesheet"
     />
   </head>
-  <body class="scrolling">
+  <body>
     <div class="loading active">
       <div class="one"></div>
       <div class="two"></div>
       <div class="three"></div>
     </div>
-    <div class="job-seeker-body">
-      <header>
-        <div class="container">
-          <div class="logo">
-            <a href="home.html"
-              ><img src="../images/logo-blue-expand.png" alt="The Logo"
-            /></a>
-          </div>
-          <div class="search">
-            <input
-              type="search"
-              name="search"
-              id="search"
-              placeholder="Search"
-            />
-            <i class="search-icon fa-solid fa-magnifying-glass"></i>
-          </div>
-          <div class="account">
-            <div>
-              <div class="img">
-                <i class="fa-solid fa-user"></i>
-              </div>
-              <button><i class="fa-solid fa-caret-down"></i>My Account</button>
-            </div>
-          </div>
-          <ul class="nav-list">
-            <li><a href="javascript:void(0);">My Profile (Soon..)</a></li>
-            <li><a href="javascript:void(0);">Settings (Soon..)</a></li>
-            <li><button id="logout">Logout</button></li>
-          </ul>
+    <header>
+      <div class="container">
+        <div class="logo">
+          <a href="../index.html"
+            ><img src="../images/logo-blue-expand.png" alt="The Logo"
+          /></a>
         </div>
-      </header>
+        <div class="search">
+          <input type="search" name="search" id="search" placeholder="Search" />
+          <i class="search-icon fa-solid fa-magnifying-glass"></i>
+        </div>
+        <div class="account">
+          <div>
+            <div class="img">
+              <i class="fa-solid fa-user"></i>
+            </div>
+            <i class="triangle fa-solid fa-caret-down"></i>
+            <button>My Account</button>
+          </div>
+        </div>
+        <ul class="nav-list">
+          <li><a href="javascript:void(0);">My Profile (Soon..)</a></li>
+          <li><a href="javascript:void(0);">Settings (Soon..)</a></li>
+          <li><button id="logout">Logout</button></li>
+        </ul>
+      </div>
+    </header>
+    <div class="job-seeker-body">
       <section class="welcome">
         <div class="container">
           <h1 class="header">
@@ -116,37 +115,6 @@
       </section>
     </div>
     <div class="company-body">
-      <header>
-        <div class="container">
-          <div class="logo">
-            <a href="home.html"
-              ><img src="../images/logo-blue-expand.png" alt="The Logo"
-            /></a>
-          </div>
-          <div class="search">
-            <input
-              type="search"
-              name="search"
-              id="search"
-              placeholder="Search"
-            />
-            <i class="search-icon fa-solid fa-magnifying-glass"></i>
-          </div>
-          <div class="account">
-            <div>
-              <div class="img">
-                <i class="fa-solid fa-user"></i>
-              </div>
-              <button><i class="fa-solid fa-caret-down"></i>My Account</button>
-            </div>
-          </div>
-          <ul class="nav-list">
-            <li><a href="javascript:void(0);">My Profile (Soon..)</a></li>
-            <li><a href="javascript:void(0);">Settings (Soon..)</a></li>
-            <li><button id="logout">Logout</button></li>
-          </ul>
-        </div>
-      </header>
       <section class="welcome">
         <div class="container">
           <h1 class="header">
@@ -176,7 +144,12 @@
                   Post a job now to get the best candidates.
                 </p>
               </div>
-              <button class="post-job">Post a job</button>
+              <a
+                class="post-job"
+                href="../post-job/post-job.html"
+                target="_blank"
+                >Post a job</a
+              >
             </div>
           </section>
           <section class="company-jobs background-section">
@@ -192,112 +165,6 @@
           </section>
         </div>
       </section>
-      <div class="post-job-box box">
-        <i class="close fa-solid fa-xmark"></i>
-        <h2 class="title">Post a job</h2>
-        <div class="body">
-          <form class="post-job-form job-form">
-            <div class="row job-title">
-              <h3>Job Title</h3>
-              <input
-                type="text"
-                name="job-title"
-                id="job-title"
-                placeholder="Ex: Pharmacist"
-              />
-              <i class="not-valid fa-solid fa-circle-exclamation"></i>
-            </div>
-            <div class="row employment-type">
-              <h3>Employment Type</h3>
-              <select name="employment-type" id="employment-type">
-                <option value="0">Select</option>
-                <option value="Job">Job</option>
-                <option value="Internship">Internship</option>
-              </select>
-              <i class="not-valid fa-solid fa-circle-exclamation"></i>
-            </div>
-            <div class="row job-type">
-              <h3>Job Type</h3>
-              <select name="job-type" id="job-type">
-                <option value="0">Select</option>
-                <option value="Full Time">Full Time</option>
-                <option value="Part Time">Part Time</option>
-              </select>
-              <i class="not-valid fa-solid fa-circle-exclamation"></i>
-            </div>
-            <div class="row workplace">
-              <h3>Workplace</h3>
-              <select name="workplace" id="workplace">
-                <option value="0">Select</option>
-                <option value="On-site">On-site</option>
-                <option value="Remote">Remote</option>
-                <option value="Hybrid">Hybrid</option>
-              </select>
-              <i class="not-valid fa-solid fa-circle-exclamation"></i>
-            </div>
-            <div class="row job-location">
-              <h3>Job Location</h3>
-              <div class="inputs">
-                <input
-                  type="text"
-                  name="job-location"
-                  id="job-location-country"
-                  placeholder="Country"
-                />
-                <input
-                  type="text"
-                  name="job-location"
-                  id="job-location-city"
-                  placeholder="City"
-                />
-              </div>
-              <i class="not-valid fa-solid fa-circle-exclamation"></i>
-            </div>
-            <div class="row job-description">
-              <h3>Job Description</h3>
-              <textarea name="job-description" id="job-description"></textarea>
-              <i class="not-valid fa-solid fa-circle-exclamation"></i>
-            </div>
-            <div class="row job-requirements">
-              <h3>Job Requirements</h3>
-              <textarea
-                name="job-requirements"
-                id="job-requirements"
-              ></textarea>
-              <i class="not-valid fa-solid fa-circle-exclamation"></i>
-            </div>
-            <div class="row vacancies">
-              <h3>Number Of Vacancies</h3>
-              <input type="number" name="vacancies" id="vacancies" min="1" />
-              <i class="not-valid fa-solid fa-circle-exclamation"></i>
-            </div>
-            <div class="row interview-questions">
-              <h3>Interview Questions</h3>
-              <i class="not-valid fa-solid fa-circle-exclamation"></i>
-              <div class="question-row first">
-                <div class="question">
-                  <input
-                    type="text"
-                    name="interview-questions"
-                    data-type="question"
-                    id="question1"
-                    placeholder="Add Question"
-                  />
-                  <input
-                    type="text"
-                    name="interview-questions"
-                    data-type="answer"
-                    id="answer1"
-                    placeholder="Add Answer"
-                  />
-                </div>
-                <i class="add fa-solid fa-circle-plus"></i>
-              </div>
-            </div>
-            <input class="submit" type="submit" value="Post" />
-          </form>
-        </div>
-      </div>
       <div class="edit-job-box box">
         <i class="close fa-solid fa-xmark"></i>
         <h2 class="title">Edit Job</h2>
@@ -412,17 +279,6 @@
           </form>
         </div>
       </div>
-      <div class="job-details-box box">
-        <i class="close fa-solid fa-xmark"></i>
-        <h2 class="title">Job Details</h2>
-        <div class="body">
-          <div class="details"></div>
-        </div>
-        <div class="options">
-          <button class="edit-job">Edit</button>
-          <button class="delete-job">Delete</button>
-        </div>
-      </div>
       <div class="delete-job-message message">
         <h3 class="title">Are you sure you want to delete this job?</h3>
         <div class="options">
@@ -439,6 +295,7 @@
       <i class="close fa-solid fa-xmark"></i>
     </div>
     <div class="overlay"></div>
+    <script src="../js/header.js" type="module"></script>
     <script src="home.js" type="module"></script>
   </body>
 </html>

@@ -1,10 +1,11 @@
-import { domain, apiVersion } from "../constants.js";
+import { domain, apiVersion } from "../js/constants.js";
 
 let userName = document.getElementById("username"),
   password = document.getElementById("password"),
   loginForm = document.querySelector(".login-form"),
   messages = document.querySelectorAll(".message"),
   wrong = document.querySelector(".not-found"),
+  notActive = document.querySelector(".not-active"),
   empty = document.querySelector(".empty"),
   loading = document.querySelector(".loading"),
   success = document.querySelector(".success"),
@@ -37,7 +38,7 @@ function showMessage(message) {
   message.classList.add("active");
   setTimeout(() => {
     message.classList.remove("active");
-  }, 3000);
+  }, 5000);
 }
 
 function generateDateExpire() {
@@ -80,8 +81,11 @@ loginForm.addEventListener("submit", async (e) => {
     location.href = "../home/home.html";
   } else if (request.status == 401) {
     let json = await request.json();
-    console.log(json);
-    showMessage(wrong);
+    if (json.detail === "Account is not active") {
+      showMessage(notActive);
+    } else {
+      showMessage(wrong);
+    }
   } else {
     showMessage(error);
   }
