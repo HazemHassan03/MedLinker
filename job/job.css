@@ -266,6 +266,19 @@ textarea {
   min-height: 250px;
   line-height: 1.6;
 }
+@media (max-width: 767px) {
+  input,
+  textarea,
+  select {
+    width: 120px;
+  }
+  textarea {
+    width: 100%;
+  }
+  select {
+    width: auto;
+  }
+}
 .job .red,
 .job .green {
   background-color: transparent;
