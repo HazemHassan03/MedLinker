@@ -195,6 +195,7 @@ section .section-heading-separation {
 }
 .main-content .company-jobs .job {
   padding: 10px 0;
+  position: relative;
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 10px;
@@ -207,7 +208,7 @@ section .section-heading-separation {
 .main-content .company-jobs .job .options {
   display: grid;
   grid-template-columns: 1fr;
-  align-content: center;
+  align-content: flex-start;
   gap: 15px;
 }
 .main-content .company-jobs .job .options .edit-job,
@@ -257,10 +258,16 @@ section .section-heading-separation {
   cursor: pointer;
 }
 .main-content .company-jobs .job .company-name,
-.main-content .company-jobs .job .job-id,
 .main-content .company-jobs .job .location,
 .main-content .company-jobs .job .vacancies {
   color: rgb(0 0 0 / 80%);
+}
+.main-content .company-jobs .job .job-id {
+  color: rgb(0 0 0 / 50%);
+  font-size: 14px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 .delete-job-message .title {
   color: var(--red-color);

@@ -34,6 +34,9 @@
           <img src="images/logo-white-expand.png" alt="The Logo" />
           <nav>
             <ul id="nav">
+              <li>
+                <a class="browse-jobs" href="home/home.html">Browse Jobs</a>
+              </li>
               <li><a class="login" href="login/login.html">Login</a></li>
               <li><a class="signup" href="signup/signup.html">Sign Up</a></li>
             </ul>
@@ -47,13 +50,16 @@
           <p class="sub">MedLinker – Redefining medical recruitment in Egypt</p>
           <div class="input">
             <i class="search fa-solid fa-magnifying-glass"></i>
-            <input
-              type="search"
-              name="job-search"
-              id="job-search"
-              placeholder="Ex: Pharmacist"
-            />
-            <i class="options fa-solid fa-ellipsis-vertical"></i>
+            <form class="search-form">
+              <input
+                type="search"
+                name="job-search"
+                id="job-search"
+                placeholder="Ex: Pharmacist"
+              />
+              <input type="submit">
+            </form>
+            <i class="go fa-solid fa-circle-right"></i>
           </div>
         </div>
       </div>
@@ -136,13 +142,13 @@
         </div>
         <div class="col">
           <h3>Are you an employer?</h3>
-          <a href="javascript:void(0);">Join us now</a>
-          <a href="javascript:void(0);">Post a job</a>
+          <a href="signup/signup.html">Join us now</a>
+          <a href="post-job/post-job.html">Post a job</a>
         </div>
         <div class="col">
           <h3>Are you a doctor?</h3>
-          <a href="javascript:void(0);">Sign Up Now</a>
-          <a href="javascript:void(0);">Browse Jobs</a>
+          <a href="signup/signup.html">Sign Up Now</a>
+          <a href="home/home.html">Browse Jobs</a>
         </div>
       </div>
       <div class="social">

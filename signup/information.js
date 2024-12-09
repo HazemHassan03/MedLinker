@@ -300,7 +300,6 @@ birthDaySelection.forEach((input) => {
 
 function checkGraduationMessage() {
   let check = checkInputValidation(graduation).check;
-  console.log(check);
   if (check) {
     graduation.parentElement
       .querySelector(".not-valid")
@@ -567,8 +566,6 @@ function checkAllEmpty() {
         });
       }
     });
-    console.log(checks);
-    console.log(falseElements);
     return falseElements;
   } else {
     return true;
@@ -710,7 +707,6 @@ function checkAllInputsValidation() {
           .classList.remove("active");
       });
     });
-    console.log(falseElements);
     return falseElements;
   } else {
     return true;

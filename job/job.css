@@ -385,3 +385,9 @@ textarea {
 .not-valid {
   border-color: var(--red-color);
 }
+i.go-back {
+  font-size: 25px;
+  color: var(--main-color);
+  margin-top: 15px;
+  cursor: pointer;
+}

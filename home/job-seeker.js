@@ -33,7 +33,6 @@ async function fetchJobs(url = `https://api.${domain}/${apiVersion}/jobs`) {
 }
 let params = new URLSearchParams(location.search);
 let jobsPage = params.get("page");
-console.log(jobsPage);
 let getJobsRequest;
 if (jobsPage) {
   getJobsRequest = await fetchJobs(
@@ -46,7 +45,6 @@ let options = document.querySelector(".jobs .options");
 let showingDetails = document.querySelector(".jobs .showing-details");
 if (getJobsRequest.status == 200) {
   let jobsObject = await getJobsRequest.json();
-  console.log(jobsObject);
   let jobs = jobsObject.results;
   if (jobsObject.count <= 20) {
     options.style.display = "none";
@@ -75,8 +73,6 @@ if (getJobsRequest.status == 200) {
     if (jobsObject.next === null) {
       next.classList.add("disabled");
     }
-    console.log(from);
-    console.log(to);
     let currentPage = jobsPage ? +jobsPage : 1;
     let pagesCount = Math.ceil(jobsObject.count / maxLength);
     for (let i = currentPage - 2; i <= currentPage + 2; i++) {
@@ -88,15 +84,11 @@ if (getJobsRequest.status == 200) {
       if (i === pagesCount) break;
     }
     document.getElementById(`page-${currentPage}`).classList.add("active");
-    console.log(currentPage);
-    console.log(pagesCount);
     next.addEventListener("click", () => {
       let nextPage = new URLSearchParams(new URL(jobsObject.next).search).get(
         "page"
       );
       params.set("page", nextPage);
-      console.log(params.toString());
-      console.log(location.search);
       location.search = params.toString();
     });
     back.addEventListener("click", () => {
@@ -116,12 +108,19 @@ if (getJobsRequest.status == 200) {
         location.search = params.toString();
       });
     });
-    console.log(pagesButtons);
   }
   if (jobs.length > 0) {
     noJobsMessage.remove();
     failedJobsMessage.remove();
     for (let job of jobs) {
+      let jobTitleValue,
+        at,
+        regex = /\sat\s/i;
+      if (userData.user.id === 67 && regex.test(job.title)) {
+        let split = job.title.split(regex);
+        jobTitleValue = split[0];
+        at = split[1];
+      }
       let jobLocation = `${job.location_country}, ${job.location_city}`;
       let employmentType = `${job.position_type[0].toUpperCase()}${job.position_type.slice(
         1
@@ -138,10 +137,14 @@ if (getJobsRequest.status == 200) {
         workplace = "On-site";
       }
       let jobElement = `<div class="job">
-                  <a class="job-title" href="../job/job.html?id=${job.id}">${job.title}</a>
+                  <a class="job-title" href="../job/job.html?id=${job.id}">${
+        jobTitleValue ? jobTitleValue : job.title
+      }</a>
                   <p class="job-id">Job Id: ${job.id}</p>
                   <p class="company-name">
-                    <i class="fa-regular fa-building fa-fw"></i> ${job.company}
+                    <i class="fa-regular fa-building fa-fw"></i> ${
+                      at ? at : job.company
+                    }
                   </p>
                   <p class="location">
                     <i class="fa-solid fa-location-dot fa-fw"></i> ${jobLocation}

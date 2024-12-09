@@ -138,3 +138,5 @@ apply.addEventListener("click", () => {
     overlay.classList.remove("active");
   });
 });
+
+finish();

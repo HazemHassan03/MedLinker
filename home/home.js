@@ -21,7 +21,6 @@ if (
   if (access === true) {
     let fetchData = await fetchUserData();
     userData = fetchData;
-    console.log(userData);
     let userType = userData.user.user_type;
     if (userType === "job_seeker") {
       companyBody.remove();

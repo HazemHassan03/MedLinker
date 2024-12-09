@@ -192,9 +192,6 @@ function finalCheck(inputs) {
       falseInputs.push(checkInput.input);
     }
   }
-  console.log(inputs);
-  console.log(falseInputs);
-  console.log(checkArray);
   falseInputs.forEach((input) => {
     document
       .querySelector(`.post-job-form .${input.name} .not-valid`)

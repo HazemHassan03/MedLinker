@@ -9,10 +9,6 @@ a {
   color: initial;
   text-decoration: none;
 }
-.container {
-  padding-left: 15px;
-  padding-right: 15px;
-}
 .landing {
   min-height: 100dvh;
   background-image: url(../images/landing-background.jpg);
@@ -41,16 +37,16 @@ header nav ul a {
   color: white;
   text-decoration: none;
   font-weight: 500;
+  font-size: 18px;
 }
 header nav ul .login,
 header nav ul .signup {
-  font-size: 18px;
   padding: 10px 13px;
-  transition: var(--transition);
-  -webkit-transition: var(--transition);
-  -moz-transition: var(--transition);
-  -ms-transition: var(--transition);
-  -o-transition: var(--transition);
+  transition: background-color var(--transition);
+  -webkit-transition: background-color var(--transition);
+  -moz-transition: background-color var(--transition);
+  -ms-transition: background-color var(--transition);
+  -o-transition: background-color var(--transition);
   border-radius: 30px;
   -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
@@ -59,6 +55,17 @@ header nav ul .signup {
 }
 header nav ul .login {
   border: 1px solid;
+}
+header nav ul .browse-jobs {
+  border-bottom: 2px solid transparent;
+  transition: border-bottom-color var(--transition);
+  -webkit-transition: border-bottom-color var(--transition);
+  -moz-transition: border-bottom-color var(--transition);
+  -ms-transition: border-bottom-color var(--transition);
+  -o-transition: border-bottom-color var(--transition);
+}
+header nav ul .browse-jobs:hover {
+  border-bottom-color: white;
 }
 @media (min-width: 676px) {
   header nav ul .signup {
@@ -83,7 +90,7 @@ header .bar {
     align-items: flex-start;
     position: absolute;
     gap: 0;
-    right: 15px;
+    right: 0;
     top: 105%;
     width: 200px;
     background-color: white;
@@ -109,6 +116,11 @@ header .bar {
   }
   header nav ul li {
     width: 100%;
+    transition: background-color var(--transition);
+    -webkit-transition: background-color var(--transition);
+    -moz-transition: background-color var(--transition);
+    -ms-transition: background-color var(--transition);
+    -o-transition: background-color var(--transition);
   }
   header nav ul .login {
     border: none;
@@ -125,6 +137,9 @@ header .bar {
     -moz-border-radius: 0;
     -ms-border-radius: 0;
     -o-border-radius: 0;
+  }
+  header nav ul .browse-jobs {
+    border-bottom: none;
   }
   header nav ul li a {
     padding: 20px 8px !important;
@@ -159,7 +174,11 @@ header .bar {
   font-size: 24px;
   margin-bottom: 40px;
 }
+.description .search-form {
+  width: 100%;
+}
 .description .input {
+  background-color: white;
   display: flex;
   align-items: center;
   position: relative;
@@ -168,15 +187,31 @@ header .bar {
   border-radius: 10px;
   overflow: hidden;
 }
-.description .input i.options {
+.description .search-form input[type="submit"] {
+  display: none;
+}
+.description .input i.go {
   position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
   color: var(--blue-color);
   right: 15px;
-  font-size: 24px;
+  font-size: 30px;
+  cursor: pointer;
 }
 .description .input i.search {
   position: absolute;
   left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
   background-color: var(--blue-color);
   color: white;
   width: 50px;

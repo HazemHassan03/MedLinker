@@ -34,7 +34,6 @@ if (
         url = `https://api.${domain}/${apiVersion}/jobs/${jobId}`;
         document.querySelector(".interview-questions").remove();
       }
-      console.log(userData);
     }
   }
 }
@@ -44,18 +43,20 @@ let jobNotFound = document.querySelector(".job-message.not-found");
 let jobFailed = document.querySelector(".job-message.failed");
 let jobContainer = document.querySelector(".job");
 async function fetchJob() {
-  let request = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${await getAccessToken()}`,
-    },
-  });
+  let request = await fetch(
+    `https://api.${domain}/${apiVersion}/jobs/${jobId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${await getAccessToken()}`,
+      },
+    }
+  );
   return request;
 }
 let fetchJobRequest = await fetchJob();
 if (fetchJobRequest.status == 200) {
   landing.remove();
   jobDetails = await fetchJobRequest.json();
-  console.log(jobDetails);
   let jobTitle = document.querySelector(".job-title .value"),
     companyName = document.querySelector(".company-name .value"),
     country = document.querySelector(".location .country"),
@@ -117,6 +118,9 @@ if (fetchJobRequest.status == 200) {
   jobNotFound.remove();
 }
 
-export { userData, jobId, jobDetails };
+let goBack = document.querySelector(".go-back");
+goBack.addEventListener("click", () => {
+  location.href = "../home/home.html";
+});
 
-finish();
+export { userData, jobId, jobDetails };

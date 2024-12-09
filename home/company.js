@@ -30,7 +30,6 @@ async function getCompanyJobs() {
   );
   if (request.status == 200) {
     let jobsObject = await request.json();
-    console.log(jobsObject);
     let jobs = jobsObject.results;
     if (jobs.length > 0) {
       noJobsMessage.remove();

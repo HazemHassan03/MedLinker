@@ -36,7 +36,6 @@ async function fetchJobs(url = `https://api.${domain}/${apiVersion}/jobs`) {
 }
 let params = new URLSearchParams(location.search);
 let jobsPage = params.get("page");
-console.log(jobsPage);
 let getJobsRequest;
 if (jobsPage) {
   getJobsRequest = await fetchJobs(
@@ -47,7 +46,6 @@ if (jobsPage) {
 }
 if (getJobsRequest.status == 200) {
   let jobsObject = await getJobsRequest.json();
-  console.log(jobsObject);
   let jobs = jobsObject.results;
   let options = document.querySelector(".jobs .options");
   let showingDetails = document.querySelector(".jobs .showing-details");
@@ -78,8 +76,6 @@ if (getJobsRequest.status == 200) {
     if (jobsObject.next === null) {
       next.classList.add("disabled");
     }
-    console.log(from);
-    console.log(to);
     let currentPage = jobsPage ? +jobsPage : 1;
     let pagesCount = Math.ceil(jobsObject.count / maxLength);
     for (let i = currentPage - 2; i <= currentPage + 2; i++) {
@@ -91,15 +87,11 @@ if (getJobsRequest.status == 200) {
       if (i === pagesCount) break;
     }
     document.getElementById(`page-${currentPage}`).classList.add("active");
-    console.log(currentPage);
-    console.log(pagesCount);
     next.addEventListener("click", () => {
       let nextPage = new URLSearchParams(new URL(jobsObject.next).search).get(
         "page"
       );
       params.set("page", nextPage);
-      console.log(params.toString());
-      console.log(location.search);
       location.search = params.toString();
     });
     back.addEventListener("click", () => {
@@ -119,7 +111,6 @@ if (getJobsRequest.status == 200) {
         location.search = params.toString();
       });
     });
-    console.log(pagesButtons);
   }
   if (jobs.length > 0) {
     noJobsMessage.remove();

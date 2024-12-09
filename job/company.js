@@ -112,7 +112,6 @@ let interviewQuestionsDiv = document.querySelector(
     ...document.querySelectorAll(".job textarea"),
   ],
   questionsNumber = 0;
-console.log(allEditJobInputs);
 
 function addQuestion(question, answer) {
   questionsNumber++;
@@ -158,7 +157,6 @@ document.addEventListener("click", (e) => {
       ...document.querySelectorAll(".job select"),
       ...document.querySelectorAll(".job textarea"),
     ];
-    console.log(allEditJobInputs);
   }
 });
 
@@ -277,9 +275,6 @@ function finalCheck(inputs) {
       falseInputs.push(checkInput.input);
     }
   }
-  console.log(inputs);
-  console.log(falseInputs);
-  console.log(checkArray);
   falseInputs.forEach((input) => {
     input.classList.add("not-valid");
     input.addEventListener("input", () => {
@@ -380,10 +375,7 @@ async function editJobFetch(id) {
 }
 
 save.addEventListener("click", async () => {
-  console.log(allEditJobInputs);
-  console.log(checkAllRequired(allEditJobInputs));
   if (checkAllRequired(allEditJobInputs) === true) {
-    console.log(assignValues());
     await editJobFetch(jobId);
   } else {
     createMessage(
@@ -393,6 +385,7 @@ save.addEventListener("click", async () => {
       "Please ensure that you have entered all the required information."
     );
     finalCheck(allEditJobInputs);
-    console.log(finalCheck(allEditJobInputs));
   }
 });
+
+finish();

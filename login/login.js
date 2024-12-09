@@ -71,7 +71,6 @@ loginForm.addEventListener("submit", async (e) => {
   if (request.status == 200) {
     showMessage(success);
     let json = await request.json();
-    console.log(json);
     document.cookie = `access=${json.access}; expires=${
       generateDateExpire()[0]
     }; path=/`;
