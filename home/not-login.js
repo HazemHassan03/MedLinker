@@ -132,7 +132,7 @@ if (getJobsRequest.status == 200) {
         workplace = "On-site";
       }
       let jobElement = `<div class="job">
-                  <a class="job-title" href="../job/job.html?id=${job.id}">${job.title}</a>
+                  <a class="job-title" href="../login/login.html">${job.title}</a>
                   <p class="job-id">Job Id: ${job.id}</p>
                   <p class="company-name">
                     <i class="fa-regular fa-building fa-fw"></i> ${job.company}

@@ -1,4 +1,4 @@
-import { jobDetails, jobId } from "./job.js";
+import { jobId, fetchJob } from "./job.js";
 import {
   loading,
   finish,
@@ -8,6 +8,10 @@ import {
   createMessage,
   storeNewAccess,
 } from "../js/constants.js";
+
+let jobDetails = await fetchJob(
+  `https://api.${domain}/${apiVersion}/company/me/jobs/${jobId}`
+);
 
 document.querySelector(".company-name").remove();
 

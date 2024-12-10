@@ -116,7 +116,7 @@ if (getJobsRequest.status == 200) {
       let jobTitleValue,
         at,
         regex = /\sat\s/i;
-      if (userData.user.id === 67 && regex.test(job.title)) {
+      if (job.company_id == 20 && regex.test(job.title)) {
         let split = job.title.split(regex);
         jobTitleValue = split[0];
         at = split[1];

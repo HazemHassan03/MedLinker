@@ -26,24 +26,23 @@ button {
   cursor: pointer;
 }
 
-.landing .container {
-  height: calc(100dvh - 60px);
-  position: relative;
-}
 .landing .container .job-message {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
   text-align: center;
   line-height: 2;
   color: var(--main-color);
+  display: none;
+}
+.landing .container .job-message.active {
+  display: block;
 }
 
 .job {
   padding-top: 15px;
   margin-bottom: 20px;
+  display: none;
+}
+.job.active {
+  display: block;
 }
 .job .container > *:not(.apply, :last-child),
 .job .container .main-details > *:not(:last-child) {
@@ -65,7 +64,7 @@ button {
 }
 .job .option,
 .application .submit {
-  padding: 5px 10px;
+  padding: 7px 10px;
   background-color: var(--alt-color);
   color: white;
   font-size: 18px;
