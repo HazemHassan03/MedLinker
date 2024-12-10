@@ -116,6 +116,14 @@ if (getJobsRequest.status == 200) {
     noJobsMessage.remove();
     failedJobsMessage.remove();
     for (let job of jobs) {
+      let jobTitleValue,
+        at,
+        regex = /\sat\s/i;
+      if (job.company_id == 20 && regex.test(job.title)) {
+        let split = job.title.split(regex);
+        jobTitleValue = split[0];
+        at = split[1];
+      }
       let jobLocation = `${job.location_country}, ${job.location_city}`;
       let employmentType = `${job.position_type[0].toUpperCase()}${job.position_type.slice(
         1
@@ -132,10 +140,14 @@ if (getJobsRequest.status == 200) {
         workplace = "On-site";
       }
       let jobElement = `<div class="job">
-                  <a class="job-title" href="../login/login.html">${job.title}</a>
+                  <a class="job-title" href="../login/login.html">${
+                    jobTitleValue ? jobTitleValue : job.title
+                  }</a>
                   <p class="job-id">Job Id: ${job.id}</p>
                   <p class="company-name">
-                    <i class="fa-regular fa-building fa-fw"></i> ${job.company}
+                    <i class="fa-regular fa-building fa-fw"></i> ${
+                      at ? at : job.company
+                    }
                   </p>
                   <p class="location">
                     <i class="fa-solid fa-location-dot fa-fw"></i> ${jobLocation}
