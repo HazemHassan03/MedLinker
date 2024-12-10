@@ -85,8 +85,8 @@ async function fetchJob(
       workplaceValue = "On-site";
     }
     document.title = jobDetails.title;
-    jobTitle.textContent = jobTitleValue ? jobTitleValue : job.title;
-    companyName.textContent = at ? at : job.company;
+    jobTitle.textContent = jobTitleValue ? jobTitleValue : jobDetails.title;
+    companyName.textContent = at ? at : jobDetails.company;
     country.textContent = jobDetails.location_country;
     city.textContent = jobDetails.location_city;
     vacancies.textContent = jobDetails.number_of_vacancies;
