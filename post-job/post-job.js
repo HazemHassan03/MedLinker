@@ -22,6 +22,5 @@ if (access === true) {
     p.append(container);
     document.body.append(p);
   }
+  finish();
 }
-
-finish();

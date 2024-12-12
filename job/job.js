@@ -11,27 +11,17 @@ import {
 let params = new URLSearchParams(location.search);
 let jobId = params.get("id");
 
-let userData, jobDetails, url;
-if (
-  !document.cookie.includes("access") &&
-  !document.cookie.includes("refresh")
-) {
-  let script = document.createElement("script");
-  script.src = "not-login.js";
-  script.type = "module";
-  document.body.append(script);
-} else {
-  let access = await checkAccess();
-  if (access === true) {
-    let fetchData = await fetchUserData();
-    if (fetchData) {
-      userData = fetchData;
-      if (userData.user.user_type === "company") {
-        document.querySelector(".not-found").textContent =
-          "This job does not exist or is no longer available.";
-      } else if (userData.user.user_type === "job_seeker") {
-        document.querySelector(".interview-questions").remove();
-      }
+let userData, jobDetails;
+let access = await checkAccess();
+if (access === true) {
+  let fetchData = await fetchUserData();
+  if (fetchData) {
+    userData = fetchData;
+    if (userData.user.user_type === "company") {
+      document.querySelector(".not-found").textContent =
+        "This job does not exist or is no longer available.";
+    } else if (userData.user.user_type === "job_seeker") {
+      document.querySelector(".interview-questions").remove();
     }
   }
 }
@@ -96,19 +86,27 @@ async function fetchJob(
     jobDescription.textContent = jobDetails.description;
     jobRequirements.textContent = jobDetails.requirements;
     if (userData.user.user_type === "job_seeker") {
-      let script = document.createElement("script");
-      script.src = "job-seeker.js";
-      script.type = "module";
-      document.body.append(script);
+      if (jobDetails.applied) {
+        let applied = document.querySelector(".applied");
+        applied.classList.add("active");
+        finish();
+      } else {
+        let script = document.createElement("script");
+        script.src = "job-seeker.js";
+        script.type = "module";
+        document.body.append(script);
+      }
     } else if (
       userData.user.user_type === "company" &&
       (jobDetails.company_id == userData.id ||
         jobDetails.company == userData.id)
     ) {
-      let script = document.createElement("script");
-      script.src = "company.js";
-      script.type = "module";
-      document.body.append(script);
+      if (!document.querySelector(`script[src="company.js"]`)) {
+        let script = document.createElement("script");
+        script.src = "company.js";
+        script.type = "module";
+        document.body.append(script);
+      }
     } else {
       document.querySelector(".interview-questions").remove();
       finish();
