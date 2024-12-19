@@ -472,7 +472,7 @@ footer .copyright {
   margin-top: 35px;
   color: white;
 }
-#to-top {
+.to-top {
   position: fixed;
   bottom: 10px;
   right: 10px;
@@ -491,6 +491,6 @@ footer .copyright {
   -ms-transform: scale(0);
   -o-transform: scale(0);
 }
-#to-top:hover {
+.to-top:hover {
   opacity: 0.8;
 }

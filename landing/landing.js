@@ -1,8 +1,9 @@
-let headerBar = document.getElementById("header-bar"),
-  nav = document.getElementById("nav"),
-  toTop = document.getElementById("to-top"),
+let headerBar = document.querySelector(".bar"),
+  closeBar = document.querySelector(".close-bar"),
+  nav = document.querySelector(".nav"),
+  toTop = document.querySelector(".to-top"),
   presentation = document.querySelectorAll(".presentation .body > div"),
-  copyrightDate = document.getElementById("copyright-date"),
+  copyrightDate = document.querySelector(".copyright-date"),
   date = new Date(),
   searchForm = document.querySelector(".search-form"),
   searchInput = document.getElementById("job-search"),
@@ -11,14 +12,13 @@ let headerBar = document.getElementById("header-bar"),
 
 headerBar.addEventListener("click", () => {
   nav.classList.toggle("active");
-  document.addEventListener("click", (e) => {
-    if (
-      e.target !== headerBar &&
-      e.target.parentElement.parentElement !== nav
-    ) {
-      nav.classList.remove("active");
-    }
-  });
+  if (nav.classList.contains("active")) {
+    headerBar.classList.remove("fa-bars");
+    headerBar.classList.add("fa-xmark");
+  } else {
+    headerBar.classList.remove("fa-xmark");
+    headerBar.classList.add("fa-bars");
+  }
 });
 
 window.addEventListener("scroll", () => {

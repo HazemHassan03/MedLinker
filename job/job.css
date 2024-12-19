@@ -393,6 +393,14 @@ i.go-back {
   color: var(--main-color);
   margin-top: 15px;
   cursor: pointer;
+  transition: opacity var(--transition);
+  -webkit-transition: opacity var(--transition);
+  -moz-transition: opacity var(--transition);
+  -ms-transition: opacity var(--transition);
+  -o-transition: opacity var(--transition);
+}
+i.go-back:hover {
+  opacity: 0.7;
 }
 .applied {
   text-align: right;

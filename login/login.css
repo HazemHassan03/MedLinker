@@ -31,6 +31,23 @@ body {
   align-items: center;
   flex-direction: column;
   padding: 30px;
+  position: relative;
+}
+i.go-back {
+  color: white;
+  font-size: 25px;
+  position: absolute;
+  top: 50px;
+  left: 35px;
+  cursor: pointer;
+  transition: opacity var(--transition);
+  -webkit-transition: opacity var(--transition);
+  -moz-transition: opacity var(--transition);
+  -ms-transition: opacity var(--transition);
+  -o-transition: opacity var(--transition);
+}
+i.go-back:hover {
+  opacity: 0.7;
 }
 .form .logo-white {
   width: 300px;

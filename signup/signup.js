@@ -5,7 +5,12 @@ let signupForm = document.querySelector(".signup-form"),
   inputs = document.querySelectorAll("input:not([type=submit])"),
   showPassword = document.querySelector(".show-hide"),
   rules = document.querySelectorAll(".rules"),
-  warning = document.querySelector(".message");
+  warning = document.querySelector(".message"),
+  goBack = document.querySelector(".go-back");
+
+goBack.addEventListener("click", () => {
+  location.href = "../index.html";
+});
 
 let infObj = {
   fullName: "",
@@ -33,7 +38,7 @@ function checkEmail(email) {
 }
 
 function checkPassword(pass) {
-  let regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+  let regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-.]).{8,}$/;
   if (regex.test(pass)) {
     return true;
   } else {

@@ -10,7 +10,12 @@ let userName = document.getElementById("username"),
   loading = document.querySelector(".loading"),
   success = document.querySelector(".success"),
   error = document.querySelector(".error"),
-  showPassword = document.querySelector(".show-hide");
+  showPassword = document.querySelector(".show-hide"),
+  goBack = document.querySelector(".go-back");
+
+goBack.addEventListener("click", () => {
+  location.href = "../index.html";
+});
 
 showPassword.addEventListener("click", () => {
   if (password.type === "password") {
