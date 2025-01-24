@@ -56,3 +56,10 @@ searchForm.addEventListener("submit", (e) => {
     location.href = "../home/home.html";
   }
 });
+searchInput.addEventListener("input", () => {
+  if (searchInput.value.length > 0) {
+    searchGo.classList.add("active");
+  } else {
+    searchGo.classList.remove("active");
+  }
+});

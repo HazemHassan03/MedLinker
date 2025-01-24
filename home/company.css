@@ -258,6 +258,7 @@ section .section-heading-separation {
 }
 .main-content .company-jobs .job .company-name,
 .main-content .company-jobs .job .job-id,
+.main-content .company-jobs .job .post-date,
 .main-content .company-jobs .job .location,
 .main-content .company-jobs .job .vacancies {
   color: rgb(0 0 0 / 80%);

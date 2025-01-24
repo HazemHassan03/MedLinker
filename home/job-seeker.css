@@ -53,11 +53,15 @@
 .main-content .jobs .job .company-name {
   color: rgb(0 0 0 / 80%);
 }
-.main-content .jobs .job .job-id {
+.main-content .jobs .job .job-id,
+.main-content .jobs .job .post-date {
   color: rgb(0 0 0 / 50%);
   font-size: 14px;
   position: absolute;
   right: 15px;
+  bottom: 40px;
+}
+.main-content .jobs .job .post-date {
   bottom: 15px;
 }
 .main-content .jobs .job .location {

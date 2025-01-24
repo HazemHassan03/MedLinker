@@ -43,12 +43,16 @@ async function fetchJob(
     let jobTitleValue,
       at,
       regex = /\sat\s/i;
-    if (jobDetails.company_id == 20 && regex.test(jobDetails.title)) {
+    if (
+      (jobDetails.company_id == 1 || jobDetails.company_id == 2) &&
+      regex.test(jobDetails.title)
+    ) {
       let split = jobDetails.title.split(regex);
       jobTitleValue = split[0];
       at = split[1];
     }
     let jobTitle = document.querySelector(".job-title .value"),
+      postDate = document.querySelector(".post-date .value"),
       companyName = document.querySelector(".company-name .value"),
       country = document.querySelector(".location .country"),
       city = document.querySelector(".location .city"),
@@ -74,8 +78,17 @@ async function fetchJob(
     if (workplaceValue === "Onsite") {
       workplaceValue = "On-site";
     }
+    let postedDate = new Date(jobDetails.posted_date);
+    let displayedDate = `${postedDate.getDate()} / ${
+      postedDate.getMonth() + 1
+    } / ${postedDate.getFullYear()}`;
     document.title = jobDetails.title;
     jobTitle.textContent = jobTitleValue ? jobTitleValue : jobDetails.title;
+    if (userData.user.user_type === "job_seeker") {
+      postDate.textContent = displayedDate;
+    } else {
+      postDate.parentElement.style.display = "none";
+    }
     companyName.textContent = at ? at : jobDetails.company;
     country.textContent = jobDetails.location_country;
     city.textContent = jobDetails.location_city;

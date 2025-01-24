@@ -406,9 +406,6 @@ form .row p.not-valid.active,
 form .row p.not-found.active {
   display: block;
 }
-option[value="0"] {
-  display: none;
-}
 .con {
   display: flex;
   gap: 10px;

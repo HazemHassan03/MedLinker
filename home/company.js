@@ -31,6 +31,7 @@ async function getCompanyJobs() {
   if (request.status == 200) {
     let jobsObject = await request.json();
     let jobs = jobsObject.results;
+    console.log(jobs);
     if (jobs.length > 0) {
       noJobsMessage.remove();
       failedJobsMessage.remove();
@@ -50,6 +51,10 @@ async function getCompanyJobs() {
         if (workplace === "Onsite") {
           workplace = "On-site";
         }
+        let postedDate = new Date(job.posted_date);
+        let displayedDate = `${postedDate.getDate()} / ${
+          postedDate.getMonth() + 1
+        } / ${postedDate.getFullYear()}`;
         let jobElement = `<div class="job" data-job-id="${job.id}">
                 <div class="details">
                   <a class="job-title" data-job-id="${job.id}" href="../job/job.html?id=${job.id}">${job.title}</a>

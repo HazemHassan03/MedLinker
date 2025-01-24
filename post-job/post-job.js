@@ -24,3 +24,8 @@ if (access === true) {
   }
   finish();
 }
+
+let goBack = document.querySelector(".go-back");
+goBack.addEventListener("click", () => {
+  location.href = "../home/home.html";
+});

@@ -34,7 +34,7 @@
       rel="stylesheet"
     />
   </head>
-  <body class="scrolling">
+  <body>
     <div class="loading active">
       <div class="one"></div>
       <div class="two"></div>
@@ -58,16 +58,13 @@
         </div>
         <ul class="nav-list">
           <li><a href="javascript:void(0);">My Profile (Soon..)</a></li>
-          <li><a href="javascript:void(0);">Settings (Soon..)</a></li>
           <li><button id="logout">Logout</button></li>
         </ul>
       </div>
     </header>
-    <div class="container">
-      <i class="go-back fa-solid fa-arrow-left"></i>
-    </div>
     <section class="landing">
       <div class="container">
+        <i class="go-back fa-solid fa-arrow-left"></i>
         <h2 class="job-message not-found">
           This job does not exist or is no longer available. We wish you the
           best of luck in finding another job.
@@ -88,6 +85,11 @@
               class="edit-mode"
               placeholder="Job Title"
             />
+          </div>
+          <div class="post-date">
+            <i class="fa-regular fa-clock fa-fw"></i>
+            <span class="title">Posted On: </span>
+            <span class="value"></span>
           </div>
           <div class="company-name">
             <i class="fa-regular fa-building fa-fw"></i>

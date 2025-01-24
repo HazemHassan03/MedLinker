@@ -1,4 +1,9 @@
-import { domain, apiVersion } from "../js/constants.js";
+import {
+  domain,
+  apiVersion,
+  maxCvSize,
+  maxPhotoSize,
+} from "../js/constants.js";
 
 let infObj;
 if (sessionStorage.getItem("Data")) {
@@ -75,8 +80,6 @@ let userType,
   cv = document.getElementById("cv"),
   photo = document.getElementById("photo"),
   uploadButtons = document.querySelectorAll(".upload button"),
-  maxCvSize = 2,
-  maxPhotoSize = 2,
   maxCv = document.querySelector(".max-cv-size"),
   maxPhoto = document.querySelector(".max-photo-size"),
   date = new Date(),
@@ -203,7 +206,7 @@ for (let i = date.getFullYear(); i >= date.getFullYear() - 60; i--) {
   year.append(option);
 }
 
-for (let i = date.getFullYear() + 5; i >= date.getFullYear() - 50; i--) {
+for (let i = date.getFullYear() + 10; i >= date.getFullYear() - 50; i--) {
   let option = document.createElement("option");
   option.append(document.createTextNode(i));
   option.setAttribute("value", i);
@@ -360,6 +363,7 @@ genderSelect.forEach((input) => {
 
 employeeForm.addEventListener("submit", (e) => {
   e.preventDefault();
+  
   employeeForm.classList.add("finish");
   employeeSecondForm.classList.add("active");
   container.scrollTo({
@@ -411,14 +415,8 @@ uploadButtons.forEach((btn) => {
     btn.parentElement.parentElement.querySelector("input[type=file]").click();
   });
 });
-maxCv.textContent = `${maxCvSize}MB`;
-maxPhoto.textContent = `${maxPhotoSize}MB`;
-// function convertSizeIntoMB(size) {
-//   return size / Math.pow(1024, 2);
-// }
-// function convertSizeIntoKB(size) {
-//   return size / 1024;
-// }
+maxCv.textContent = maxCvSize;
+maxPhoto.textContent = maxPhotoSize;
 function process(input) {
   if (input.files[0]) {
     input.parentElement.querySelector(".not-found").classList.remove("active");
@@ -501,15 +499,6 @@ function checkEmpty(input) {
       info.check = true;
     } else {
       info.check = false;
-      // if (input.name === "cv") {
-      //   if (currentLevel.value === "Graduated") {
-      //     info.check = false;
-      //   } else {
-      //     info.check = true;
-      //   }
-      // } else {
-      //   info.check = false;
-      // }
     }
   }
   return info;
@@ -643,24 +632,22 @@ function checkInputValidation(input) {
     let value = input.files[0];
     if (input.name === "cv") {
       if (value) {
-        if (value.type === "application/pdf" && value.size / 1e6 <= maxCvSize) {
+        if (
+          value.type === "application/pdf" &&
+          value.size / 1e6 <= parseInt(maxCvSize)
+        ) {
           info.check = true;
         } else {
           info.check = false;
         }
       } else {
         info.check = false;
-        // if (currentLevel.value === "Graduated") {
-        //   info.check = false;
-        // } else {
-        //   info.check = true;
-        // }
       }
     } else if (input.name === "photo") {
       if (value) {
         if (
           value.type.startsWith("image") &&
-          value.size / 1e6 <= maxPhotoSize
+          value.size / 1e6 <= parseInt(maxPhotoSize)
         ) {
           info.check = true;
         } else {

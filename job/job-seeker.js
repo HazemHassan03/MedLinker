@@ -56,7 +56,37 @@ async function jobApply() {
     }
   );
   finish();
-  return request;
+  let json = await request.json();
+  if (request.status == 201) {
+    createMessage(
+      "success",
+      applicationFormBox,
+      "You have successfully applied for the job.",
+      "Please wait until you are contacted.",
+      undefined,
+      true
+    );
+  } else if (request.status == 400) {
+    createMessage(
+      "failed",
+      applicationFormBox,
+      "The job application was not submitted successfully",
+      undefined,
+      json
+    );
+  } else if (request.status == 401) {
+    let check = await storeNewAccess();
+    if (check === true) {
+      await jobApply();
+    }
+  } else {
+    createMessage(
+      "failed",
+      applicationFormBox,
+      "Something went wrong",
+      "We're sorry about that. Please try again."
+    );
+  }
 }
 function checkResume(file) {
   if (file) {
@@ -93,38 +123,7 @@ applicationForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   if (e.submitter.tagName !== "BUTTON") {
     if (checkResume(resumeInput.files[0])) {
-      let jobApplyRequest = await jobApply();
-      let json = await jobApplyRequest.json();
-      if (jobApplyRequest.status == 201) {
-        createMessage(
-          "success",
-          applicationFormBox,
-          "You have successfully applied for the job.",
-          "Please wait until you are contacted.",
-          undefined,
-          true
-        );
-      } else if (jobApplyRequest.status == 400) {
-        createMessage(
-          "failed",
-          applicationFormBox,
-          "The job application was not submitted successfully",
-          undefined,
-          json
-        );
-      } else if (jobApplyRequest.status == 401) {
-        let check = await storeNewAccess();
-        if (check === true) {
-          await jobApply();
-        }
-      } else {
-        createMessage(
-          "failed",
-          applicationFormBox,
-          "Something went wrong",
-          "We're sorry about that. Please try again."
-        );
-      }
+      await jobApply();
     } else {
       fileNotValid.classList.add("active");
     }

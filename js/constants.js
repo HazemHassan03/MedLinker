@@ -1,10 +1,16 @@
 let domain = "medlinker.org";
 let apiVersion = "v1";
+let maxCvSize = "2MB";
+let maxPhotoSize = "2MB";
 
-function logoutFunction() {
+function logoutFunction(goToLogin) {
   document.cookie = "access=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   document.cookie = "refresh=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-  location.href = "/login/login.html";
+  if (goToLogin === false) {
+    location.reload();
+  } else {
+    location.href = "/login/login.html";
+  }
 }
 
 function loading() {
@@ -152,7 +158,8 @@ function createMessage(
   title,
   mainMessage,
   anotherMessages,
-  closeReload
+  closeReload,
+  closeRedirect
 ) {
   let message = document.querySelector(".page-message"),
     messageClose = document.querySelector(".page-message i"),
@@ -207,12 +214,20 @@ function createMessage(
       messageClose.removeEventListener("click", closeMessage);
     }
   }
-  messageClose.addEventListener("click", closeMessage);
+  messageClose.addEventListener("click", () => {
+    if (closeRedirect) {
+      location.href = closeRedirect;
+    } else {
+      closeMessage();
+    }
+  });
 }
 
 export {
   domain,
   apiVersion,
+  maxCvSize,
+  maxPhotoSize,
   storeNewAccess,
   checkAccess,
   logoutFunction,

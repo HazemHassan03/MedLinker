@@ -203,7 +203,6 @@ function finalCheck(inputs) {
     });
   });
 }
-
 async function postJobFetch() {
   loading();
   let request = await fetch(
@@ -223,7 +222,10 @@ async function postJobFetch() {
       "success",
       undefined,
       "The job has been successfully posted",
-      "Thank you for using MedLinker. We will work hard to find the best candidates suitable for this job."
+      "Thank you for using MedLinker. We will work hard to find the best candidates suitable for this job.",
+      undefined,
+      undefined,
+      "../home/home.html"
     );
   } else if (request.status == 401) {
     let check = await storeNewAccess();

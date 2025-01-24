@@ -1,19 +1,5 @@
 a {
   display: block;
-  color: initial;
-  text-decoration: none;
-}
-img {
-  max-width: 100%;
-}
-body {
-  font-family: var(--arabic-font);
-}
-body.scrolling {
-  touch-action: none;
-}
-body.scrolling::-webkit-scrollbar {
-  width: 0;
 }
 .nav-list {
   list-style: none;
@@ -259,9 +245,6 @@ input#job-title {
 .job select {
   width: 200px;
   cursor: pointer;
-}
-option[value="0"] {
-  display: none;
 }
 .job textarea {
   width: 100%;

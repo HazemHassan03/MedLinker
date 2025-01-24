@@ -151,7 +151,7 @@ header .nav-list li:not(:last-child) {
 header .nav-list li a,
 header .nav-list li button {
   display: block;
-  padding: 15px 50px 15px 20px;
+  padding: 15px 75px 15px 20px;
   transition: background-color var(--transition);
   -webkit-transition: background-color var(--transition);
   -moz-transition: background-color var(--transition);
