@@ -30,7 +30,7 @@ let jobNotFound = document.querySelector(".job-message.not-found"),
   jobFailed = document.querySelector(".job-message.failed"),
   jobContainer = document.querySelector(".job");
 async function fetchJob(
-  url = `https://api.${domain}/${apiVersion}/jobs/${jobId}`
+  url = `${domain}/${apiVersion}/jobs/${jobId}`
 ) {
   let request = await fetch(url, {
     headers: {

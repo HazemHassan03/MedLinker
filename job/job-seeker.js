@@ -46,7 +46,7 @@ async function jobApply() {
   }
   loading();
   let request = await fetch(
-    `https://api.${domain}/${apiVersion}/jobs/${jobId}/application`,
+    `${domain}/${apiVersion}/jobs/${jobId}/application`,
     {
       method: "POST",
       headers: {

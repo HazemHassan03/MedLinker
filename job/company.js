@@ -10,7 +10,7 @@ import {
 } from "../js/constants.js";
 
 let jobDetails = await fetchJob(
-  `https://api.${domain}/${apiVersion}/company/me/jobs/${jobId}`
+  `${domain}/${apiVersion}/company/me/jobs/${jobId}`
 );
 
 document.querySelector(".company-name").remove();
@@ -43,7 +43,7 @@ let deleteJobsYes = document.querySelector(".delete-job-message .yes"),
 async function deleteJobFetch(id) {
   loading();
   let request = await fetch(
-    `https://api.${domain}/${apiVersion}/company/me/jobs/${id}`,
+    `${domain}/${apiVersion}/company/me/jobs/${id}`,
     {
       method: "DELETE",
       headers: {
@@ -343,7 +343,7 @@ function assignValues() {
 async function editJobFetch(id) {
   loading();
   let request = await fetch(
-    `https://api.${domain}/${apiVersion}/company/me/jobs/${id}`,
+    `${domain}/${apiVersion}/company/me/jobs/${id}`,
     {
       method: "PUT",
       headers: {

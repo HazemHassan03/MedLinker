@@ -66,7 +66,7 @@ loginForm.addEventListener("submit", async (e) => {
     loading.classList.add("active");
   }
   let object = assignValues();
-  let request = await fetch(`https://api.${domain}/${apiVersion}/auth/token`, {
+  let request = await fetch(`${domain}/${apiVersion}/auth/token`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
