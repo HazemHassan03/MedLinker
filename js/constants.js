@@ -1,4 +1,4 @@
-let domain = "medlinker.org";
+let domain = "https://api.medlinker.org";
 let apiVersion = "v1";
 let maxCvSize = "2MB";
 let maxPhotoSize = "2MB";
@@ -59,7 +59,7 @@ let triesLimit = 3,
 async function storeNewAccess() {
   let refreshToken = await getRefreshToken();
   let request = await fetch(
-    `https://api.${domain}/${apiVersion}/auth/token/refresh`,
+    `${domain}/${apiVersion}/auth/token/refresh`,
     {
       method: "POST",
       headers: {
@@ -110,7 +110,7 @@ async function checkAccess() {
 
 async function fetchUserData() {
   let request = await fetch(
-    `https://api.${domain}/${apiVersion}/users/jobseeker/me`,
+    `${domain}/${apiVersion}/users/jobseeker/me`,
     {
       headers: {
         Authorization: `Bearer ${await getAccessToken()}`,
@@ -119,7 +119,7 @@ async function fetchUserData() {
   );
   if (request.status == 404) {
     let request = await fetch(
-      `https://api.${domain}/${apiVersion}/users/company/me`,
+      `${domain}/${apiVersion}/users/company/me`,
       {
         headers: {
           Authorization: `Bearer ${await getAccessToken()}`,

@@ -206,7 +206,7 @@ function finalCheck(inputs) {
 async function postJobFetch() {
   loading();
   let request = await fetch(
-    `https://api.${domain}/${apiVersion}/company/me/jobs`,
+    `${domain}/${apiVersion}/company/me/jobs`,
     {
       method: "POST",
       headers: {

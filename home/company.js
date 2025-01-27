@@ -21,7 +21,7 @@ let jobsContainer = document.querySelector(".company-jobs"),
   failedJobsMessage = document.querySelector(".company-jobs .failed");
 async function getCompanyJobs() {
   let request = await fetch(
-    `https://api.${domain}/${apiVersion}/company/me/jobs`,
+    `${domain}/${apiVersion}/company/me/jobs`,
     {
       headers: {
         Authorization: `Bearer ${await getAccessToken()}`,
@@ -105,7 +105,7 @@ let deleteJobs = document.querySelectorAll(".job .delete-job"),
 async function deleteJobFetch(jobId) {
   loading();
   let request = await fetch(
-    `https://api.${domain}/${apiVersion}/company/me/jobs/${jobId}`,
+    `${domain}/${apiVersion}/company/me/jobs/${jobId}`,
     {
       method: "DELETE",
       headers: {

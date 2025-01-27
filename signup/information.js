@@ -893,7 +893,7 @@ async function fetchData(from) {
       let formData = assignValues();
       loadingMessage();
       let request = await fetch(
-        `https://api.${domain}/${apiVersion}/auth/register`,
+        `${domain}/${apiVersion}/auth/register`,
         {
           method: "POST",
           body: formData,

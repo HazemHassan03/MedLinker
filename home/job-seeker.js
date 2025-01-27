@@ -27,7 +27,7 @@ let params = new URLSearchParams(location.search);
 let jobsPage = params.get("page");
 let options = document.querySelector(".jobs .options");
 let showingDetails = document.querySelector(".jobs .showing-details");
-async function fetchJobs(url = `https://api.${domain}/${apiVersion}/jobs`) {
+async function fetchJobs(url = `${domain}/${apiVersion}/jobs`) {
   let request = await fetch(url, {
     headers: {
       Authorization: `Bearer ${await getAccessToken()}`,
@@ -180,7 +180,7 @@ async function fetchJobs(url = `https://api.${domain}/${apiVersion}/jobs`) {
   }
 }
 if (jobsPage) {
-  await fetchJobs(`https://api.${domain}/${apiVersion}/jobs?page=${jobsPage}`);
+  await fetchJobs(`${domain}/${apiVersion}/jobs?page=${jobsPage}`);
 } else {
   await fetchJobs();
 }
