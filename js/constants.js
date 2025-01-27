@@ -224,7 +224,7 @@ function createMessage(
 }
 
 export {
-  domain as domain,
+  domain,
   apiVersion,
   maxCvSize,
   maxPhotoSize,
