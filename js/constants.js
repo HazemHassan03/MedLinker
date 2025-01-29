@@ -1,7 +1,24 @@
 let domain = "https://api.medlinker.org";
 let apiVersion = "v1";
-let maxCvSize = "2MB";
-let maxPhotoSize = "2MB";
+let maxJobs = 20;
+let maxCvSize = {
+  show: "2MB",
+  size: 2 * 1000000,
+};
+let maxPhotoSize = {
+  show: "2MB",
+  size: 2 * 1000000,
+};
+
+function showFileSize(bytes) {
+  let units = ["B", "KB", "MB"];
+  let i = 0;
+  while (bytes >= 1000) {
+    bytes /= 1000;
+    i++;
+  }
+  return `${bytes.toFixed(2)}${units[i]}`;
+}
 
 function logoutFunction(goToLogin) {
   document.cookie = "access=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -58,18 +75,15 @@ let triesLimit = 3,
   tries = 0;
 async function storeNewAccess() {
   let refreshToken = await getRefreshToken();
-  let request = await fetch(
-    `${domain}/${apiVersion}/auth/token/refresh`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        refresh: refreshToken,
-      }),
-    }
-  );
+  let request = await fetch(`${domain}/${apiVersion}/auth/token/refresh`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      refresh: refreshToken,
+    }),
+  });
   tries++;
   if (request.status == 200) {
     let json = await request.json();
@@ -109,23 +123,17 @@ async function checkAccess() {
 }
 
 async function fetchUserData() {
-  let request = await fetch(
-    `${domain}/${apiVersion}/users/jobseeker/me`,
-    {
+  let request = await fetch(`${domain}/${apiVersion}/users/jobseeker/me`, {
+    headers: {
+      Authorization: `Bearer ${await getAccessToken()}`,
+    },
+  });
+  if (request.status == 404) {
+    let request = await fetch(`${domain}/${apiVersion}/users/company/me`, {
       headers: {
         Authorization: `Bearer ${await getAccessToken()}`,
       },
-    }
-  );
-  if (request.status == 404) {
-    let request = await fetch(
-      `${domain}/${apiVersion}/users/company/me`,
-      {
-        headers: {
-          Authorization: `Bearer ${await getAccessToken()}`,
-        },
-      }
-    );
+    });
     if (request.status == 200) {
       let userData = await request.json();
       return userData;
@@ -226,8 +234,10 @@ function createMessage(
 export {
   domain,
   apiVersion,
+  maxJobs,
   maxCvSize,
   maxPhotoSize,
+  showFileSize,
   storeNewAccess,
   checkAccess,
   logoutFunction,
