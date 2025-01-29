@@ -188,6 +188,69 @@ section .section-heading-separation {
   grid-template-columns: 1fr;
   row-gap: 10px;
 }
+.main-content .company-jobs .options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 5px;
+  margin-top: 15px;
+}
+.main-content .company-jobs .showing-details {
+  color: rgb(0 0 0 / 50%);
+  text-align: center;
+  margin-top: 10px;
+}
+.main-content .company-jobs .options .back,
+.main-content .company-jobs .options .next {
+  color: var(--alt-color);
+  border: 3px solid var(--alt-color);
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: background-color var(--transition), color var(--transition);
+  -webkit-transition: background-color var(--transition),
+    color var(--transition);
+  -moz-transition: background-color var(--transition), color var(--transition);
+  -ms-transition: background-color var(--transition), color var(--transition);
+  -o-transition: background-color var(--transition), color var(--transition);
+}
+.main-content .company-jobs .options .back.disabled,
+.main-content .company-jobs .options .next.disabled {
+  pointer-events: none;
+  opacity: 0.25;
+}
+.main-content .company-jobs .options .back:hover,
+.main-content .company-jobs .options .next:hover {
+  background-color: var(--alt-color);
+  color: white;
+}
+.main-content .company-jobs .options .pages {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+}
+.main-content .company-jobs .options .pages button {
+  padding: 5px 10px;
+  transition: var(--transition);
+  -webkit-transition: var(--transition);
+  -moz-transition: var(--transition);
+  -ms-transition: var(--transition);
+  -o-transition: var(--transition);
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border: 3px solid transparent;
+}
+.main-content .company-jobs .options .pages button.active {
+  color: white;
+  background-color: var(--alt-color);
+}
+.main-content .company-jobs .options .pages button:not(.active):hover {
+  color: var(--alt-color);
+  border-color: var(--alt-color);
+}
 .main-content .company-jobs .jobs-message {
   text-align: center;
   color: var(--main-color);
