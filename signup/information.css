@@ -134,9 +134,14 @@ button {
   font-weight: 500;
 }
 
-.logo {
-  width: 300px;
+.logo-link {
   display: block;
+  width: fit-content;
+  margin: auto;
+}
+.logo {
+  display: block;
+  width: 300px;
   min-height: 100px;
   object-fit: contain;
   margin: auto;

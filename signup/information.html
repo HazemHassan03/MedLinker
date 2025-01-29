@@ -46,7 +46,9 @@
       </div>
       <i class="exit fa-solid fa-chevron-left"></i>
     </div>
-    <img src="../images/logo-blue-expand.png" alt="The Logo" class="logo" />
+    <a class="logo-link" href="../index.html"
+      ><img src="../images/logo-blue-expand.png" alt="The Logo" class="logo"
+    /></a>
     <div class="body-container">
       <form class="employee-form">
         <h2>Personal Information</h2>
@@ -69,8 +71,8 @@
             <h3>Username</h3>
             <input type="text" name="username" id="employee-username" />
             <p class="not-valid" id="username-not-valid">
-              The username must be at least 8 characters, have at least one
-              english letter, the numbers are optional and have no spaces
+              The username must be at least 8 characters, all characters must be small, have at least one
+              english letter, the numbers are optional and have no spaces.
             </p>
             <i class="check-false fa-solid fa-circle-exclamation"></i>
           </div>
@@ -350,13 +352,6 @@
         </div>
         <input class="next" type="submit" value="Submit" id="company-submit" />
       </form>
-    </div>
-    <div class="empty-message message">
-      <h3>Incomplete data</h3>
-      <p class="main-message">
-        Please make sure you have entered all the required information.
-      </p>
-      <i class="fa-solid fa-circle-xmark"></i>
     </div>
     <p class="loading">Loading...</p>
     <div class="not-valid-message message">

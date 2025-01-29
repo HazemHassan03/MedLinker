@@ -3,6 +3,7 @@ import {
   apiVersion,
   maxCvSize,
   maxPhotoSize,
+  showFileSize,
 } from "../js/constants.js";
 
 let infObj;
@@ -25,7 +26,7 @@ let userType,
   exitChoices = document.querySelector(".choices .exit"),
   companyChoice = document.querySelector(".company"),
   employeeChoice = document.querySelector(".employee"),
-  container = document.querySelector(".container"),
+  container = document.querySelector(".body-container"),
   employeeForm = document.querySelector(".employee-form"),
   employeeSecondForm = document.querySelector(".employee-second-form"),
   companyForm = document.querySelector(".company-form"),
@@ -34,12 +35,15 @@ let userType,
     ...document.querySelectorAll("input:not([type=submit], [type=file])"),
     ...document.querySelectorAll("select"),
   ],
-  allEmployeeInputs = [
-    ...document.querySelectorAll(".employee-form input:not([type=submit])"),
+  allEmployeeSecondInputs = [
     ...document.querySelectorAll(
       ".employee-second-form input:not([type=submit])"
     ),
-    ...document.querySelectorAll("select"),
+    ...document.querySelectorAll(".employee-second-form select"),
+  ],
+  allEmployeeFirstInputs = [
+    ...document.querySelectorAll(".employee-form input:not([type=submit])"),
+    ...document.querySelectorAll(".employee-form select"),
   ],
   allCompanyInputs = [
     ...document.querySelectorAll(".company-form input:not([type=submit])"),
@@ -85,7 +89,6 @@ let userType,
   date = new Date(),
   employeeSubmit = document.getElementById("employee-submit"),
   companySubmit = document.getElementById("company-submit"),
-  emptyMessage = document.querySelector(".empty-message"),
   notValidMessage = document.querySelector(".not-valid-message"),
   failedMessage = document.querySelector(".failed-message"),
   failedCauseMessage = document.querySelector(".failed-cause-message"),
@@ -213,28 +216,6 @@ for (let i = date.getFullYear() + 10; i >= date.getFullYear() - 50; i--) {
   graduation.append(option);
 }
 
-if (!sessionStorage.getItem("Active Messages")) {
-  let activeMessages = {};
-  sessionStorage.setItem("Active Messages", JSON.stringify(activeMessages));
-} else {
-  let ids = Object.values(
-    JSON.parse(sessionStorage.getItem("Active Messages"))
-  );
-  for (let id of ids) {
-    document.getElementById(id).classList.add("active");
-  }
-}
-function addActiveMessage(input, name = input.id) {
-  let object = JSON.parse(sessionStorage.getItem("Active Messages"));
-  object[name] = input.parentElement.querySelector(".not-valid").id;
-  sessionStorage.setItem("Active Messages", JSON.stringify(object));
-}
-function deleteActiveMessage(input, name = input.id) {
-  let object = JSON.parse(sessionStorage.getItem("Active Messages"));
-  delete object[name];
-  sessionStorage.setItem("Active Messages", JSON.stringify(object));
-}
-
 function checkUserNameMessage(input) {
   let check = checkInputValidation(input).check;
   if (input.value.length > 0) {
@@ -242,14 +223,11 @@ function checkUserNameMessage(input) {
       input.parentElement
         .querySelector(".not-valid")
         .classList.remove("active");
-      deleteActiveMessage(input);
     } else {
       input.parentElement.querySelector(".not-valid").classList.add("active");
-      addActiveMessage(input);
     }
   } else {
     input.parentElement.querySelector(".not-valid").classList.remove("active");
-    deleteActiveMessage(input);
   }
 }
 userName.forEach((input) => {
@@ -265,14 +243,11 @@ function checkPhoneMessage(input) {
       input.parentElement
         .querySelector(".not-valid")
         .classList.remove("active");
-      deleteActiveMessage(input);
     } else {
       input.parentElement.querySelector(".not-valid").classList.add("active");
-      addActiveMessage(input);
     }
   } else {
     input.parentElement.querySelector(".not-valid").classList.remove("active");
-    deleteActiveMessage(input);
   }
 }
 phoneNumber.forEach((input) => {
@@ -288,10 +263,8 @@ function checkBirthMessage(input) {
       input.parentElement
         .querySelector(".not-valid")
         .classList.remove("active");
-      deleteActiveMessage(input, "birth");
     } else {
       input.parentElement.querySelector(".not-valid").classList.add("active");
-      addActiveMessage(input, "birth");
     }
   }
 }
@@ -301,71 +274,21 @@ birthDaySelection.forEach((input) => {
   });
 });
 
-function checkGraduationMessage() {
-  let check = checkInputValidation(graduation).check;
-  if (check) {
-    graduation.parentElement
-      .querySelector(".not-valid")
-      .classList.remove("active");
-    deleteActiveMessage(graduation);
-  } else {
-    graduation.parentElement
-      .querySelector(".not-valid")
-      .classList.add("active");
-    addActiveMessage(graduation);
-  }
-}
-graduation.addEventListener("input", () => {
-  checkGraduationMessage();
-});
-
-function checkLevelMessage() {
-  let check = checkInputValidation(currentLevel).check;
-  if (check) {
-    currentLevel.parentElement
-      .querySelector(".not-valid")
-      .classList.remove("active");
-    deleteActiveMessage(currentLevel);
-  } else {
-    currentLevel.parentElement
-      .querySelector(".not-valid")
-      .classList.add("active");
-    addActiveMessage(currentLevel);
-  }
-}
-currentLevel.addEventListener("input", () => {
-  checkLevelMessage();
-});
-
-function checkMilitaryMessage() {
-  let check = checkInputValidation(militaryStatus).check;
-  if (check) {
-    militaryStatus.parentElement
-      .querySelector(".not-valid")
-      .classList.remove("active");
-    deleteActiveMessage(militaryStatus);
-  } else {
-    militaryStatus.parentElement
-      .querySelector(".not-valid")
-      .classList.add("active");
-    addActiveMessage(militaryStatus);
-  }
-}
-militaryStatus.addEventListener("input", () => {
-  checkMilitaryMessage();
-});
-
 genderSelect.forEach((input) => {
   input.addEventListener("change", () => {
     checkedGender = document.querySelector("input[type=radio]:checked");
   });
 });
 
+console.log(allEmployeeFirstInputs);
 employeeForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  
-  employeeForm.classList.add("finish");
-  employeeSecondForm.classList.add("active");
+  let check = checkAllInputsValidation(allEmployeeFirstInputs);
+  if (check === true) {
+    employeeForm.classList.add("finish");
+    employeeSecondForm.classList.add("active");
+  }
+  console.log(check);
   container.scrollTo({
     top: 0,
   });
@@ -394,29 +317,13 @@ education.addEventListener("input", () => {
   }
 });
 
-function checkJobTypeMessage() {
-  let check = checkInputValidation(jobType).check;
-  if (check) {
-    jobType.parentElement
-      .querySelector(".not-valid")
-      .classList.remove("active");
-    deleteActiveMessage(jobType);
-  } else {
-    jobType.parentElement.querySelector(".not-valid").classList.add("active");
-    addActiveMessage(jobType);
-  }
-}
-jobType.addEventListener("input", () => {
-  checkJobTypeMessage();
-});
-
 uploadButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
     btn.parentElement.parentElement.querySelector("input[type=file]").click();
   });
 });
-maxCv.textContent = maxCvSize;
-maxPhoto.textContent = maxPhotoSize;
+maxCv.textContent = maxCvSize.show;
+maxPhoto.textContent = maxPhotoSize.show;
 function process(input) {
   if (input.files[0]) {
     input.parentElement.querySelector(".not-found").classList.remove("active");
@@ -428,14 +335,9 @@ function process(input) {
       input.parentElement.querySelector(".details").classList.add("active");
       input.parentElement.querySelector(".details .file-name").textContent =
         input.files[0].name;
+      console.log(input.files[0].size);
       input.parentElement.querySelector(".details .file-size").textContent =
-        input.files[0].size < 1000
-          ? `${input.files[0].size.toFixed(2)}Byte`
-          : input.files[0].size >= 1000 && input.files[0].size < 1e6
-          ? `${(input.files[0].size / 1000).toFixed(2)}KB`
-          : input.files[0].size >= 1e6 && input.files[0].size < 1e9
-          ? `${(input.files[0].size / 1e6).toFixed(2)}MB`
-          : "";
+        showFileSize(input.files[0].size);
     } else {
       input.parentElement.querySelector(".details").classList.remove("active");
       input.parentElement.querySelector(".not-valid").classList.add("active");
@@ -453,139 +355,21 @@ photo.addEventListener("input", (e) => {
   process(e.target);
 });
 
-function checkEmpty(input) {
-  let info = {
-    input: input,
-    name: input.name,
-  };
-  if (input.type === "text") {
-    if (input.name === "education-other") {
-      info.check = true;
-    } else {
-      if (input.value.length > 0) {
-        info.check = true;
-      } else {
-        info.check = false;
-      }
-    }
-  } else if (input.tagName === "SELECT") {
-    if (input.value == 0) {
-      info.check = false;
-    } else {
-      if (input.name === "education" && input.value === "Other") {
-        if (educationOther.value.length > 0) {
-          info.check = true;
-        } else {
-          info.check = false;
-        }
-      } else {
-        info.check = true;
-      }
-    }
-  } else if (input.type === "radio") {
-    if (document.querySelector(`input[name="${input.name}"]:checked`)) {
-      info.check = true;
-    } else {
-      info.check = false;
-    }
-  } else if (input.type === "number") {
-    if (input.value) {
-      info.check = true;
-    } else {
-      info.check = false;
-    }
-  } else if (input.type === "file") {
-    if (input.files[0]) {
-      info.check = true;
-    } else {
-      info.check = false;
-    }
-  }
-  return info;
-}
-function checkAllEmpty() {
-  let checks = [];
-  if (userType === "job-seeker") {
-    allEmployeeInputs.forEach((input) => {
-      checks.push(checkEmpty(input));
-    });
-  } else if (userType === "company") {
-    allCompanyInputs.forEach((input) => {
-      checks.push(checkEmpty(input));
-    });
-  } else {
-    return false;
-  }
-  let thereIsAFalse = checks.some((check) => {
-    return check.check === false;
-  });
-  if (thereIsAFalse) {
-    let findFalseElements = checks.filter((check) => {
-      return check.check === false;
-    });
-    let falseElements = [];
-    for (let falseElement of findFalseElements) {
-      falseElements.push(falseElement.input);
-    }
-    falseElements.forEach((element) => {
-      if (element.parentElement.classList.contains(element.name)) {
-        element.parentElement
-          .querySelector(".check-false")
-          .classList.add("active");
-        element.addEventListener("input", () => {
-          element.parentElement
-            .querySelector(".check-false")
-            .classList.remove("active");
-        });
-        if (element.name === "education") {
-          educationOther.addEventListener("input", () => {
-            educationOther.parentElement.parentElement
-              .querySelector(".check-false")
-              .classList.remove("active");
-          });
-        }
-      } else {
-        element.parentElement.parentElement
-          .querySelector(".check-false")
-          .classList.add("active");
-        element.addEventListener("input", () => {
-          element.parentElement.parentElement
-            .querySelector(".check-false")
-            .classList.remove("active");
-        });
-      }
-    });
-    return falseElements;
-  } else {
-    return true;
-  }
-}
 function checkInputValidation(input) {
   let info = {
     input: input,
     name: input.name,
   };
   if (input.type === "text") {
-    if (input.name === "fname") {
-      if (input.value === firstNameValue) {
-        info.check = true;
+    if (input.name === "email") {
+      let regex = /.+@.+/i;
+      if (regex.test(input.value)) {
+        return true;
       } else {
-        info.check = false;
-      }
-    } else if (input.name === "lname") {
-      if (input.value === lastNameValue) {
-        info.check = true;
-      } else {
-        info.check = false;
-      }
-    } else if (input.name === "email") {
-      if (input.value === infObj.email) {
-        info.check = true;
-      } else {
-        info.check = false;
+        return false;
       }
     } else if (input.name === "username") {
-      let regex = /^[a-zA-Z0-9]{8,}$/;
+      let regex = /^[a-z0-9]{8,}$/;
       if (regex.test(input.value)) {
         info.check = true;
       } else {
@@ -598,8 +382,25 @@ function checkInputValidation(input) {
       } else {
         info.check = false;
       }
+    } else {
+      if (input.name == "education-other") {
+        if (input.classList.contains("active")) {
+          if (input.value.length > 1) {
+            info.check = true;
+          } else {
+            info.check = false;
+          }
+        }
+      } else {
+        if (input.value.length > 1) {
+          info.check = true;
+        } else {
+          info.check = false;
+        }
+      }
     }
   } else if (input.tagName === "SELECT") {
+    console.log(input, input.value);
     if (input.parentElement.id === "birth") {
       if (day.value > 0 && month.value > 0 && year.value > 0) {
         if (
@@ -626,16 +427,25 @@ function checkInputValidation(input) {
         info.check = false;
       }
     } else {
-      info.check = true;
+      if (input.value == 0) {
+        info.check = false;
+      } else if (input.value == "Other") {
+        if (
+          input.parentElement.querySelector("#education-other").value.length > 0
+        ) {
+          info.check = true;
+        } else {
+          info.check = false;
+        }
+      } else {
+        info.check = true;
+      }
     }
   } else if (input.type === "file") {
     let value = input.files[0];
     if (input.name === "cv") {
       if (value) {
-        if (
-          value.type === "application/pdf" &&
-          value.size / 1e6 <= parseInt(maxCvSize)
-        ) {
+        if (value.type === "application/pdf" && value.size <= maxCvSize.size) {
           info.check = true;
         } else {
           info.check = false;
@@ -645,10 +455,7 @@ function checkInputValidation(input) {
       }
     } else if (input.name === "photo") {
       if (value) {
-        if (
-          value.type.startsWith("image") &&
-          value.size / 1e6 <= parseInt(maxPhotoSize)
-        ) {
+        if (value.type.startsWith("image") && value.size <= maxPhotoSize.size) {
           info.check = true;
         } else {
           info.check = false;
@@ -657,22 +464,29 @@ function checkInputValidation(input) {
         info.check = false;
       }
     }
+  } else if (input.type === "radio") {
+    let search = document.querySelector(`input[name=${input.name}]:checked`);
+    if (search) {
+      info.check = true;
+    } else {
+      info.check = false;
+    }
+  } else if (input.type === "number") {
+    if (input.value) {
+      info.check = true;
+    } else {
+      info.check = false;
+    }
   }
   return info;
 }
-function checkAllInputsValidation() {
+console.log(allEmployeeSecondInputs);
+function checkAllInputsValidation(inputs) {
+  console.log(inputs);
   let checks = [];
-  if (userType === "job-seeker") {
-    allEmployeeInputs.forEach((input) => {
-      checks.push(checkInputValidation(input));
-    });
-  } else if (userType === "company") {
-    allCompanyInputs.forEach((input) => {
-      checks.push(checkInputValidation(input));
-    });
-  } else {
-    return false;
-  }
+  inputs.forEach((input) => {
+    checks.push(checkInputValidation(input));
+  });
   let thereIsAFalse = checks.some((check) => {
     return check.check === false;
   });
@@ -681,25 +495,52 @@ function checkAllInputsValidation() {
       return check.check === false;
     });
     let falseElements = [];
+    console.log(falseElements);
     for (let falseElement of findFalseElements) {
       falseElements.push(falseElement.input);
     }
     falseElements.forEach((element) => {
-      element.parentElement
-        .querySelector(".check-false")
-        .classList.add("active");
-      element.addEventListener("input", () => {
+      console.log(element);
+      if (element.parentElement.querySelector(".check-false")) {
         element.parentElement
           .querySelector(".check-false")
-          .classList.remove("active");
+          .classList.add("active");
+      } else {
+        element.parentElement.parentElement
+          .querySelector(".check-false")
+          .classList.add("active");
+      }
+      element.addEventListener("input", () => {
+        if (element.parentElement.querySelector(".check-false")) {
+          element.parentElement
+            .querySelector(".check-false")
+            .classList.remove("active");
+        } else {
+          element.parentElement.parentElement
+            .querySelector(".check-false")
+            .classList.remove("active");
+        }
       });
     });
+    console.log(falseElements);
     return falseElements;
   } else {
     return true;
   }
 }
 
+function extractFormDataEntries(formData) {
+  let entries = {};
+  for (let [key, value] of formData.entries()) {
+      if (value instanceof File) {
+          entries[key] = value.name;
+      } else {
+          entries[key] = value;
+      }
+  }
+  
+  return entries;
+}
 function assignValues() {
   let formData = new FormData();
   let currentLevelValue = {
@@ -802,10 +643,6 @@ function fillValues() {
 }
 fillValues();
 
-function showEmptyMessage() {
-  emptyMessage.classList.add("active");
-  overlay.classList.add("active");
-}
 function showNotValidMessage() {
   notValidMessage.classList.add("active");
   overlay.classList.add("active");
@@ -884,54 +721,49 @@ function clearSessionStorage() {
   sessionStorage.removeItem("Active Messages");
   sessionStorage.removeItem("Data");
 }
-async function fetchData(from) {
+async function fetchData(from, inputs) {
   let interval = setInterval(() => {
     from.setAttributeNode(document.createAttribute("disabled"));
   });
-  if (checkAllEmpty() === true) {
-    if (checkAllInputsValidation() === true) {
-      let formData = assignValues();
-      loadingMessage();
-      let request = await fetch(
-        `${domain}/${apiVersion}/auth/register`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-      if (request) {
-        removeLoadingMessage();
-      }
-      if (request.status === 201) {
-        successMessage();
-        clearSessionStorage();
-      } else if (request.status === 400) {
-        removeDisabled(interval);
-        let json = await request.json();
-        showFailedCauseMessage(request.status, Object.entries(json));
-      } else {
-        removeDisabled(interval);
-        showFailedMessage(request.status);
-      }
+  if (checkAllInputsValidation(inputs) === true) {
+    let formData = assignValues();
+    console.log(extractFormDataEntries(formData))
+    loadingMessage();
+    let request = await fetch(`${domain}/${apiVersion}/auth/register`, {
+      method: "POST",
+      body: formData,
+    });
+    console.log(request);
+    if (request) {
+      removeLoadingMessage();
+    }
+    if (request.status === 201) {
+      successMessage();
+      clearSessionStorage();
+    } else if (request.status === 400) {
+      removeDisabled(interval);
+      let json = await request.json();
+      console.log(json);
+      showFailedCauseMessage(request.status, Object.entries(json));
     } else {
       removeDisabled(interval);
-      showNotValidMessage();
+      showFailedMessage(request.status);
     }
   } else {
     removeDisabled(interval);
-    showEmptyMessage();
+    showNotValidMessage();
   }
 }
 employeeSecondForm.addEventListener("submit", (e) => {
   e.preventDefault();
   if (e.submitter.tagName !== "BUTTON") {
-    fetchData(employeeSubmit);
+    fetchData(employeeSubmit, allEmployeeSecondInputs);
   }
 });
 
 companyForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  fetchData(companySubmit);
+  fetchData(companySubmit, allCompanyInputs);
 });
 
 closeErrorMessages.forEach((closeIcon) => {
