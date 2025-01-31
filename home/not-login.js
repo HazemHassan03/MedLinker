@@ -132,15 +132,13 @@ async function fetchJobs(url = `${domain}/${apiVersion}/jobs`) {
         if (workplace === "Onsite") {
           workplace = "On-site";
         }
-        let postedDate = new Date(job.posted_date);
-        let displayedDate = `${postedDate.getDate()} / ${
-          postedDate.getMonth() + 1
-        } / ${postedDate.getFullYear()}`;
+        let timestamp = new Date(job.posted_date);
+        let timeAgo = timeago.format(timestamp);
         let jobElement = `<div class="job">
                     <a class="job-title" href="../login/login.html">${
                       jobTitleValue ? jobTitleValue : job.title
                     }</a>
-                    <p class="post-date">${displayedDate}</p>
+                    <p class="post-date">${timeAgo}</p>
                     <p class="job-id">Job Id: ${job.id}</p>
                     <p class="company-name">
                       <i class="fa-regular fa-building fa-fw"></i> ${

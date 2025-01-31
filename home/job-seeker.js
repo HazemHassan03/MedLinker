@@ -2,6 +2,7 @@ import { userData } from "./home.js";
 import {
   domain,
   apiVersion,
+  maxJobs,
   finish,
   getAccessToken,
   storeNewAccess,
@@ -36,11 +37,12 @@ async function fetchJobs(url = `${domain}/${apiVersion}/jobs`) {
   if (request.status == 200) {
     let jobsObject = await request.json();
     let jobs = jobsObject.results;
-    if (jobsObject.count <= 20) {
+    console.log(jobs);
+    if (jobsObject.count <= maxJobs) {
       options.style.display = "none";
       showingDetails.style.display = "none";
     } else {
-      let maxLength = 20,
+      let maxLength = maxJobs,
         to = maxLength,
         from = to - maxLength + 1;
       if (jobsPage) {
@@ -50,8 +52,8 @@ async function fetchJobs(url = `${domain}/${apiVersion}/jobs`) {
       if (to > jobsObject.count) {
         to = jobsObject.count;
       }
-      let showing = document.querySelector(".showing-details .showing"),
-        count = document.querySelector(".showing-details .count"),
+      let showing = showingDetails.querySelector(".showing"),
+        count = showingDetails.querySelector(".count"),
         next = options.querySelector(".next"),
         back = options.querySelector(".back"),
         pages = options.querySelector(".pages");
@@ -129,15 +131,13 @@ async function fetchJobs(url = `${domain}/${apiVersion}/jobs`) {
         if (workplace === "Onsite") {
           workplace = "On-site";
         }
-        let postedDate = new Date(job.posted_date);
-        let displayedDate = `${postedDate.getDate()} / ${
-          postedDate.getMonth() + 1
-        } / ${postedDate.getFullYear()}`;
+        let timestamp = new Date(job.posted_date);
+        let timeAgo = timeago.format(timestamp);
         let jobElement = `<div class="job">
                     <a class="job-title" href="../job/job.html?id=${job.id}">${
           jobTitleValue ? jobTitleValue : job.title
         }</a>
-                    <p class="post-date">${displayedDate}</p>
+                    <p class="post-date">${timeAgo}</p>
                     <p class="job-id">Job Id: ${job.id}</p>
                     <p class="company-name">
                       <i class="fa-regular fa-building fa-fw"></i> ${
@@ -172,6 +172,7 @@ async function fetchJobs(url = `${domain}/${apiVersion}/jobs`) {
     } else {
       options.style.display = "none";
       showingDetails.style.display = "none";
+      noJobsMessage.remove();
     }
   } else {
     options.style.display = "none";

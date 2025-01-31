@@ -42,15 +42,12 @@ let deleteJobsYes = document.querySelector(".delete-job-message .yes"),
   deleteJobMessage = document.querySelector(".delete-job-message");
 async function deleteJobFetch(id) {
   loading();
-  let request = await fetch(
-    `${domain}/${apiVersion}/company/me/jobs/${id}`,
-    {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${await getAccessToken()}`,
-      },
-    }
-  );
+  let request = await fetch(`${domain}/${apiVersion}/company/me/jobs/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${await getAccessToken()}`,
+    },
+  });
   finish();
   if (request.status == 204) {
     deleteJobMessage.classList.remove("active");
@@ -66,6 +63,13 @@ async function deleteJobFetch(id) {
     let check = await storeNewAccess();
     if (check === true) {
       await deleteJobFetch(id);
+    } else {
+      createMessage(
+        "failed",
+        deleteJobMessage,
+        "Something went wrong",
+        "We're sorry about that. Please try again."
+      );
     }
   } else if (request.status == 404) {
     createMessage(
@@ -342,17 +346,14 @@ function assignValues() {
 
 async function editJobFetch(id) {
   loading();
-  let request = await fetch(
-    `${domain}/${apiVersion}/company/me/jobs/${id}`,
-    {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${await getAccessToken()}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(assignValues()),
-    }
-  );
+  let request = await fetch(`${domain}/${apiVersion}/company/me/jobs/${id}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${await getAccessToken()}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(assignValues()),
+  });
   finish();
   if (request.status == 200) {
     createMessage(
@@ -367,6 +368,13 @@ async function editJobFetch(id) {
     let check = await storeNewAccess();
     if (check === true) {
       await editJobFetch(jobId);
+    } else {
+      createMessage(
+        "failed",
+        undefined,
+        "Something went wrong",
+        "We're sorry about that. Please try again."
+      );
     }
   } else {
     createMessage(

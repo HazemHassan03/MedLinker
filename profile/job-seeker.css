@@ -1,23 +1,23 @@
 section.job-seeker-body {
   margin: 20px 0;
 }
-.container {
+section.job-seeker-body .container {
   display: grid;
   grid-template-columns: 325px 1fr;
   align-items: flex-start;
   gap: 20px;
 }
-.container > * {
+section.job-seeker-body .container > * {
   display: grid;
   grid-template-columns: 1fr;
   row-gap: 20px;
 }
 @media (max-width: 991px) {
-  .container {
+  section.job-seeker-body .container {
     grid-template-columns: 1fr;
   }
 }
-.container > * > section {
+section.job-seeker-body .container > * > section {
   border: 2px solid var(--main-color);
   padding: 20px 15px;
   display: grid;
@@ -30,7 +30,7 @@ section.job-seeker-body {
   -o-border-radius: 7px;
   position: relative;
 }
-.container > * > section > .title {
+section.job-seeker-body .container > * > section > .title {
   font-size: 25px;
   color: var(--main-color);
   text-align: center;
@@ -315,8 +315,7 @@ section.job-seeker-body
   cursor: pointer;
 }
 .job-applications .job-application .post-date,
-.job-applications .job-application .job-id,
-.job-applications .job-application .apply-date {
+.job-applications .job-application .job-id {
   color: rgb(0 0 0 / 50%);
   font-size: 14px;
   position: absolute;
@@ -327,7 +326,9 @@ section.job-seeker-body
   bottom: 40px;
 }
 .job-applications .job-application .apply-date {
-  bottom: 15px;
+  color: rgb(0 0 0 / 50%);
+  text-align: center;
+  font-size: 14px;
 }
 .job-applications .job-application .company-name,
 .job-applications .job-application .location,

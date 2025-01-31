@@ -205,17 +205,14 @@ function finalCheck(inputs) {
 }
 async function postJobFetch() {
   loading();
-  let request = await fetch(
-    `${domain}/${apiVersion}/company/me/jobs`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${await getAccessToken()}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(assignValues()),
-    }
-  );
+  let request = await fetch(`${domain}/${apiVersion}/company/me/jobs`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${await getAccessToken()}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(assignValues()),
+  });
   finish();
   if (request.status == 201) {
     createMessage(
@@ -231,6 +228,13 @@ async function postJobFetch() {
     let check = await storeNewAccess();
     if (check === true) {
       await postJobFetch();
+    } else {
+      createMessage(
+        "failed",
+        undefined,
+        "Something went wrong",
+        "We're sorry about that. Please try again."
+      );
     }
   } else {
     createMessage(

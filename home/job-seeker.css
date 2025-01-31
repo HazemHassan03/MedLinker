@@ -133,8 +133,6 @@
   color: var(--alt-color);
   border-color: var(--alt-color);
 }
-@media (max-width: 991px) {
-}
 .main-content .side > * {
   padding: 10px 15px;
   border-radius: 10px;

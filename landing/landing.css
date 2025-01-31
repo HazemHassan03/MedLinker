@@ -32,20 +32,109 @@ header .container {
 header img {
   width: 250px;
 }
-header nav ul {
+header nav {
+  display: none;
+}
+header nav.active {
+  display: block;
+}
+header nav button {
+  display: block;
+  font-size: 18px;
+  font-weight: 500;
+}
+header nav.logged i {
+  margin-right: 5px;
+}
+header nav .nav {
   list-style: none;
   display: flex;
   align-items: center;
   gap: 24px;
 }
-header nav ul a {
+header nav.logged .nav > li {
+  border: 2px solid white;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  transition: background-color var(--transition);
+  -webkit-transition: background-color var(--transition);
+  -moz-transition: background-color var(--transition);
+  -ms-transition: background-color var(--transition);
+  -o-transition: background-color var(--transition);
+}
+header nav.logged .nav li:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+header nav.logged .nav > li a,
+header nav.logged .nav > li button {
+  padding: 10px;
+}
+header nav .nav .account-li {
+  position: relative;
+}
+header nav .nav .my-account {
+  z-index: 999;
+  list-style: none;
+  position: absolute;
+  top: calc(100% + 5px);
+  right: 0;
+  width: 170px;
+  background-color: white;
+  transform: scaleY(0);
+  -webkit-transform: scaleY(0);
+  -moz-transform: scaleY(0);
+  -ms-transform: scaleY(0);
+  -o-transform: scaleY(0);
+  transform-origin: top;
+  transition: transform var(--transition);
+  -webkit-transition: transform var(--transition);
+  -moz-transition: transform var(--transition);
+  -ms-transition: transform var(--transition);
+  -o-transition: transform var(--transition);
+}
+header nav .nav .my-account.active {
+  transform: scaleY(1);
+  -webkit-transform: scaleY(1);
+  -moz-transform: scaleY(1);
+  -ms-transform: scaleY(1);
+  -o-transform: scaleY(1);
+}
+header nav .nav button.account-nav {
+  color: white;
+}
+header nav .nav .my-account a,
+header nav .nav .my-account button {
+  color: var(--main-color);
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  padding: 15px !important;
+  transition: background-color var(--transition), color var(--transition);
+  -webkit-transition: background-color var(--transition),
+    color var(--transition);
+  -moz-transition: background-color var(--transition), color var(--transition);
+  -ms-transition: background-color var(--transition), color var(--transition);
+  -o-transition: background-color var(--transition), color var(--transition);
+}
+header nav .nav .my-account a:hover,
+header nav .nav .my-account button:hover {
+  background-color: var(--main-color);
+  color: white;
+}
+header nav .nav .my-account li:not(:last-child) {
+  border-bottom: 1px solid #ddd;
+}
+header nav .nav a {
   color: white;
   text-decoration: none;
   font-weight: 500;
   font-size: 18px;
 }
-header nav ul .login,
-header nav ul .signup {
+header nav .nav .login,
+header nav .nav .signup {
   padding: 10px 13px;
   transition: background-color var(--transition);
   -webkit-transition: background-color var(--transition);
@@ -58,10 +147,10 @@ header nav ul .signup {
   -ms-border-radius: 30px;
   -o-border-radius: 30px;
 }
-header nav ul .login {
+header nav .nav .login {
   border: 1px solid;
 }
-header nav ul .browse-jobs {
+header nav .nav .browse-jobs {
   border-bottom: 2px solid transparent;
   transition: border-bottom-color var(--transition);
   -webkit-transition: border-bottom-color var(--transition);
@@ -69,17 +158,17 @@ header nav ul .browse-jobs {
   -ms-transition: border-bottom-color var(--transition);
   -o-transition: border-bottom-color var(--transition);
 }
-header nav ul .browse-jobs:hover {
+header nav .nav .browse-jobs:hover {
   border-bottom-color: white;
 }
 @media (min-width: 676px) {
-  header nav ul .signup {
+  header nav .nav .signup {
     background-color: var(--blue-color);
   }
-  header nav ul .login:hover {
+  header nav .nav .login:hover {
     background-color: rgb(0 0 0 / 30%);
   }
-  header nav ul .signup:hover {
+  header nav .nav .signup:hover {
     background-color: var(--blue-alt-color);
   }
 }
@@ -90,7 +179,7 @@ header .bar {
   display: none;
 }
 @media (max-width: 675px) {
-  header nav ul {
+  header nav.not-logged .nav {
     flex-direction: column;
     align-items: flex-start;
     position: absolute;
@@ -112,14 +201,14 @@ header .bar {
     transform-origin: top;
     z-index: 999;
   }
-  header nav ul.active {
+  header nav.not-logged .nav.active {
     transform: scaleY(1);
     -webkit-transform: scaleY(1);
     -moz-transform: scaleY(1);
     -ms-transform: scaleY(1);
     -o-transform: scaleY(1);
   }
-  header nav ul li {
+  header nav.not-logged .nav li {
     width: 100%;
     transition: background-color var(--transition);
     -webkit-transition: background-color var(--transition);
@@ -127,7 +216,7 @@ header .bar {
     -ms-transition: background-color var(--transition);
     -o-transition: background-color var(--transition);
   }
-  header nav ul .login {
+  header nav.not-logged .nav .login {
     border: none;
     border-radius: 0;
     -webkit-border-radius: 0;
@@ -135,7 +224,7 @@ header .bar {
     -ms-border-radius: 0;
     -o-border-radius: 0;
   }
-  header nav ul .signup {
+  header nav.not-logged .nav .signup {
     background-color: initial;
     border-radius: 0;
     -webkit-border-radius: 0;
@@ -143,21 +232,35 @@ header .bar {
     -ms-border-radius: 0;
     -o-border-radius: 0;
   }
-  header nav ul .browse-jobs {
+  header nav.not-logged .nav .browse-jobs {
     border-bottom: none;
   }
-  header nav ul li a {
+  header nav.not-logged .nav li a {
     padding: 20px 8px !important;
     color: var(--main-color);
   }
-  header nav ul li:not(:last-child) {
+  header nav.not-logged .nav li:not(:last-child) {
     border-bottom: 1px solid var(--main-color);
   }
-  header nav ul li:hover {
+  header nav.not-logged .nav li:hover {
     background-color: #eee;
   }
   header .bar {
     display: block;
+  }
+  header nav.logged .nav {
+    gap: 10px;
+  }
+  header nav.logged .nav > li a,
+  header nav.logged .nav > li button {
+    padding: 7px;
+  }
+  header nav.logged span {
+    display: none;
+  }
+  header nav.logged i {
+    font-size: 18px;
+    margin-right: 0;
   }
 }
 .description {
@@ -189,9 +292,9 @@ header .bar {
   position: relative;
   max-width: 700px;
   margin: auto;
-  border-radius: 10px;
   overflow: hidden;
   border: 3px solid #ddd;
+  border-radius: 10px;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
@@ -217,7 +320,7 @@ header .bar {
   -ms-transform: translateY(-50%);
   -o-transform: translateY(-50%);
   color: rgba(0, 0, 0, 0.2);
-  right: 15px;
+  left: 15px;
   font-size: 30px;
   cursor: pointer;
   transition: color var(--transition);
@@ -231,6 +334,7 @@ header .bar {
 }
 .description .input input {
   padding: 10px 15px;
+  padding-left: 60px;
   width: 100%;
   outline: none;
   border: none;

@@ -1,14 +1,29 @@
+import { logoutFunction } from "../js/constants.js";
+
 let headerBar = document.querySelector(".bar"),
-  closeBar = document.querySelector(".close-bar"),
   nav = document.querySelector(".nav"),
+  notLoggedNav = document.querySelector("nav.not-logged"),
+  loggedNav = document.querySelector("nav.logged"),
+  showAccountNav = document.querySelector("header nav .nav .account-nav"),
+  accountNav = document.querySelector("header nav .nav .my-account"),
+  triangle = document.querySelector("header nav .nav .triangle"),
+  logout = document.getElementById("logout"),
   toTop = document.querySelector(".to-top"),
   presentation = document.querySelectorAll(".presentation .body > div"),
   copyrightDate = document.querySelector(".copyright-date"),
   date = new Date(),
   searchForm = document.querySelector(".search-form"),
   searchInput = document.getElementById("job-search"),
-  searchGo = document.querySelector(".input .go"),
-  searchSubmit = document.querySelector(".search-form input[type=submit]");
+  searchGo = document.querySelector(".input .go");
+
+if (
+  !document.cookie.includes("access") &&
+  !document.cookie.includes("refresh")
+) {
+  notLoggedNav.classList.add("active");
+} else {
+  loggedNav.classList.add("active");
+}
 
 headerBar.addEventListener("click", () => {
   nav.classList.toggle("active");
@@ -19,6 +34,19 @@ headerBar.addEventListener("click", () => {
     headerBar.classList.remove("fa-xmark");
     headerBar.classList.add("fa-bars");
   }
+});
+
+showAccountNav.addEventListener("click", () => {
+  accountNav.classList.toggle("active");
+  if (accountNav.classList.contains("active")) {
+    triangle.className = triangle.className.replace("down", "up");
+  } else {
+    triangle.className = triangle.className.replace("up", "down");
+  }
+});
+
+logout.addEventListener("click", () => {
+  logoutFunction(false);
 });
 
 window.addEventListener("scroll", () => {
@@ -57,6 +85,13 @@ searchForm.addEventListener("submit", (e) => {
   }
 });
 searchInput.addEventListener("input", () => {
+  if (searchInput.value.length > 0) {
+    searchGo.classList.add("active");
+  } else {
+    searchGo.classList.remove("active");
+  }
+});
+searchInput.addEventListener("focus", () => {
   if (searchInput.value.length > 0) {
     searchGo.classList.add("active");
   } else {

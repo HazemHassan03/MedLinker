@@ -205,6 +205,13 @@ async function deleteJobFetch(jobId) {
     let check = await storeNewAccess();
     if (check === true) {
       await deleteJobFetch(jobId);
+    } else {
+      createMessage(
+        "failed",
+        deleteJobMessage,
+        "Something went wrong",
+        "We're sorry about that. Please try again."
+      );
     }
   } else if (request.status == 404) {
     createMessage(

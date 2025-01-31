@@ -78,6 +78,13 @@ async function jobApply() {
     let check = await storeNewAccess();
     if (check === true) {
       await jobApply();
+    } else {
+      createMessage(
+        "failed",
+        applicationFormBox,
+        "Something went wrong",
+        "We're sorry about that. Please try again."
+      );
     }
   } else {
     createMessage(

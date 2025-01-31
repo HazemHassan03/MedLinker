@@ -532,13 +532,13 @@ function checkAllInputsValidation(inputs) {
 function extractFormDataEntries(formData) {
   let entries = {};
   for (let [key, value] of formData.entries()) {
-      if (value instanceof File) {
-          entries[key] = value.name;
-      } else {
-          entries[key] = value;
-      }
+    if (value instanceof File) {
+      entries[key] = value.name;
+    } else {
+      entries[key] = value;
+    }
   }
-  
+
   return entries;
 }
 function assignValues() {
@@ -727,7 +727,7 @@ async function fetchData(from, inputs) {
   });
   if (checkAllInputsValidation(inputs) === true) {
     let formData = assignValues();
-    console.log(extractFormDataEntries(formData))
+    console.log(extractFormDataEntries(formData));
     loadingMessage();
     let request = await fetch(`${domain}/${apiVersion}/auth/register`, {
       method: "POST",
@@ -751,7 +751,6 @@ async function fetchData(from, inputs) {
     }
   } else {
     removeDisabled(interval);
-    showNotValidMessage();
   }
 }
 employeeSecondForm.addEventListener("submit", (e) => {

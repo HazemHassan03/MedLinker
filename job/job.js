@@ -29,9 +29,7 @@ if (access === true) {
 let jobNotFound = document.querySelector(".job-message.not-found"),
   jobFailed = document.querySelector(".job-message.failed"),
   jobContainer = document.querySelector(".job");
-async function fetchJob(
-  url = `${domain}/${apiVersion}/jobs/${jobId}`
-) {
+async function fetchJob(url = `${domain}/${apiVersion}/jobs/${jobId}`) {
   let request = await fetch(url, {
     headers: {
       Authorization: `Bearer ${await getAccessToken()}`,
@@ -78,17 +76,11 @@ async function fetchJob(
     if (workplaceValue === "Onsite") {
       workplaceValue = "On-site";
     }
-    let postedDate = new Date(jobDetails.posted_date);
-    let displayedDate = `${postedDate.getDate()} / ${
-      postedDate.getMonth() + 1
-    } / ${postedDate.getFullYear()}`;
+    let timestamp = new Date(jobDetails.posted_date);
+    let timeAgo = timeago.format(timestamp);
     document.title = jobDetails.title;
     jobTitle.textContent = jobTitleValue ? jobTitleValue : jobDetails.title;
-    if (userData.user.user_type === "job_seeker") {
-      postDate.textContent = displayedDate;
-    } else {
-      postDate.parentElement.style.display = "none";
-    }
+    postDate.textContent = timeAgo;
     companyName.textContent = at ? at : jobDetails.company;
     country.textContent = jobDetails.location_country;
     city.textContent = jobDetails.location_city;
@@ -131,6 +123,9 @@ async function fetchJob(
     let check = await storeNewAccess();
     if (check === true) {
       await fetchJob();
+    } else {
+      finish();
+      jobFailed.classList.add("active");
     }
   } else {
     finish();
