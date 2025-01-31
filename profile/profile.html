@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Profile</title>
+    <link
+      rel="shortcut icon"
+      href="../images/favicon.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="../fontawesome/all.min.css" />
+    <link rel="stylesheet" href="../css/constants.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/loading.css" />
+    <link rel="stylesheet" href="../css/messages.css" />
+    <link rel="stylesheet" href="profile.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="loading active">
+      <div class="one"></div>
+      <div class="two"></div>
+      <div class="three"></div>
+    </div>
+    <header class="no-search">
+      <div class="container">
+        <div class="logo">
+          <a href="../index.html"
+            ><img src="../images/logo-blue-expand.png" alt="The Logo"
+          /></a>
+        </div>
+        <div class="account">
+          <div>
+            <div class="img">
+              <i class="fa-solid fa-user"></i>
+            </div>
+            <i class="triangle fa-solid fa-caret-down"></i>
+            <button>My Account</button>
+          </div>
+        </div>
+        <ul class="nav-list">
+          <li><a href="javascript:void(0);">My Profile (Soon..)</a></li>
+          <li><button id="logout">Logout</button></li>
+        </ul>
+      </div>
+    </header>
+    <section class="landing">
+      <div class="container">
+        <i class="go-back fa-solid fa-arrow-left"></i>
+      </div>
+    </section>
+    <section class="main job-seeker-body">
+      <div class="container">
+        <aside>
+          <section class="user-card">
+            <p class="profile-message inf failed">
+              Failed to get your information. Please try again.
+            </p>
+            <i class="view-mode edit-inf fa-solid fa-pen-to-square"></i>
+            <div class="img">
+              <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="user-inf">
+              <h2 class="view-mode full-name"></h2>
+              <div class="edit-mode hide full-name">
+                <input
+                  type="text"
+                  name="fname"
+                  id="fname"
+                  placeholder="First Name"
+                />
+                <input
+                  type="text"
+                  name="lname"
+                  id="lname"
+                  placeholder="Last Name"
+                />
+              </div>
+              <p class="view-mode username">@<span class="value"></span></p>
+              <p class="edit-mode hide username not-editable">
+                @<span class="value"></span>
+              </p>
+              <p class="email view-mode">
+                <i class="fa-solid fa-envelope fa-fw"></i
+                ><span class="value"></span>
+              </p>
+              <div class="email edit-mode hide not-editable">
+                <i class="fa-solid fa-envelope fa-fw"></i
+                ><span class="value"></span>
+              </div>
+              <p class="phone view-mode">
+                <i class="fa-solid fa-phone fa-fw"></i
+                ><span class="value"></span>
+              </p>
+              <div class="phone edit-mode hide">
+                <i class="fa-solid fa-phone fa-fw"></i>
+                <input
+                  type="text"
+                  name="phone"
+                  id="phone"
+                  placeholder="Phone Number"
+                />
+              </div>
+              <p class="address view-mode">
+                <i class="fa-solid fa-location-dot fa-fw"></i
+                ><span class="value"></span>
+              </p>
+              <div class="address edit-mode hide">
+                <i class="fa-solid fa-location-dot fa-fw"></i>
+                <input
+                  type="text"
+                  name="address"
+                  id="address"
+                  placeholder="Your Address"
+                />
+              </div>
+              <p class="gender view-mode">
+                <i class="fa-solid fa-user fa-fw"></i
+                ><span class="value"></span>
+              </p>
+              <div class="gender edit-mode hide">
+                <i class="fa-solid fa-user fa-fw"></i>
+                <select name="gender" id="gender">
+                  <option value="0">Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+              <p class="job-title view-mode">
+                <i class="fa-solid fa-briefcase fa-fw"></i
+                ><span class="value"></span>
+              </p>
+              <div class="job-title edit-mode hide">
+                <i class="fa-solid fa-briefcase fa-fw"></i>
+                <input
+                  type="text"
+                  name="job-title"
+                  id="job-title"
+                  placeholder="Your Job Title"
+                />
+              </div>
+              <p class="birth view-mode">
+                <i class="fa-solid fa-cake-candles fa-fw"></i
+                ><span class="value"></span>
+              </p>
+              <div class="birth edit-mode hide">
+                <i class="fa-solid fa-cake-candles fa-fw"></i>
+                <div>
+                  <select name="birth-day" id="birth-day">
+                    <option value="0">Day</option>
+                  </select>
+                  <select name="birth-month" id="birth-month">
+                    <option value="0">Month</option>
+                  </select>
+                  <select name="birth-year" id="birth-year">
+                    <option value="0">Year</option>
+                  </select>
+                </div>
+              </div>
+              <p class="level view-mode">
+                <i class="fa-solid fa-school fa-fw"></i
+                ><span class="value"></span>
+              </p>
+              <div class="level edit-mode hide">
+                <i class="fa-solid fa-school fa-fw"></i>
+                <select name="level" id="level">
+                  <option value="0">Current Level</option>
+                  <option value="Level 1">Level 1</option>
+                  <option value="Level 2">Level 2</option>
+                  <option value="Level 3">Level 3</option>
+                  <option value="Level 4">Level 4</option>
+                  <option value="Level 5">Level 5</option>
+                  <option value="Graduated">Graduated</option>
+                </select>
+              </div>
+              <p class="graduation view-mode">
+                <i class="fa-solid fa-user-graduate fa-fw"></i
+                ><span class="value"></span>
+              </p>
+              <div class="graduation edit-mode hide">
+                <i class="fa-solid fa-user-graduate fa-fw"></i>
+                <select name="graduation" id="graduation">
+                  <option value="0">Graduation Year</option>
+                </select>
+              </div>
+              <p class="education view-mode">
+                <i class="fa-solid fa-graduation-cap fa-fw"></i
+                ><span class="value"></span>
+              </p>
+              <div class="education edit-mode hide">
+                <i class="fa-solid fa-graduation-cap fa-fw"></i>
+                <div>
+                  <select name="education" id="education">
+                    <option value="0">Education</option>
+                    <option value="Faculty Of Medicine">
+                      Faculty Of Medicine
+                    </option>
+                    <option value="Faculty Of Dentistry">
+                      Faculty Of Dentistry
+                    </option>
+                    <option value="Faculty Of Pharmacy">
+                      Faculty Of Pharmacy
+                    </option>
+                    <option value="Faculty Of Physical Therapy">
+                      Faculty Of Physical Therapy
+                    </option>
+                    <option value="Faculty Of Nursing">
+                      Faculty Of Nursing
+                    </option>
+                    <option value="Faculty Of Science">
+                      Faculty Of Science
+                    </option>
+                    <option value="Faculty Of Veterinary Medicine">
+                      Faculty Of Veterinary Medicine
+                    </option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <input
+                    type="text"
+                    class="other"
+                    name="education-other"
+                    id="education-other"
+                    placeholder="Write Your Education"
+                  />
+                </div>
+              </div>
+              <p class="experience view-mode">
+                <i class="fa-solid fa-user-doctor fa-fw"></i
+                ><span class="value"></span>
+              </p>
+              <div class="experience edit-mode hide">
+                <i class="fa-solid fa-user-doctor fa-fw"></i>
+                <div>
+                  <div>
+                    <p>Years:</p>
+                    <input
+                      type="number"
+                      name="experience-years"
+                      id="experience-years"
+                      min="0"
+                    />
+                  </div>
+                  <div>
+                    <p>Months:</p>
+                    <input
+                      type="number"
+                      name="experience-months"
+                      id="experience-months"
+                      min="0"
+                      max="11"
+                    />
+                  </div>
+                </div>
+              </div>
+              <p class="job-type view-mode">
+                <i class="fa-solid fa-business-time fa-fw"></i
+                ><span class="value"></span>
+              </p>
+              <div class="job-type edit-mode hide">
+                <i class="fa-solid fa-business-time fa-fw"></i>
+                <select name="job-type" id="job-type">
+                  <option value="0">Job Type</option>
+                  <option value="Full Time">Full Time</option>
+                  <option value="Part Time">Part Time</option>
+                </select>
+              </div>
+              <p class="military view-mode">
+                <i class="fa-solid fa-person-military-rifle fa-fw"></i
+                ><span class="value"></span>
+              </p>
+              <div class="military edit-mode hide">
+                <i class="fa-solid fa-person-military-rifle fa-fw"></i>
+                <select name="military" id="military">
+                  <option value="0">Military Status</option>
+                  <option value="Exempted">Exempted</option>
+                  <option value="Postponed">Postponed</option>
+                  <option value="Serving">Serving</option>
+                  <option value="Fulfilled">Fulfilled</option>
+                </select>
+              </div>
+            </div>
+            <div class="cv">
+              <h2 class="title">Your CV</h2>
+              <div class="view-mode">
+                <p class="file-name">Name: <span class="value"></span></p>
+                <a href="" class="show" target="_blank"
+                  ><i class="fa-solid fa-file-lines fa-fw"></i>Show Your CV</a
+                >
+              </div>
+              <div class="edit-mode hide">
+                <button class="upload input edit-mode hide">
+                  <i class="fa-solid fa-cloud-arrow-up fa-fw"></i>Upload Your CV
+                </button>
+                <div class="file-inf">
+                  <p class="name">Name: <span class="value"></span></p>
+                  <p class="size">Size: <span class="value"></span></p>
+                </div>
+                <p class="note">- The file must be PDF.</p>
+                <p class="note">
+                  - Max size is <span class="max-cv-size"></span>.
+                </p>
+                <input type="file" name="cv" id="cv" accept=".pdf" />
+              </div>
+            </div>
+            <div class="options edit-mode hide">
+              <input type="submit" value="Save" />
+              <button class="close-editing">Close</button>
+            </div>
+          </section>
+          <section class="reset-password">
+            <h2 class="title">Reset Password</h2>
+            <button>
+              <!-- <i class="fa-solid fa-key fa-fw"></i>Change Your Password -->
+              Soon, Stay Tuned
+            </button>
+          </section>
+        </aside>
+        <main>
+          <section class="job-applications">
+            <h2 class="title">Job Applications</h2>
+            <div class="applications"></div>
+            <div class="options">
+              <button class="back">
+                <i class="fa-solid fa-angle-left"></i> Back
+              </button>
+              <div class="pages"></div>
+              <button class="next">
+                Next <i class="fa-solid fa-angle-right"></i>
+              </button>
+            </div>
+            <p class="showing-details">
+              Showing <span class="showing"></span> of
+              <span class="count"></span>
+            </p>
+            <p class="profile-message apps failed">
+              Failed to get your job applications. Please try again.
+            </p>
+            <p class="profile-message apps no-apps">
+              You have not applied for jobs yet. Apply for jobs now to can see
+              them here.
+            </p>
+          </section>
+        </main>
+      </div>
+    </section>
+    <section class="main company-body">
+      <div class="container">
+        <section class="company-inf">
+          <p class="profile-message inf failed" style="display: none">
+            Failed to get your information. Please try again.
+          </p>
+          <i class="view-mode edit-inf fa-solid fa-pen-to-square"></i>
+          <div class="img">
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <div class="user-inf first">
+            <h2 class="view-mode company-name">Med Linker</h2>
+            <div class="edit-mode hide company-name">
+              <input
+                type="text"
+                name="company-name"
+                id="company-name"
+                placeholder="Company Name"
+              />
+            </div>
+            <p class="view-mode full-name">Hazem Hassan</p>
+            <div class="edit-mode hide full-name">
+              <input
+                type="text"
+                name="fname"
+                id="fname"
+                placeholder="First Name"
+              />
+              <input
+                type="text"
+                name="lname"
+                id="lname"
+                placeholder="Last Name"
+              />
+            </div>
+            <p class="view-mode username">
+              @<span class="value">medlinker</span>
+            </p>
+            <p class="edit-mode hide username not-editable">
+              @<span class="value"></span>
+            </p>
+          </div>
+          <div class="user-inf second">
+            <p class="email view-mode">
+              <i class="fa-solid fa-envelope fa-fw"></i
+              ><span class="value">hazemhassan@gmail.com</span>
+            </p>
+            <div class="email edit-mode hide not-editable">
+              <i class="fa-solid fa-envelope fa-fw"></i
+              ><span class="value"></span>
+            </div>
+            <p class="phone view-mode">
+              <i class="fa-solid fa-phone fa-fw"></i
+              ><span class="value">01555881025</span>
+            </p>
+            <div class="phone edit-mode hide">
+              <i class="fa-solid fa-phone fa-fw"></i>
+              <input
+                type="text"
+                name="phone"
+                id="phone"
+                placeholder="Phone Number"
+              />
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+    <div class="page-message message">
+      <h3 class="title"></h3>
+      <p class="main-message"></p>
+      <div class="another-messages"></div>
+      <i class="close fa-solid fa-xmark"></i>
+    </div>
+    <div class="overlay"></div>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js/dist/timeago.min.js"></script>
+    <script src="../js/header.js" type="module"></script>
+    <script src="profile.js" type="module"></script>
+  </body>
+</html>
