@@ -64,11 +64,24 @@
 .main-content .jobs .job .post-date {
   bottom: 15px;
 }
+.main-content .jobs .job.applied-job .job-id {
+  bottom: 67px;
+}
+.main-content .jobs .job.applied-job .post-date {
+  bottom: 42px;
+}
 .main-content .jobs .job .location {
   color: rgb(0 0 0 / 80%);
 }
 .main-content .jobs .job .vacancies {
   color: rgb(0 0 0 / 80%);
+}
+.main-content .jobs .job.applied-job .applied {
+  text-align: center;
+  color: var(--green-color);
+  font-weight: 600;
+  font-size: 18px;
+  margin-top: -10px;
 }
 .main-content .jobs .options {
   display: flex;

@@ -133,7 +133,7 @@ async function fetchJobs(url = `${domain}/${apiVersion}/jobs`) {
         }
         let timestamp = new Date(job.posted_date);
         let timeAgo = timeago.format(timestamp);
-        let jobElement = `<div class="job">
+        let jobElement = `<div class="job ${job.applied ? "applied-job" : ""}">
                     <a class="job-title" href="../job/job.html?id=${job.id}">${
           jobTitleValue ? jobTitleValue : job.title
         }</a>
@@ -158,7 +158,8 @@ async function fetchJobs(url = `${domain}/${apiVersion}/jobs`) {
                       <span class="job-type">${jobType}</span>
                       |
                       <span class="workplace">${workplace}</span>
-                  </div>
+                    </div>
+                    ${job.applied ? `<p class="applied">Applied</p>` : ""}
                 </div>`;
         jobsContainer.insertAdjacentHTML("beforeend", jobElement);
       }
