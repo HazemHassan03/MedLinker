@@ -280,7 +280,6 @@ genderSelect.forEach((input) => {
   });
 });
 
-console.log(allEmployeeFirstInputs);
 employeeForm.addEventListener("submit", (e) => {
   e.preventDefault();
   let check = checkAllInputsValidation(allEmployeeFirstInputs);
@@ -288,7 +287,6 @@ employeeForm.addEventListener("submit", (e) => {
     employeeForm.classList.add("finish");
     employeeSecondForm.classList.add("active");
   }
-  console.log(check);
   container.scrollTo({
     top: 0,
   });
@@ -335,7 +333,6 @@ function process(input) {
       input.parentElement.querySelector(".details").classList.add("active");
       input.parentElement.querySelector(".details .file-name").textContent =
         input.files[0].name;
-      console.log(input.files[0].size);
       input.parentElement.querySelector(".details .file-size").textContent =
         showFileSize(input.files[0].size);
     } else {
@@ -400,7 +397,6 @@ function checkInputValidation(input) {
       }
     }
   } else if (input.tagName === "SELECT") {
-    console.log(input, input.value);
     if (input.parentElement.id === "birth") {
       if (day.value > 0 && month.value > 0 && year.value > 0) {
         if (
@@ -480,9 +476,7 @@ function checkInputValidation(input) {
   }
   return info;
 }
-console.log(allEmployeeSecondInputs);
 function checkAllInputsValidation(inputs) {
-  console.log(inputs);
   let checks = [];
   inputs.forEach((input) => {
     checks.push(checkInputValidation(input));
@@ -495,12 +489,10 @@ function checkAllInputsValidation(inputs) {
       return check.check === false;
     });
     let falseElements = [];
-    console.log(falseElements);
     for (let falseElement of findFalseElements) {
       falseElements.push(falseElement.input);
     }
     falseElements.forEach((element) => {
-      console.log(element);
       if (element.parentElement.querySelector(".check-false")) {
         element.parentElement
           .querySelector(".check-false")
@@ -522,7 +514,6 @@ function checkAllInputsValidation(inputs) {
         }
       });
     });
-    console.log(falseElements);
     return falseElements;
   } else {
     return true;
@@ -727,13 +718,11 @@ async function fetchData(from, inputs) {
   });
   if (checkAllInputsValidation(inputs) === true) {
     let formData = assignValues();
-    console.log(extractFormDataEntries(formData));
     loadingMessage();
     let request = await fetch(`${domain}/${apiVersion}/auth/register`, {
       method: "POST",
       body: formData,
     });
-    console.log(request);
     if (request) {
       removeLoadingMessage();
     }
@@ -743,7 +732,6 @@ async function fetchData(from, inputs) {
     } else if (request.status === 400) {
       removeDisabled(interval);
       let json = await request.json();
-      console.log(json);
       showFailedCauseMessage(request.status, Object.entries(json));
     } else {
       removeDisabled(interval);

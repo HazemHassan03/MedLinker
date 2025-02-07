@@ -33,7 +33,6 @@ async function getCompanyJobs(url = `${domain}/${apiVersion}/company/me/jobs`) {
   if (request.status == 200) {
     let jobsObject = await request.json();
     let jobs = jobsObject.results;
-    console.log(jobsObject);
     if (jobsObject.count <= maxJobs) {
       options.style.display = "none";
       showingDetails.style.display = "none";

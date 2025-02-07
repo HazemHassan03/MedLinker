@@ -37,7 +37,6 @@ async function fetchJobs(url = `${domain}/${apiVersion}/jobs`) {
   if (request.status == 200) {
     let jobsObject = await request.json();
     let jobs = jobsObject.results;
-    console.log(jobs);
     if (jobsObject.count <= maxJobs) {
       options.style.display = "none";
       showingDetails.style.display = "none";

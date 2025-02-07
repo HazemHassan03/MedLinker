@@ -198,7 +198,6 @@ let cvName =
   (cvNameValue.textContent =
   fileName.textContent =
     resumeParams.pathname.split("/").at(-1));
-console.log(personalData);
 
 function profileEditMode() {
   document
@@ -337,7 +336,6 @@ let allProfileEditInputs = [
   ...document.querySelectorAll(".user-card input:not([type=submit], .other)"),
   ...document.querySelectorAll(".user-card select"),
 ];
-console.log(allProfileEditInputs);
 
 function assignValues() {
   let formData = new FormData();
@@ -357,7 +355,6 @@ function assignValues() {
     educationEdit.value === "Other"
       ? educationOther.value
       : educationEdit.value;
-  console.log(educationEdit, educationOther, education);
   if (firstNameEdit.value !== personalData.user.first_name)
     formData.append("user.first_name", firstNameEdit.value.trim());
   if (lastNameEdit.value !== personalData.user.last_name)
@@ -368,7 +365,6 @@ function assignValues() {
     formData.append("location_city", addressEdit.value.trim());
   if (genderValue[genderEdit.value] !== personalData.gender)
     formData.append("gender", genderValue[genderEdit.value]);
-  console.log(genderValue, genderValue[genderEdit.value], personalData.gender);
   if (jobTitleEdit.value !== personalData.job_title)
     formData.append("job_title", jobTitleEdit.value.trim());
   if (
@@ -383,8 +379,6 @@ function assignValues() {
     formData.append("current_level", currentLevelValue[levelEdit.value]);
   if (+graduationYearEdit.value !== personalData.graduation_year)
     formData.append("graduation_year", +graduationYearEdit.value);
-  console.log(educationValue);
-  console.log(personalData.education);
   if (educationValue !== personalData.education)
     formData.append("education", educationValue);
   if (+experienceYearsEdit.value !== personalData.years_of_experience)
@@ -416,9 +410,7 @@ function extractFormDataEntries(formData) {
 async function editProfile() {
   if (checkAllRequired(allProfileEditInputs) === true) {
     let formData = assignValues();
-    console.log(Object.values(extractFormDataEntries(formData)).length);
     if (Object.values(extractFormDataEntries(formData)).length > 0) {
-      console.log(extractFormDataEntries(formData));
       loading();
       let request = await fetch(`${domain}/${apiVersion}/users/jobseeker/me`, {
         method: "PATCH",
@@ -460,8 +452,6 @@ async function editProfile() {
     } else {
       profileViewMode();
     }
-  } else {
-    console.log(finalCheck(allProfileEditInputs));
   }
 }
 let saveEditing = document.querySelector(".user-card input[type=submit]");
@@ -482,9 +472,7 @@ async function getApplications(url = `${domain}/${apiVersion}/applications`) {
   });
   if (request.status == 200) {
     let applicationsObj = await request.json();
-    console.log(applicationsObj);
     let applications = applicationsObj.results;
-    console.log(applications);
     if (applicationsObj.count <= maxJobs) {
       options.style.display = "none";
       showingDetails.style.display = "none";
@@ -631,7 +619,6 @@ async function getApplications(url = `${domain}/${apiVersion}/applications`) {
     showingDetails.style.display = "none";
     noApps.remove();
   }
-  console.log(request);
 }
 if (jobsPage) {
   await getApplications(
