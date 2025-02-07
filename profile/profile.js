@@ -67,6 +67,6 @@ async function getPersonalData() {
   }
   return request;
 }
-await getPersonalData();
+getPersonalData();
 
 export { personalData };

@@ -12,19 +12,21 @@ let params = new URLSearchParams(location.search);
 let jobId = params.get("id");
 
 let userData, jobDetails;
-let access = await checkAccess();
-if (access === true) {
-  let fetchData = await fetchUserData();
-  if (fetchData) {
-    userData = fetchData;
-    if (userData.user.user_type === "company") {
-      document.querySelector(".not-found").textContent =
-        "This job does not exist or is no longer available.";
-    } else if (userData.user.user_type === "job_seeker") {
-      document.querySelector(".interview-questions").remove();
+
+checkAccess().then( async (access) => {
+    if (access === true) {
+      let fetchData = await fetchUserData();
+      if (fetchData) {
+        userData = fetchData;
+        if (userData.user.user_type === "company") {
+          document.querySelector(".not-found").textContent =
+            "This job does not exist or is no longer available.";
+        } else if (userData.user.user_type === "job_seeker") {
+          document.querySelector(".interview-questions").remove();
+        }
+      }
     }
-  }
-}
+})
 
 let jobNotFound = document.querySelector(".job-message.not-found"),
   jobFailed = document.querySelector(".job-message.failed"),
@@ -133,7 +135,8 @@ async function fetchJob(url = `${domain}/${apiVersion}/jobs/${jobId}`) {
   }
   return jobDetails;
 }
-await fetchJob();
+
+fetchJob();
 
 let goBack = document.querySelector(".go-back");
 goBack.addEventListener("click", () => {

@@ -1,7 +1,7 @@
 import { finish, checkAccess, fetchUserData } from "../js/constants.js";
 
-let access = await checkAccess();
 let postJobDiv = document.querySelector(".post-job");
+checkAccess().then(async (access) =>{
 if (access === true) {
   let fetchData = await fetchUserData();
   let userType = fetchData.user.user_type;
@@ -24,6 +24,7 @@ if (access === true) {
   }
   finish();
 }
+})
 
 let goBack = document.querySelector(".go-back");
 goBack.addEventListener("click", () => {

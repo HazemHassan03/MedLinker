@@ -17,7 +17,7 @@ if (
   link.href = "job-seeker.css";
   document.head.append(link);
 } else {
-  let access = await checkAccess();
+  checkAccess().then( async (access) =>{
   if (access === true) {
     let fetchData = await fetchUserData();
     userData = fetchData;
@@ -44,6 +44,9 @@ if (
       document.head.append(link);
     }
   }
+  })
+
+
 }
 
 export { userData };
