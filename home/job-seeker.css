@@ -65,10 +65,10 @@
   bottom: 15px;
 }
 .main-content .jobs .job.applied-job .job-id {
-  bottom: 67px;
+  bottom: 78px;
 }
 .main-content .jobs .job.applied-job .post-date {
-  bottom: 42px;
+  bottom: 53px;
 }
 .main-content .jobs .job .location {
   color: rgb(0 0 0 / 80%);
@@ -81,7 +81,6 @@
   color: var(--green-color);
   font-weight: 600;
   font-size: 18px;
-  margin-top: -10px;
 }
 .main-content .jobs .options {
   display: flex;
