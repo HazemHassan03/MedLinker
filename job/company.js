@@ -57,7 +57,8 @@ async function deleteJobFetch(id) {
       "The job has been successfully deleted",
       "Thank you for using MedLinker. We are happy to serve you.",
       undefined,
-      true
+      undefined,
+      "../home/home.html"
     );
   } else if (request.status == 401) {
     let check = await storeNewAccess();
@@ -362,7 +363,8 @@ async function editJobFetch(id) {
       "The job has been successfully updated",
       "Thank you for using MedLinker. We are happy to serve you.",
       undefined,
-      true
+      undefined,
+      "../home/home.html"
     );
   } else if (request.status == 401) {
     let check = await storeNewAccess();
