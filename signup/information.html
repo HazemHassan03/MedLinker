@@ -6,12 +6,9 @@
     <title>More Information</title>
     <link
       rel="shortcut icon"
-      href="../images/favicon.png"
+      href="/assets/favicon-BPPGXyGE.png"
       type="image/x-icon"
-    />
-    <link rel="stylesheet" href="../fontawesome/all.min.css" />
-    <link rel="stylesheet" href="../css/constants.css" />
-    <link rel="stylesheet" href="information.css" />
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -30,6 +27,11 @@
       href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap"
       rel="stylesheet"
     />
+    <script type="module" crossorigin src="/assets/information-BJdyGOkJ.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/constants-D2DsSXG6.js">
+    <link rel="modulepreload" crossorigin href="/assets/constants-DNmD6dpJ.js">
+    <link rel="stylesheet" crossorigin href="/assets/constants-C-kfF6wK.css">
+    <link rel="stylesheet" crossorigin href="/assets/information-CyEppO74.css">
   </head>
   <body>
     <div class="choices">
@@ -47,7 +49,7 @@
       <i class="exit fa-solid fa-chevron-left"></i>
     </div>
     <a class="logo-link" href="../index.html"
-      ><img src="../images/logo-blue-expand.png" alt="The Logo" class="logo"
+      ><img src="/assets/logo-blue-expand-jHzCqXVZ.png" alt="The Logo" class="logo"
     /></a>
     <div class="body-container">
       <form class="employee-form">
@@ -55,14 +57,12 @@
         <div class="row flex">
           <div class="fname">
             <h3>First Name</h3>
-            <input type="text" name="fname" id="employee-fname" readonly />
-            <i class="readonly fa-solid fa-lock"></i>
+            <input type="text" name="fname" id="employee-fname" />
             <i class="check-false fa-solid fa-circle-exclamation"></i>
           </div>
           <div class="lname">
             <h3>Last Name</h3>
-            <input type="text" name="lname" id="employee-lname" readonly />
-            <i class="readonly fa-solid fa-lock"></i>
+            <input type="text" name="lname" id="employee-lname" />
             <i class="check-false fa-solid fa-circle-exclamation"></i>
           </div>
         </div>
@@ -71,15 +71,15 @@
             <h3>Username</h3>
             <input type="text" name="username" id="employee-username" />
             <p class="not-valid" id="username-not-valid">
-              The username must be at least 8 characters, all characters must be small, have at least one
-              english letter, the numbers are optional and have no spaces.
+              The username must be at least 8 characters, all characters must be
+              small, have at least one english letter, the numbers are optional
+              and have no spaces.
             </p>
             <i class="check-false fa-solid fa-circle-exclamation"></i>
           </div>
           <div class="email">
             <h3>Email Address</h3>
-            <input type="text" name="email" id="employee-email" readonly />
-            <i class="readonly fa-solid fa-lock"></i>
+            <input type="text" name="email" id="employee-email" />
             <i class="check-false fa-solid fa-circle-exclamation"></i>
           </div>
         </div>
@@ -386,7 +386,6 @@
         <a href="../login/login.html">Login</a>
       </p>
     </div>
-    <div class="overlay"></div>
-    <script src="information.js" type="module"></script>
+    <div class="overlay"></div>
   </body>
 </html>
