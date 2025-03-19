@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Filtered Candidates</title>
+    <link
+      rel="shortcut icon"
+      href="/assets/favicon-BPPGXyGE.png"
+      type="image/x-icon"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" crossorigin src="/assets/filteredCandidates-BPHGSMV1.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/constants-D2DsSXG6.js">
+    <link rel="modulepreload" crossorigin href="/assets/constants-DNmD6dpJ.js">
+    <link rel="modulepreload" crossorigin href="/assets/header-BX0fN-_f.js">
+    <link rel="stylesheet" crossorigin href="/assets/constants-C-kfF6wK.css">
+    <link rel="stylesheet" crossorigin href="/assets/header-BXXCsdek.css">
+    <link rel="stylesheet" crossorigin href="/assets/filteredCandidates-D3v2TF0A.css">
+  </head>
+  <body>
+    <div class="loading active">
+      <div class="one"></div>
+      <div class="two"></div>
+      <div class="three"></div>
+    </div>
+    <header>
+      <div class="container">
+        <div class="logo">
+          <a href="../index.html"
+            ><img src="/assets/logo-blue-expand-jHzCqXVZ.png" alt="The Logo"
+          /></a>
+        </div>
+        <div class="search">
+          <input type="search" name="search" id="search" placeholder="Search" />
+          <i class="search-icon fa-solid fa-magnifying-glass"></i>
+        </div>
+        <div class="account">
+          <div>
+            <div class="img">
+              <i class="fa-solid fa-user"></i>
+            </div>
+            <i class="triangle fa-solid fa-caret-down"></i>
+            <button>My Account</button>
+          </div>
+        </div>
+        <ul class="nav-list">
+          <li><a href="../profile/profile.html">My Profile</a></li>
+          <li><button id="logout">Logout</button></li>
+        </ul>
+      </div>
+    </header>
+    <section class="landing">
+      <div class="container">
+        <i class="go-back fa-solid fa-arrow-left"></i>
+        <p class="no-access">You do not have permission to access this page.</p>
+      </div>
+    </section>
+    <div class="job-card">
+      <div class="container">
+        <p class="candidates-message not-found">
+          This job does not exist or is no longer available.
+        </p>
+        <p class="candidates-message job-failed">
+          Something went wrong, please try again.
+        </p>
+      </div>
+    </div>
+    <div class="filtrated-candidates">
+      <div class="container">
+        <h2 class="title">Filtered Candidates</h2>
+        <p class="candidates-message no-candidates">
+          We are still in the filtration process. We appreciate your patience.
+        </p>
+        <p class="candidates-message candidates-failed">
+          Something went wrong, please try again.
+        </p>
+        <div class="candidates"></div>
+      </div>
+    </div>
+    <div class="page-message message">
+      <h3 class="title"></h3>
+      <p class="main-message"></p>
+      <div class="another-messages"></div>
+      <i class="close fa-solid fa-xmark"></i>
+    </div>
+    <div class="copied success">
+      <i class="fa-solid fa-check-circle"></i> Copied Successfully
+    </div>
+    <div class="copied failed">
+      <i class="fa-solid fa-exclamation-circle"></i> Copy Failed
+    </div>
+    <div class="overlay"></div>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js/dist/timeago.min.js"></script>
+  </body>
+</html>
